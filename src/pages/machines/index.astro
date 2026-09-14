@@ -1,121 +1,32 @@
 ---
-import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
-import { inlineIcon } from '../../lib/icons';
-import { url } from '../../lib/url';
-
-const machines = (await getCollection('machines', ({ data }) => !data.draft))
-  .sort((a, b) => (b.data.released ?? '').localeCompare(a.data.released ?? ''));
-
-const fmt = (iso?: string) => {
-  if (!iso) return '導入日未定';
-  const [y, m, d] = iso.split('-').map(Number);
-  return d ? `${y}年${m}月${d}日` : m ? `${y}年${m}月` : `${y}年`;
-};
-const shortDate = (iso?: string) => {
-  if (!iso) return '導入日未定';
-  const [y, m, d] = iso.split('-').map(Number);
-  return d
-    ? `${y}.${String(m).padStart(2, '0')}.${String(d).padStart(2, '0')}`
-    : `${y}.${String(m).padStart(2, '0')} 予定`;
-};
-type M = (typeof machines)[number];
-const groups: { label: string; items: M[] }[] = [];
-for (const m of machines) {
-  const label = fmt(m.data.released);
-  const g = groups.find((item) => item.label === label);
-  if (g) g.items.push(m);
-  else groups.push({ label, items: [m] });
-}
+import Editorial from '../../layouts/Editorial.astro';
+import Icon from '../../components/editorial/Icon.astro';
+import ReleaseList from '../../components/editorial/ReleaseList.astro';
+import {getCollection} from 'astro:content';
+import {url} from '../../lib/url';
+const machines = (await getCollection('machines',({data})=>!data.draft))
+  .sort((a,b)=>(b.data.released??'').localeCompare(a.data.released??'')||a.data.name.localeCompare(b.data.name,'ja'));
+const real = machines.filter(m=>!m.data.fictional);
+const kinana = machines.find(m=>m.data.fictional);
 ---
-
-<Base title="新台・機種情報｜スロログ" description="導入日の新しい順で見るパチスロ新台・機種情報。メーカー公表事実を確認し、スロログアプリへ取り込めます。">
-  <div class="hub">
-    <section class="hub-hero">
-      <div class="hub-heading"><div><p class="kicker">SLOLOG / MACHINE GUIDE</p><h1>メーカー公表スペックを、<br/><span>アプリに取り込む。</span></h1></div><p class="hub-lead">機種名・メーカー・導入日を、出典と取得日つきで掲載。<br/>詳細ページの「機種データをコピー」から、<br/>スロログにそのまま貼り付けられます。</p></div>
-      <div class="hub-toolbar"><div class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="machineSearch" type="search" placeholder="機種名・メーカーで検索" aria-label="機種名・メーカーで検索" /></div><span class="hub-count">{machines.length}<small>機種掲載</small></span></div>
-    </section>
-    <div class="principle"><p><span>01</span> メーカー公式の情報</p><p><span>02</span> 出典・取得日を明記</p><p><span>03</span> アプリへ取り込み</p></div>
-
-    <div class="hub-grid">
-      <section class="articles" aria-labelledby="latestTitle">
-        <div class="section-title">
-          <div><p>LATEST MACHINES</p><h2 id="latestTitle">新着の機種情報</h2></div>
-          <span id="resultCount" aria-live="polite" role="status">{machines.length}件</span>
-        </div>
-
-        <div class="article-grid" id="machineGrid">
-          {machines.map((m, index) => (
-            <article class="machine-card" data-search={`${m.data.name} ${m.data.maker}`.toLowerCase()}>
-              <a href={url(`machines/${m.id}/`)}>
-                <div class="machine-thumbnail">{m.data.image
-                  ? <img src={url(m.data.image.src)} alt={m.data.image.alt} loading="lazy" />
-                  : <span class="thumb-slot" aria-hidden="true">画像準備中</span>}</div>
-                <div class="machine-card-top"><span class="maker">{m.data.maker}</span><span class="card-arrow ico" aria-hidden="true" set:html={inlineIcon('chevronRight', 20)} /></div>
-                <div class="machine-body">
-                  <p class="date">導入時期 <span>{shortDate(m.data.released)}</span></p>
-                  <h3>{m.data.name}</h3>
-                  <p class="excerpt">
-
-                    {m.data.ceiling ? `天井 ${m.data.ceiling}。` : ''}
-                    {m.data.junzo ? `純増 ${m.data.junzo}。` : ''}
-                    {!m.data.ceiling && !m.data.junzo && '公表情報・出典を確認する'}
-                  </p>
-                  <span class="read">機種情報を見る <span class="ico" aria-hidden="true" set:html={inlineIcon('chevronRight', 17)} /></span>
-                </div>
-              </a>
-            </article>
-          ))}
-        </div>
-        <p class="empty" id="emptyState" hidden>条件に合う機種が見つかりませんでした。</p>
+<Editorial title="新台・機種情報｜スロログ" description="機種の基本情報とスペックを出典とともに。調べたデータは、そのままスロログへ。">
+  <div class="page-wrap">
+    <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><span aria-current="page">機種情報</span></nav>
+    <div class="page-title"><p class="eyebrow">MACHINE GUIDE</p><h1>新台・機種情報</h1><p>機種の基本情報とスペックを、出典とともに。<br />調べたデータは、そのままスロログへ。</p></div>
+    <div class="catalog-toolbar"><label class="search-input"><span>機種名・メーカー</span><input id="machine-search" type="search" placeholder="機種名・メーカーで検索" autocomplete="off" /></label><p class="result-count" id="result-count" role="status" aria-live="polite"><b>{real.length}</b> 機種</p></div>
+    <div class="catalog-layout">
+      <section aria-label="機種一覧">
+        <div class="catalog-heading"><h2>掲載機種</h2><span>導入時期が新しい順</span></div>
+        <div class="catalog-grid">{real.map(m=><article class="catalog-item" data-search={`${m.data.name} ${m.data.maker}`.normalize('NFKC').toLowerCase()}>
+          <a href={url(`machines/${m.id}/`)}><div class="catalog-meta"><span>{m.data.maker}</span><time datetime={m.data.released}>{m.data.released?.replaceAll('-','.')||'未定'}</time></div><h2>{m.data.name}</h2><p>{m.data.type||m.data.gen||(m.data.noCeiling?'ノーマル':'公表スペック・基本情報')}</p><div class="catalog-foot"><span>{m.data.noCeiling?'天井なし':m.data.ceiling?'天井情報あり':'基本情報を確認'}</span><Icon name="arrow-up-right" /></div></a>
+        </article>)}</div>
+        <div id="no-results" class="no-results" hidden><h2>一致する機種がありません</h2><p>機種名やメーカー名を変えて検索してください。</p><button id="clear-search" class="button">検索をクリア</button></div>
       </section>
-
-      <aside class="release" aria-labelledby="releaseTitle">
-        <div class="release-head"><small>BY RELEASE DATE</small><h2 id="releaseTitle">導入日から探す</h2></div>
-        <div class="release-list">
-          {groups.map((g) => (
-            <section>
-              <h3>{g.label}<small>{g.label !== '導入日未定' && ' 導入'}</small></h3>
-              {g.items.map((m) => <a href={url(`machines/${m.id}/`)}>{m.data.name}<span>›</span></a>)}
-            </section>
-          ))}
-        </div>
+      <aside class="catalog-aside">
+        <ReleaseList machines={machines} />
+        {kinana&&<a class="sample-machine" href={url(`machines/${kinana.id}/`)}><p class="eyebrow">SLOLOG ORIGINAL</p>{kinana.data.image&&<img src={url(kinana.data.image.src)} alt={kinana.data.image.alt} width="220" height="360" loading="lazy" />}<span class="sample-badge">架空機 / サンプル</span><h2>回胴キナナ</h2><p>スロログの機能を試せる<br />オリジナルシミュレーター。</p><span class="text-link">スペックを見る <Icon /></span></a>}
+        <div class="source-principles"><p class="eyebrow">INFORMATION POLICY</p><h2>情報の出典を、<br />大切にしています。</h2><p>メーカー公表情報と、確認できた天井情報を分けて掲載。未確認の数値や画像は追加していません。</p><a href={url('terms/#section-3')}>掲載情報について <Icon name="arrow-up-right" /></a></div>
       </aside>
     </div>
-
-    <section class="app-cta">
-      <div>
-        <p>FROM WEB TO APP</p>
-        <h2>調べた機種を、<span>自分の立ち回りへ。</span></h2>
-        <p class="desc">メーカー公表スペックを取り込み、自分の狙い目・ヤメ時・期待値メモをアプリ内で管理できます。</p>
-      </div>
-      <a class="pill" href={url('')}>スロログについて <span class="ico" set:html={inlineIcon('chevronRight', 16)} /></a>
-    </section>
   </div>
-
-  <script>
-    const search = document.getElementById('machineSearch') as HTMLInputElement | null;
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('.machine-card'));
-    const count = document.getElementById('resultCount');
-    const empty = document.getElementById('emptyState');
-    search?.addEventListener('input', () => {
-      const query = search.value.normalize('NFKC').trim().toLowerCase();
-      let visible = 0;
-      cards.forEach((card) => {
-        const show = !query || (card.dataset.search ?? '').normalize('NFKC').includes(query);
-        card.hidden = !show;
-        if (show) visible += 1;
-      });
-      if (count) count.textContent = `${visible}件`;
-      if (empty) empty.hidden = visible !== 0;
-    });
-  </script>
-</Base>
-
-<style>
-.machine-thumbnail{height:230px;margin:-24px -24px 24px;padding:20px;background:linear-gradient(#20232b,#13161c);border-bottom:1px solid var(--line)}.machine-thumbnail img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .3s}.thumb-slot{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border:1px dashed #2b2f37;border-radius:10px;color:#565c66;font-size:12px;letter-spacing:.08em}.machine-card:hover .machine-thumbnail img{transform:scale(1.035)}
-
-.hub{padding-bottom:10px}.hub-hero{padding:32px 0 0}.hub-heading{display:flex;justify-content:space-between;align-items:end;gap:44px}.kicker,.section-title p,.app-cta>div>p{color:var(--orange);font-size:12px;font-weight:800;letter-spacing:.13em;margin:0 0 14px}.hub-hero h1{font-size:clamp(34px,4.8vw,62px);letter-spacing:-.05em;margin:0;line-height:1.32}.hub-hero h1 span{color:var(--orange)}.hub-lead{font-size:16px;color:var(--sub);margin:0 0 8px;line-height:2}.hub-toolbar{display:flex;justify-content:space-between;align-items:center;margin-top:38px;gap:24px}.search-box{width:min(100%,640px);display:flex;align-items:center;gap:14px;background:var(--bg-soft);padding:17px 20px;border:1px solid #414650;border-radius:10px}.search-box:focus-within{border-color:var(--orange);box-shadow:0 0 0 2px #f5972a22}.search-box svg{width:21px;height:21px;flex-shrink:0;fill:none;stroke:var(--orange);stroke-width:1.7}.search-box input{background:none;border:0;outline:0;min-width:0;width:100%;color:var(--text);font-size:16px}.search-box input::placeholder{color:#8c929e}.hub-count{font-size:38px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums;color:var(--text)}.hub-count small{font-size:14px;color:var(--sub);margin-left:12px;font-weight:400}.principle{display:flex;gap:32px;border-bottom:1px solid var(--line);padding:22px 0;margin-bottom:48px;flex-wrap:wrap}.principle p{font-size:14px;color:var(--sub);margin:0}.principle span{font-size:12px;color:var(--orange);margin-right:8px;font-variant-numeric:tabular-nums}.hub-grid{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:40px;align-items:start}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.section-title p{margin-bottom:6px}.section-title h2{font-size:26px;margin:0}.section-title>span{font-size:14px;color:var(--sub)}.article-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.machine-card{border:1px solid var(--line);background:var(--bg-soft);border-radius:14px;overflow:hidden;transition:transform .2s,border-color .2s}.machine-card:hover{transform:translateY(-3px);border-color:#b27632}.machine-card a{display:block;color:var(--text);height:100%;padding:24px}.machine-card-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.maker{font-size:13px;color:var(--sub);padding:4px 9px;background:#22252c;border-radius:4px}.card-arrow{color:var(--orange)}.machine-body{display:flex;flex-direction:column}.date{order:2;margin:24px 0 0;display:flex;justify-content:space-between;gap:16px;font-size:13px;color:var(--sub);padding-top:15px;border-top:1px solid var(--line)}.date span{font-variant-numeric:tabular-nums;color:var(--text)}.machine-body h3{font-size:23px;line-height:1.6;min-height:75px;letter-spacing:-.03em;margin:24px 0 8px}.excerpt{font-size:14px;color:var(--sub);line-height:1.8;min-height:28px;margin:0}.read{order:3;display:flex;justify-content:space-between;color:var(--orange);font-size:14px;font-weight:700;margin-top:18px}.read span{font-size:18px}.empty{padding:50px 24px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--sub)}.release{position:sticky;top:110px;border-left:1px solid var(--line);padding-left:25px}.release-head small{font-size:12px;color:var(--orange);letter-spacing:.12em;font-weight:700}.release-head h2{font-size:22px;margin:7px 0 24px}.release-list{max-height:680px;overflow:auto;padding-right:8px;scrollbar-width:thin;scrollbar-color:#4e525c transparent}.release-list section{margin-bottom:22px}.release-list h3{font-size:14px;margin:0 0 8px;color:var(--text);padding-left:12px;border-left:2px solid var(--orange)}.release-list h3 small{font-weight:400;color:var(--sub);font-size:12px}.release-list a{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--sub);padding:9px 0;border-bottom:1px solid #22252c}.release-list a:hover{color:var(--orange-light)}.release-list a span{color:var(--orange)}.app-cta{display:flex;justify-content:space-between;align-items:center;gap:30px;padding:38px 40px;margin-top:65px;background:#181b20;border:1px solid var(--line);border-radius:16px}.app-cta h2{font-size:28px;margin:5px 0 12px}.app-cta h2 span{color:var(--orange)}.app-cta .desc{color:var(--sub);font-size:16px;max-width:720px;margin:0;letter-spacing:0;font-weight:400}.app-cta .pill{flex-shrink:0}
-@media(max-width:1000px){.hub-grid{grid-template-columns:minmax(0,1fr) 240px;gap:24px}.article-grid{grid-template-columns:1fr}.machine-body h3{min-height:0}.release{padding-left:20px}.hub-heading{align-items:start;flex-direction:column;gap:20px}.hub-lead br{display:none}.hub-lead{max-width:600px}}
-@media(max-width:660px){.hub-hero{padding-top:16px}.hub-toolbar{align-items:start;flex-direction:column;gap:22px}.hub-count{font-size:28px}.search-box{width:100%}.principle{gap:12px 24px;padding-block:24px;margin-bottom:32px}.principle p{font-size:13px}.hub-grid{grid-template-columns:1fr}.release{position:static;padding:24px 0 0;border-left:0;border-top:1px solid var(--line);margin-top:15px}.release-list{max-height:360px}.machine-card a{padding:24px}.app-cta{flex-direction:column;align-items:start;padding:28px}.app-cta h2{font-size:25px}.app-cta .pill{width:100%}.machine-body h3{font-size:23px}.hub-hero h1{font-size:38px}}
-</style>
+</Editorial>

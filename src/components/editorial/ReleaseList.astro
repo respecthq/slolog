@@ -1,0 +1,27 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import {url} from '../../lib/url';
+import Icon from './Icon.astro';
+interface Props { machines: CollectionEntry<'machines'>[]; }
+const {machines} = Astro.props;
+const groups = new Map<string, CollectionEntry<'machines'>[]>();
+for (const m of machines.filter(m=>!m.data.draft&&!m.data.fictional).toSorted((a,b)=>(b.data.released??'').localeCompare(a.data.released??''))) {
+  const key = m.data.released ?? '';
+  if (!groups.has(key)) groups.set(key,[]);
+  groups.get(key)!.push(m);
+}
+const format = (value:string) => {
+  if (!value) return '導入日未定';
+  const [y,m,d] = value.split('-').map(Number);
+  return `${y}年${m}月${d?`${d}日`:''}`;
+};
+---
+<section class="release-browser" aria-labelledby="release-title">
+  <p class="eyebrow">BY RELEASE DATE</p><h2 id="release-title">導入日から探す</h2>
+  <nav class="release-list" aria-label="導入日別の機種一覧" tabindex="0">
+    {[...groups].map(([released,items])=><section class="release-group">
+      <h3>{released?<><time datetime={released}>{format(released)}</time><small>導入</small></>:'導入日未定'}</h3>
+      <ul>{items.map(m=><li><a href={url(`machines/${m.id}/`)}><span>{m.data.name}</span><Icon /></a></li>)}</ul>
+    </section>)}
+  </nav>
+</section>

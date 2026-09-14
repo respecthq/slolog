@@ -1,0 +1,9 @@
+---
+import {url} from '../../lib/url';
+---
+<header class="header">
+    <a href={url("")} class="brand" aria-label="スロログ ホーム"><img src={url("editorial/assets/logo.png")} width="160" height="53" alt="スロログ powered by 回胴キナナ"></a>
+    <nav id="navigation" aria-label="メインナビゲーション"><a href={url("#features")}>できること</a><a href={url("machines/")}>機種情報</a><a href={url("#plans")}>料金プラン</a><a href={url("#faq")}>よくある質問</a></nav>
+    <a class="button header-cta" href={url("#release")}>リリース情報 <img src={url("editorial/assets/arrow-up-right.svg")} alt=""></a>
+    <button class="menu-button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navigation"><img src={url("editorial/assets/menu.svg")} alt=""></button>
+  </header>

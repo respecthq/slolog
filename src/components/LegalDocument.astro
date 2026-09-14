@@ -1,18 +1,20 @@
 ---
-import Base from '../layouts/Base.astro';
+import Editorial from '../layouts/Editorial.astro';
 import LegalBlock from './LegalBlock.astro';
-import { UPDATED_AT } from '../lib/legal';
-import { inlineIcon } from '../lib/icons';
-import { url } from '../lib/url';
-const {title, label, description, text}=Astro.props;
+import Icon from './editorial/Icon.astro';
+import {UPDATED_AT} from '../lib/legal';
+import {url} from '../lib/url';
+const {title,label,description,text}=Astro.props;
 const blocks:string[]=text.trim().split('\n\n');
-const headings=blocks.map((b,i)=>({name:b.replace('■ ',''),id:`section-${i}`,heading:b.startsWith('■')})).filter(b=>b.heading);
+const headings=blocks.map((b,i)=>({name:b.replace(/^■ /,''),id:`section-${i}`,heading:b.startsWith('■')})).filter(b=>b.heading);
 ---
-<Base title={`${title}｜スロログ`} description={description}>
-  <div class="document-head"><a class="document-back" href={url('')}><span class="ico" set:html={inlineIcon('chevronLeft', 14)} /> スロログ</a><p class="document-label">SLOLOG / {label}</p><h1>{title}</h1><p class="document-date">最終更新：{UPDATED_AT}</p></div>
-  <div class="document-layout"><aside><p>このページの内容</p><nav aria-label="目次">{headings.map(h=><a href={`#${h.id}`}>{h.name}</a>)}</nav><div class="legal-links"><a href={url('privacy/')}>プライバシーポリシー <span class="ico" set:html={inlineIcon('chevronRight', 14)} /></a><a href={url('terms/')}>利用規約 <span class="ico" set:html={inlineIcon('chevronRight', 14)} /></a><a href={url('support/')}>お問い合わせ <span class="ico" set:html={inlineIcon('chevronRight', 14)} /></a></div></aside><article class="legal">{blocks.map((b,i)=>b.startsWith('■')?<h2 id={`section-${i}`}>{b.replace('■ ','')}</h2>:<LegalBlock text={b}/>)}<p class="back"><a href={url('')}>← スロログについて</a></p></article></div>
-</Base>
-<style>
-.document-head{border-bottom:1px solid var(--line);padding:8px 0 35px}.document-back{display:inline-block;font-size:13px;color:var(--sub);margin-bottom:35px}.document-label{font-size:12px;letter-spacing:.14em;color:var(--orange);font-weight:700;margin:0 0 15px}.document-head h1{font-size:clamp(28px,4vw,48px);margin:0;line-height:1.5;letter-spacing:-.04em}.document-date{font-size:14px;color:var(--sub);margin:18px 0 0}.document-layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:65px;align-items:start;margin-top:40px}.document-layout aside{position:sticky;top:112px}.document-layout aside>p{font-size:13px;color:var(--sub);margin:0 0 17px}.document-layout nav{display:grid;gap:13px}.document-layout nav a{font-size:14px;line-height:1.8;color:#ced1d8;border-left:1px solid var(--line);padding-left:14px}.document-layout nav a:hover{color:var(--orange-light);border-color:var(--orange)}.legal-links{border-top:1px solid var(--line);margin-top:28px;padding-top:22px;display:grid;gap:12px}.legal-links a{font-size:13px;color:var(--sub)}.document-layout .legal{padding:0;margin:0;max-width:800px;min-width:0}.legal :global(h2){scroll-margin-top:112px}.legal :global(p:first-child){color:var(--text);font-size:17px}.legal :global(h2:first-of-type){margin-top:30px}.legal :global(a){overflow-wrap:anywhere}
-@media(max-width:900px){.document-layout{grid-template-columns:1fr;gap:0;margin-top:30px}.document-layout aside{display:none}.document-layout .legal{max-width:760px;margin:auto}.document-head{padding-bottom:28px}.document-back{margin-bottom:28px}}
-</style>
+<Editorial title={`${title}｜スロログ`} description={description}>
+  <div class="page-wrap legal-wrap">
+    <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><span aria-current="page">{title}</span></nav>
+    <div class="page-title"><p class="eyebrow">{label}</p><h1>{title}</h1><p>最終更新：{UPDATED_AT}</p></div>
+    <div class="document-grid">
+      <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次">{headings.map(h=><a href={`#${h.id}`}>{h.name}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={url('support/')}>お問い合わせ <Icon name="arrow-up-right" /></a></div></aside>
+      <article class="legal-text">{blocks.map((b,i)=>b.startsWith('■')?<h2 id={`section-${i}`}>{b.replace(/^■ /,'')}</h2>:<LegalBlock text={b}/>)}<div class="document-end"><span>スロログ / Re:Spect</span><a href={url('')}>トップに戻る <Icon /></a></div></article>
+    </div>
+  </div>
+</Editorial>

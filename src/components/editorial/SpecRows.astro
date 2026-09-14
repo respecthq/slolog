@@ -1,0 +1,4 @@
+---
+const {items} = Astro.props;
+---
+<dl class="spec-rows">{items.filter(([,value])=>value).map(([key,value])=><div><dt>{key}</dt><dd>{value}</dd></div>)}</dl>
