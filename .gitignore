@@ -1,0 +1,28 @@
+# build output
+dist/
+# generated types
+.astro/
+# deps
+node_modules/
+# env
+.env
+.env.production
+# macOS
+.DS_Store
+# logs
+npm-debug.log*
+# Obsidian vault の設定（端末ごと・配信不要）
+.obsidian/
+# 非公開の下書き・日記・メモ（配信しない。Astroも読まない _ 始まりフォルダ）
+_drafts/
+_journal/
+notes/
+
+# 作業用の元データ（Desktopが正本）
+kinana_bg.psd
+
+# デザインモック（公開リポジトリには含めない。移植したら削除）
+mockups/
+
+# エージェントのホスティング設定（公開不要）
+.openai/

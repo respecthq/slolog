@@ -1,0 +1,197 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { toSpec } from '../../lib/spec';
+import { inlineIcon } from '../../lib/icons';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const machines = await getCollection('machines', ({ data }) => !data.draft);
+  return machines.map((m) => ({ params: { slug: m.id }, props: { m } }));
+}
+
+const { m } = Astro.props;
+const machineImage = m.data.image;
+const { Content, headings } = await render(m);
+const specJson = JSON.stringify(toSpec(m), null, 2);
+const allMachines = (await getCollection('machines', ({ data }) => !data.draft))
+  .filter((item) => item.id !== m.id)
+  .sort((a, b) => (b.data.released ?? '').localeCompare(a.data.released ?? ''))
+  .slice(0, 3);
+
+const fmt = (iso?: string) => {
+  if (!iso) return '';
+  const [y, mo, d] = iso.split('-').map(Number);
+  return d ? `${y}年${mo}月${d}日` : `${y}年${mo}月`;
+};
+// 基本情報＝その機種が何かを示すもの／基本スペック＝出玉に関わる数値。
+// 必勝本など既存メディアの区分に合わせてある（基本情報の下に基本スペックが入る）。
+const infoRows: [string, string][] = [
+  ['メーカー', m.data.maker],
+  ['導入日', fmt(m.data.released)],
+  ['タイプ', m.data.type],
+  ['分類', m.data.gen],
+  ['筐体', m.data.cabinet],
+];
+// 基本スペック＝メーカーが公表している出玉性能
+const specRows: [string, string][] = [
+  ['純増', m.data.junzo],
+  ['ボーナス合成確率', m.data.bonus],
+  ['出玉率', m.data.payout],
+];
+const hasSpec = specRows.some(([, v]) => v);
+// 天井まわり＝メーカー非公表。確認元を明示して別ブロックにする（PIPELINE.md）
+const ceilingRows: [string, string][] = [
+  ['天井', m.data.ceiling],
+  ['天井恩恵', m.data.ceilingBonus],
+  ['ゾーン', m.data.zone],
+  ['設定変更時', m.data.resetBehavior],
+];
+const hasCeiling = ceilingRows.some(([, v]) => v);
+---
+
+<Base title={`${m.data.name}｜新台・機種情報｜スロログ`} description={`${m.data.name}の導入日・メーカー・公表スペックをまとめた機種データ。ボタン1つでスロログに取り込めます。`} socialImage={null}>
+  <article class="machine-page">
+    <nav class="breadcrumb" aria-label="パンくず"><a href={url('')}>スロログ</a><span>›</span><a href={url('machines/')}>新台・機種情報</a><span>›</span><b>{m.data.name}</b></nav>
+
+    {machineImage?.placement === 'above' && <figure class="cabinet-above"><img src={url(machineImage.src)} alt={machineImage.alt} fetchpriority="high" />{machineImage.credit && <figcaption>{machineImage.credit}</figcaption>}</figure>}
+    <header class:list={['machine-hero', {'with-cabinet-background': machineImage?.placement === 'background'}]}>
+      {machineImage?.placement === 'background' && <div class="cabinet-background"><img src={url(machineImage.src)} alt={machineImage.alt} fetchpriority="high" /></div>}
+      <div class="hero-copy">
+        <p class="kicker">MACHINE GUIDE / {m.data.maker}</p>
+        <h1>{m.data.name}</h1>
+        <div class="meta">
+          {m.data.released && <span class="release">{fmt(m.data.released)} 導入</span>}
+          {m.data.maker && <span>{m.data.maker}</span>}
+        </div>
+        <p class="intro">{m.data.fictional
+          ? 'Re:Spect が作ったオリジナル機です。実在しないので、ホールにはありません。スロログの機能を試すためのサンプルとして、アプリに同梱しています。'
+          : '導入日・メーカー・公表スペックを1ページにまとめた機種データです。ボタン1つでスロログに取り込み、自分の期待値メモと組み合わせられます。'}</p>
+      </div>
+
+    </header>
+    {machineImage?.placement === 'background' && machineImage.credit && <p class="cabinet-credit">{machineImage.credit}</p>}
+
+    <div class="trust-strip">
+      <div><small>01</small><b>{m.data.fictional ? '架空機（Re:Spect）' : '掲載しているもの'}</b><span>{m.data.fictional ? '実在しない機種です' : 'メーカー公表の情報と、確認できた天井'}</span></div>
+      <div><small>02</small><b>{m.data.fictional ? '自社シミュレーターの実装値' : (m.data.source ? '公式の出典リンク付き' : '出典準備中')}</b><span>{m.data.fictional ? '設定1・2000万Gの実測' : (m.data.fetched ? `${fmt(m.data.fetched)} 取得` : '更新履歴を管理')}</span></div>
+      <div><small>03</small><b>{m.data.fictional ? 'アプリに同梱' : 'スロログへ取込可能'}</b><span>{m.data.fictional ? '「サンプルを入れる」で追加' : 'アプリの機種一覧に登録されます'}</span></div>
+    </div>
+
+    <div class="content-grid">
+      <div class="content-main">
+        <section class="spec-card" aria-labelledby="specTitle">
+          <div class="section-label"><p>OFFICIAL FACTS</p><h2 id="specTitle">基本情報</h2></div>
+          <dl>
+            {infoRows.filter(([, value]) => value).map(([key, value]) => <div><dt>{key}</dt><dd>{value}</dd></div>)}
+          </dl>
+          <div class="section-label spec-sub"><h2>基本スペック</h2></div>
+          {hasSpec
+            ? <dl>{specRows.filter(([, value]) => value).map(([key, value]) => <div><dt>{key}</dt><dd>{value}</dd></div>)}</dl>
+            : <p class="spec-empty">純増・出玉率はメーカーが公表していないため、掲載していません。</p>}
+          {m.data.fictional
+            ? <p class="source">出典：Re:Spect（自社シミュレーターの実装値）　※実在しない機種です</p>
+            : (m.data.source || m.data.fetched) && (
+              <p class="source">
+                {m.data.source && (<>出典：<a href={m.data.source} target="_blank" rel="noopener">メーカー・公式情報を開く <span class="ico" set:html={inlineIcon('externalLink', 13)} /></a></>)}
+                {m.data.fetched && <>　取得日：{fmt(m.data.fetched)}</>}
+              </p>
+            )}
+        </section>
+
+        <section class="spec-card" aria-labelledby="ceilingTitle">
+          <div class="section-label"><p>{m.data.fictional ? 'OWN SIMULATOR' : 'CROSS-CHECKED'}</p><h2 id="ceilingTitle">天井・ゾーン</h2></div>
+          {m.data.noCeiling
+            ? <p class="spec-empty">この機種に天井はありません。ボーナスは毎ゲーム同じ確率で抽選されます。</p>
+            : hasCeiling
+              ? <dl>{ceilingRows.filter(([, value]) => value).map(([key, value]) => <div><dt>{key}</dt><dd>{value}</dd></div>)}</dl>
+              : <p class="spec-empty">メーカーが公表しておらず、確認できる公開情報もまだ出ていません。判明しだい追記します。</p>}
+          {m.data.verified && (
+            <p class="source verified-note">
+              確認：{m.data.verified.url
+                ? <a href={m.data.verified.url} target="_blank" rel="noopener nofollow">{m.data.verified.by.join('・')} <span class="ico" set:html={inlineIcon('externalLink', 13)} /></a>
+                : m.data.verified.by.join('・')}（{fmt(m.data.verified.date)}時点）
+              <br /><small>メーカーが公表していない項目です。各媒体との提携関係はありません。</small>
+            </p>
+          )}
+        </section>
+
+        {headings.length > 1 && <nav class="article-toc" aria-label="このページの内容"><span>このページの内容</span>{headings.filter(h=>h.depth===2).map(h=><a href={`#${h.slug}`}>{h.text} <span class="ico" set:html={inlineIcon('chevronDown', 14)} /></a>)}</nav>}
+        <section class="machine-article">
+          <Content />
+        </section>
+
+        <details class="json-box">
+          <summary>取り込まれる機種データの中身を見る</summary>
+          <pre tabindex="0" aria-label="機種データ">{specJson}</pre>
+        </details>
+      </div>
+
+      {m.data.fictional ? (
+      <aside class="import-card">
+        <p class="side-kicker">SAMPLE MACHINE</p>
+        <h2>アプリに<br /><span>最初から入っています</span></h2>
+        <p>Re:Spect のオリジナル機です。実在しないので、ホールにはありません。スロログの「サンプルを入れる」を押すと、この機種と架空の実戦データが入ります。期待値メモやマイボーダー検証を、自分の記録を汚さずに試せます。</p>
+        <p class="copy-status">スペックは自社シミュレーターの実装値（設定1・2000万Gの実測）です。</p>
+      </aside>
+      ) : (
+      <aside class="import-card">
+        <p class="side-kicker">ADD TO SLOLOG</p>
+        <h2>この機種を<br /><span>スロログに追加</span></h2>
+        <p>下のボタンでこのページのデータをコピーし、アプリに貼り付けるだけ。狙い目・ヤメ時・期待値メモは、取り込んだあとにアプリで追加します。</p>
+        <ol>
+          <li><span>1</span><b>機種データをコピー</b></li>
+          <li><span>2</span><b>アプリの「機種を取り込む」を開く</b></li>
+          <li><span>3</span><b>貼り付けて登録</b></li>
+        </ol>
+        <button class="pill import-button" id="copyBtn" data-json={specJson}>機種データをコピー</button>
+        <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+        <div id="manualCopy" hidden><label for="manualData">下のデータを選択してコピーしてください</label><textarea id="manualData" readonly rows="6">{specJson}</textarea></div>
+        <a class="raw-link" href={url(`machines/${m.id}.json`)}>JSONファイルを直接開く</a>
+      </aside>)}
+    </div>
+
+    {allMachines.length > 0 && (
+      <section class="related">
+        <div class="section-label"><p>MORE MACHINES</p><h2>ほかの機種情報</h2></div>
+        <div class="related-grid">
+          {allMachines.map((item) => (
+            <a href={url(`machines/${item.id}/`)}>
+              <small>{item.data.released ? `${fmt(item.data.released)} 導入` : '導入日未定'}</small>
+              <h3>{item.data.name}</h3>
+              <span>{item.data.maker || 'メーカー未登録'}　›</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+
+  <script>
+    const btn = document.getElementById('copyBtn') as HTMLButtonElement | null;
+    const status = document.getElementById('copyStatus');
+    btn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.json ?? '');
+        btn.textContent = 'コピーしました！';
+        if (status) status.textContent = 'アプリの「機種を取り込む」に貼り付けてください。';
+        window.setTimeout(() => (btn.textContent = '機種データをコピー'), 1800);
+      } catch {
+        btn.textContent = 'コピーできませんでした';
+        if (status) status.textContent = '下の欄から手動でコピーできます。';
+        const manual=document.getElementById('manualCopy');
+        const data=document.getElementById('manualData') as HTMLTextAreaElement | null;
+        if(manual)manual.hidden=false;data?.focus();data?.select();
+      }
+    });
+  </script>
+</Base>
+
+<style>
+.cabinet-above{margin:0 0 36px;padding:30px;background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;text-align:center}.cabinet-above img{display:block;width:100%;height:clamp(260px,30vw,420px);object-fit:contain;margin:auto}.cabinet-above figcaption,.cabinet-credit{font-size:12px;color:var(--sub);margin:16px 0 0}.machine-hero.with-cabinet-background{position:relative;isolation:isolate;overflow:hidden;background:var(--bg-soft);border:1px solid var(--line);border-radius:16px;min-height:360px;padding:45px}.with-cabinet-background .hero-copy{position:relative;max-width:72%;z-index:2}.cabinet-background{position:absolute;inset:0 0 0 45%;z-index:0;pointer-events:none}.cabinet-background img{height:100%;width:100%;object-fit:contain;object-position:right center;opacity:.6}.cabinet-background:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--bg-soft),#121419cf 30%,#12141922 85%)}.cabinet-credit{text-align:right;margin:8px 0 0}
+@media(max-width:760px){.machine-hero.with-cabinet-background{padding:28px 24px}.with-cabinet-background .hero-copy{max-width:100%}.cabinet-background{left:15%;opacity:.38}.cabinet-background:after{background:linear-gradient(90deg,var(--bg-soft),#12141980)}.cabinet-above{padding:22px;margin-bottom:28px}.cabinet-above img{height:300px}}
+
+.machine-page{padding-top:4px}.breadcrumb{display:flex;align-items:center;flex-wrap:wrap;gap:8px;color:var(--sub);font-size:13px;margin:0 0 42px}.breadcrumb a{color:var(--sub)}.breadcrumb a:hover{color:var(--orange-light)}.breadcrumb b{font-weight:400;color:#d1d4dc}.breadcrumb>span{color:#646976}.machine-hero{padding:0 0 36px;border-bottom:1px solid var(--line)}.kicker,.section-label p,.side-kicker{font-size:12px;color:var(--orange);font-weight:800;letter-spacing:.12em;margin:0 0 16px}.machine-hero h1{font-size:clamp(34px,4.6vw,60px);max-width:990px;margin:0;line-height:1.4;letter-spacing:-.045em}.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.meta span{font-size:14px;color:var(--sub);padding:5px 12px;border:1px solid var(--line);border-radius:5px;background:var(--bg-soft)}.meta .release{color:var(--text)}.intro{color:var(--sub);font-size:16px;max-width:790px;margin:22px 0 0;line-height:1.95}.trust-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin:26px 0 50px}.trust-strip>div{display:grid;grid-template-columns:25px 1fr;gap:3px 10px}.trust-strip small{grid-row:span 2;color:var(--orange);font-size:12px;padding-top:3px}.trust-strip b{font-size:14px;font-weight:700}.trust-strip span{font-size:13px;color:var(--sub)}.content-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:48px;align-items:start}.content-main{min-width:0}.spec-card{border:1px solid var(--line);border-radius:14px;padding:30px;background:var(--bg-soft)}.section-label p{margin:0 0 6px}.section-label h2{font-size:25px;margin:0}.spec-card dl{margin:24px 0 0}.spec-card .spec-sub{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}.spec-card .spec-sub h2{font-size:20px}.spec-card .spec-empty{margin:18px 0 0;font-size:14px;line-height:1.9;color:var(--sub)}.spec-card+.spec-card{margin-top:20px}.verified-note small{display:inline-block;margin-top:5px;font-size:12px;color:var(--sub);line-height:1.7}.spec-card dl div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:20px;padding:17px 0;border-bottom:1px solid var(--line)}.spec-card dl div:last-child{border:0}.spec-card dt{font-size:14px;color:var(--sub)}.spec-card dd{font-size:16px;color:var(--text);font-weight:600;margin:0}.source{font-size:13px;color:var(--sub);border-top:1px solid var(--line);padding-top:20px;margin:20px 0 0;line-height:1.9}.source a{text-decoration:underline;text-underline-offset:4px}.article-toc{display:flex;gap:12px 18px;flex-wrap:wrap;padding:24px 0;margin-top:12px;border-bottom:1px solid var(--line)}.article-toc>span{width:100%;font-size:13px;color:var(--sub)}.article-toc a{font-size:14px}.machine-article{color:#c5c9d1;margin-top:35px;font-size:16px}.machine-article :global(p){font-size:16px;line-height:2.05;margin:18px 0}.machine-article :global(h2){margin:44px 0 20px;font-size:25px;padding-bottom:14px;border-bottom:1px solid var(--line);color:var(--text)}.machine-article :global(h3){font-size:20px;margin:30px 0 14px;color:var(--text)}.machine-article :global(strong){color:var(--text)}.machine-article :global(ul),.machine-article :global(ol){padding-left:24px;line-height:1.95}.machine-article :global(li){margin:7px 0}.machine-article :global(li::marker){color:var(--orange)}.machine-article :global(table){display:block;width:100%;overflow:auto;border-collapse:collapse;white-space:nowrap;font-size:14px;margin:24px 0}.machine-article :global(th),.machine-article :global(td){padding:13px 16px;min-width:90px;border-bottom:1px solid var(--line)}.machine-article :global(th){background:var(--card);color:var(--orange-light);font-weight:700;text-align:left}.machine-article :global(blockquote){margin:22px 0;border-left:2px solid var(--orange);padding:5px 22px;background:var(--bg-soft)}.machine-article :global(blockquote p){margin:10px 0}.json-box{margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}.json-box summary{font-size:14px;color:var(--sub);cursor:pointer}.json-box[open] summary{color:var(--text)}.import-card{position:sticky;top:112px;background:#1b1b19;border:1px solid #685031;border-radius:16px;padding:28px}.side-kicker{color:var(--orange);margin:0 0 12px}.import-card h2{font-size:28px;margin:0;line-height:1.5}.import-card h2 span{color:var(--orange-light)}.import-card>p:not(.side-kicker):not(.copy-status){font-size:14px;color:var(--sub);line-height:1.95;margin:18px 0 0}.import-card ol{display:grid;gap:17px;list-style:none;padding:24px 0;margin:24px 0;border-block:1px solid #3a352c}.import-card li{display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:14px;align-items:start}.import-card li b{font-weight:600}.import-card li span{font-size:12px;color:var(--orange);width:22px;height:22px;display:grid;place-items:center;border-radius:50%;border:1px solid #6d5030}.import-button{width:100%}.copy-status{font-size:13px;color:var(--orange-light);line-height:1.7;margin:12px 0;min-height:23px}.raw-link{display:block;font-size:13px;text-align:center;color:var(--sub);text-decoration:underline;text-underline-offset:4px}.raw-link:hover{color:var(--text)}#manualCopy label{font-size:13px;color:var(--sub)}#manualData{width:100%;resize:vertical;font-size:13px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);padding:10px;margin:10px 0 16px}.related{border-top:1px solid var(--line);margin-top:72px;padding-top:36px}.related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:24px}.related-grid a{padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--bg-soft);transition:border-color .2s}.related-grid a:hover{border-color:var(--orange)}.related-grid small{font-size:13px;color:var(--sub)}.related-grid h3{font-size:20px;min-height:60px;margin:16px 0;color:var(--text)}.related-grid span{font-size:14px;color:var(--orange)}
+@media(max-width:1000px){.content-grid{grid-template-columns:minmax(0,1fr) 290px;gap:26px}.import-card{padding:24px}.import-card h2{font-size:24px}.spec-card{padding:24px}.trust-strip{gap:15px}}
+@media(max-width:760px){.breadcrumb{margin-bottom:28px;font-size:12px}.machine-hero h1{font-size:34px}.trust-strip{grid-template-columns:1fr;gap:18px;margin:24px 0 36px}.content-grid{grid-template-columns:1fr;gap:30px}.import-card{position:static}.import-card h2 br{display:none}.import-card ol{grid-template-columns:1fr;gap:13px}.spec-card dl div{grid-template-columns:76px minmax(0,1fr);gap:15px}.related-grid{grid-template-columns:1fr}.related-grid h3{min-height:0}.related{margin-top:52px}.spec-card{padding:24px 20px}.machine-article :global(h2){font-size:23px}}
+</style>

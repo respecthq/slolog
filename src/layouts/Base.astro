@@ -1,0 +1,55 @@
+---
+import { inlineIcon } from '../lib/icons';
+import { url } from '../lib/url';
+interface Props { title: string; description?: string; socialImage?: string | null; }
+const { title, description = '記録から、判断へ。スロログはパチスロの記録・分析・立ち回りをつなぐアプリです。', socialImage = 'og.jpg' } = Astro.props;
+const home=url('');
+const ogImage=socialImage ? new URL(url(socialImage),Astro.site ?? Astro.url).href : null;
+const isMachine=Astro.url.pathname.startsWith(url('machines'));
+const isHome=Astro.url.pathname===home;
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} /><meta name="theme-color" content="#0c0d10" />
+  <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+  <title>{title}</title><link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  <link rel="icon" type="image/png" href={url('images/app-icon.webp')} />
+  <style is:global>
+    /* リンク末尾のアイコン（set:html で挿すSVGの器）。大きさはSVG側の属性で決まる */
+    .ico{display:inline-flex;align-items:center;vertical-align:-.18em}
+    :root{color-scheme:dark;--bg:#0c0d10;--bg-soft:#121419;--card:#181b21;--card-2:#20242b;--line:#2b2f37;--text:#f5f5f7;--sub:#afb3be;--orange:#f5972a;--orange-light:#ffcb5c;--maxw:1220px;--font:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:110px}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.8;-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}a{color:var(--orange-light);text-decoration:none}button,input,textarea{font:inherit}button,a{-webkit-tap-highlight-color:transparent}img{max-width:100%}button{cursor:pointer}h1,h2,h3{line-height:1.4;letter-spacing:-.035em}::selection{background:#f5972a;color:#0c0d10}:focus-visible{outline:2px solid var(--orange-light);outline-offset:5px}[hidden]{display:none!important}.wrap{width:min(calc(100% - 80px),var(--maxw));margin-inline:auto}
+    .skip-link{position:fixed;left:16px;top:-100px;padding:12px 20px;background:var(--orange);color:#111;z-index:100}.skip-link:focus{top:12px}
+    header.site{position:sticky;top:0;z-index:30;background:#0c0d10ed;border-bottom:1px solid #ffffff0e;backdrop-filter:blur(20px)}header.site .wrap{height:84px;display:flex;align-items:center;gap:34px}.brand{display:inline-flex;flex-shrink:0;line-height:0}.brand img{height:40px;width:auto}nav.site{margin-left:auto;display:flex;align-items:center;gap:27px}nav.site a{font-size:14px;font-weight:700;color:var(--sub);position:relative;white-space:nowrap;padding-block:12px}nav.site a:hover,nav.site a[aria-current]{color:var(--text)}nav.site a[aria-current]:after{content:'';position:absolute;bottom:2px;left:0;width:20px;height:2px;background:var(--orange)}.ico{display:inline-flex;align-items:center}.site-cta{display:inline-flex;align-items:center;justify-content:center;gap:15px;padding:11px 18px;font-size:14px;font-weight:800;white-space:nowrap;flex-shrink:0;border-radius:9px;background:var(--orange);color:#13100b;transition:background .2s,transform .2s}.site-cta:hover{background:var(--orange-light);transform:translateY(-1px)}.nav-toggle{display:none}
+    main#main-content{min-height:70vh;padding:44px 0 96px}.pill{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:50px;padding:12px 23px;border:1px solid transparent;border-radius:9px;font-size:14px;font-weight:800;background:var(--orange);color:#171009;transition:transform .2s,background .2s,border-color .2s}.pill:hover{background:var(--orange-light);transform:translateY(-2px)}.pill.ghost{background:transparent;color:var(--text);border-color:#474a52}.pill.ghost:hover{background:#ffffff08;border-color:var(--orange)}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}pre,code{font-family:"SFMono-Regular",Consolas,monospace}pre{border:1px solid var(--line);background:#090a0d;padding:20px;border-radius:10px;overflow:auto;font-size:14px}
+    .legal{max-width:760px;margin:auto;padding:30px 0}.legal h1{font-size:clamp(28px,4vw,44px);margin:0 0 36px}.legal h2{font-size:21px;color:var(--text);margin:44px 0 18px;padding-top:25px;border-top:1px solid var(--line)}.legal p{white-space:pre-line;font-size:16px;line-height:2.05;color:var(--sub);margin:0 0 20px}.legal a{text-decoration:underline;text-underline-offset:4px}.legal .back{margin-top:54px}
+    footer.site{border-top:1px solid var(--line);background:#090a0c;padding:55px 0 28px}.footer-top{display:flex;align-items:start;justify-content:space-between;gap:44px}.footer-brand img{width:180px;height:auto}.footer-brand p{font-size:14px;color:var(--sub);margin:18px 0}.foot-links{display:grid;grid-template-columns:repeat(2,auto);gap:16px 40px}.foot-links a{font-size:14px;color:var(--sub);font-weight:600}.foot-links a:hover{color:var(--orange-light)}.footer-bottom{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:35px;padding-top:24px;border-top:1px solid #22252c;color:#858a95;font-size:12px}.footer-bottom p{margin:0}
+    @media(max-width:1000px){.wrap{width:calc(100% - 48px)}header.site .wrap{height:72px;gap:16px}.brand img{height:34px}.site-cta{margin-left:auto;padding:10px 15px}.nav-toggle{display:flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:42px;height:42px;padding:10px;border:1px solid var(--line);border-radius:9px;background:transparent}.nav-toggle span{display:block;width:20px;height:2px;background:var(--text);transition:transform .2s,opacity .2s}.nav-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}.nav-open .nav-toggle span:nth-child(2){opacity:0}.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}nav.site{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--bg-soft);border-bottom:1px solid var(--line);padding:12px 24px;box-shadow:0 20px 35px #0006}nav.site a{padding:13px 8px;font-size:16px}.nav-open nav.site{display:flex}nav.site a[aria-current]:after{display:none}}
+    @media(max-width:600px){.wrap{width:calc(100% - 36px)}header.site .wrap{height:66px;gap:10px}.brand img{height:28px}.site-cta{font-size:13px;padding:9px 12px;gap:8px}.site-cta span{display:none}main#main-content{padding:28px 0 64px}.footer-top{flex-direction:column;gap:28px}.foot-links{gap:14px 24px}.footer-bottom{gap:12px}.legal{padding:12px 0}.legal h2{font-size:19px}.pill{min-height:48px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">本文へスキップ</a>
+  <header class="site"><div class="wrap">
+    <a class="brand" href={home} aria-label="スロログ ホーム"><img src={url('images/logo_orange_grad.png')} alt="スロログ powered by 回胴キナナ" /></a>
+    <nav class="site" id="siteNav" aria-label="メインナビゲーション"><a href={home} aria-current={isHome ? 'page' : undefined}>アプリについて</a><a href={url('machines/')} aria-current={isMachine ? 'page' : undefined}>機種情報</a><a href={`${home}#plans`}>無料／Pro</a><a href={`${home}#faq`}>よくある質問</a></nav>
+    <a class="site-cta" href={`${home}#download`}>ダウンロード<span class="ico" set:html={inlineIcon('chevronRight', 15)} /></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
+  </div></header>
+  <main id="main-content"><div class="wrap"><slot /></div></main>
+  <footer class="site"><div class="wrap"><div class="footer-top"><div class="footer-brand"><a href={home}><img src={url('images/logo_orange_grad.png')} alt="スロログ powered by 回胴キナナ" loading="lazy" /></a><p>記録から、判断へ。<br/>あなたの実戦に、自分だけの根拠を。</p></div><nav class="foot-links" aria-label="フッターナビゲーション"><a href={home}>アプリについて</a><a href={url('machines/')}>機種情報</a><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={url('support/')}>サポート・お問い合わせ</a><a href={`${home}#plans`}>無料／Pro</a></nav></div><div class="footer-bottom"><p>© 2026 Re:Spect / 回胴キナナ</p><p>スロログは遊技の記録・計算ツールです。遊技の結果を保証するものではありません。</p></div></div></footer>
+  <script>
+    const toggle=document.getElementById('navToggle');const nav=document.getElementById('siteNav');
+    const setOpen=(open:boolean)=>{document.body.classList.toggle('nav-open',open);toggle?.setAttribute('aria-expanded',String(open));toggle?.setAttribute('aria-label',open?'メニューを閉じる':'メニューを開く');};
+    toggle?.addEventListener('click',()=>setOpen(!document.body.classList.contains('nav-open')));
+    nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));
+    window.addEventListener('keydown',e=>{if(e.key==='Escape'){const wasOpen=document.body.classList.contains('nav-open');setOpen(false);if(wasOpen)toggle?.focus();}});
+    document.addEventListener('click',e=>{if(e.target instanceof Node&&!nav?.contains(e.target)&&!toggle?.contains(e.target))setOpen(false);});
+  </script>
+</body>
+</html>

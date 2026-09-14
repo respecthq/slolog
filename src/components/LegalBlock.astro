@@ -1,0 +1,5 @@
+---
+const { text } = Astro.props;
+const parts: string[] = text.split(/(https?:\/\/[^\s]+|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/g);
+---
+<p>{parts.map(part => /^https?:\/\//.test(part) ? <a href={part} target="_blank" rel="noopener noreferrer">{part}</a> : /^[A-Za-z0-9._%+-]+@/.test(part) ? <a href={`mailto:${part}`}>{part}</a> : part)}</p>
