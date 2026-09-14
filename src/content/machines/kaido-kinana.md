@@ -9,7 +9,7 @@ koyaku: リプレイ,ベル,スイカ,チェリー,チャンス目,確定役
 source: ''
 fetched: 2026-07-12
 added: 2026-07-12
-draft: false
+draft: true # LPでは非表示（2026-09-15）。アプリ内のサンプルは別途内蔵
 fictional: true # Re:Spect のオリジナル（実在しない機種）。サイトには「架空機」と明示、アプリ配信JSONからは除外
 image:
   src: images/machines/kinana-cabinet.webp
