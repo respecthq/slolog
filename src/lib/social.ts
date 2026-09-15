@@ -1,10 +1,11 @@
-// SNSリンク。url が空のものはフッターに出さない（アカウントができたらここに入れるだけ）
+// 公式SNS。スロログは回胴キナナのアカウントで発信する（LPの「powered by 回胴キナナ」と同じ線）。
+// url が空のものはフッターに出さない。計測パラメータ（?_t= / ?s= / ?stkn= など）は必ず外して入れる
 export type Social = { key: 'x' | 'instagram' | 'youtube' | 'tiktok'; label: string; url: string };
 export const SOCIALS: Social[] = [
-  { key: 'x', label: 'X', url: '' },
-  { key: 'instagram', label: 'Instagram', url: '' },
-  { key: 'youtube', label: 'YouTube', url: '' },
-  { key: 'tiktok', label: 'TikTok', url: '' },
+  { key: 'x', label: '回胴キナナ公式X', url: 'https://x.com/kinana_kaido' },
+  { key: 'instagram', label: '回胴キナナ公式Instagram', url: 'https://www.instagram.com/kinana_kaido/' },
+  { key: 'youtube', label: '回胴キナナ公式YouTube', url: 'https://www.youtube.com/@KinanaKaido' },
+  { key: 'tiktok', label: '回胴キナナ公式TikTok', url: 'https://www.tiktok.com/@kinana_kaido' },
 ];
 // 各社の公式ブランド素材（白ロゴ）。public/editorial/assets/social/ に置く
 export const SOCIAL_ICONS: Record<Social['key'], string> = {

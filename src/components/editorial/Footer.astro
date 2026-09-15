@@ -3,11 +3,11 @@ import {url} from '../../lib/url';
 import {SOCIALS, SOCIAL_ICONS} from '../../lib/social';
 const socials = SOCIALS.filter(s => s.url);
 ---
-<footer><a class="brand" href={url("")}><img src={url("editorial/assets/logo.png")} alt="スロログ" width="160" height="53"></a><div><a href={url("privacy/")}>プライバシーポリシー</a><a href={url("terms/")}>利用規約</a><a href="mailto:respecthq.dev@gmail.com">サポート</a></div>{socials.length > 0 && <ul class="social" aria-label="公式SNS">{socials.map(s => <li><a href={s.url} target="_blank" rel="noopener" aria-label={s.label} title={s.label}><img src={url(`editorial/assets/${SOCIAL_ICONS[s.key]}`)} alt="" /></a></li>)}</ul>}<small>© 2026 Re:Spect / 回胴キナナ</small></footer>
+<footer><a class="brand" href={url("")}><img src={url("editorial/assets/logo.png")} alt="スロログ" width="160" height="53"></a><div><a href={url("privacy/")}>プライバシーポリシー</a><a href={url("terms/")}>利用規約</a><a href="mailto:respecthq.dev@gmail.com">サポート</a></div>{socials.length > 0 && <ul class="social" aria-label="公式SNS">{socials.map(s => <li><a href={s.url} target="_blank" rel="noopener" aria-label={s.label} title={s.label} data-social={s.key}><img src={url(`editorial/assets/${SOCIAL_ICONS[s.key]}`)} alt="" /></a></li>)}</ul>}<small>© 2026 Re:Spect / 回胴キナナ</small></footer>
 <style>
   .social{list-style:none;display:flex;gap:10px;margin:0;padding:0}
   .social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#111216;border-radius:50%;transition:background .18s,transform .18s}
   .social a:hover{background:#eb650b;transform:translateY(-2px)}
   .social img{width:18px;height:18px;object-fit:contain}
-  .social a[title="TikTok"] img{width:22px;height:22px}
+  .social a[data-social="tiktok"] img{width:22px;height:22px}
 </style>
