@@ -84,6 +84,7 @@ const machines = defineCollection({
     type: z.coerce.string().default(''),    // タイプ（例 ノーマル／AT／ボーナストリガー）
     gen: z.coerce.string().default(''),     // 分類・号機（例 6号機（スマスロ））※アプリの号機チップに入る
     cabinet: z.coerce.string().default(''), // 筐体（例 アーチャー）
+    modelName: z.coerce.string().default(''), // 型式名（検定通過時の正式名。例 Sマイジャグラー6KK）※メーカー公表の事実
     // 設定別スペック（メーカー公式が公表している場合のみ）。範囲で持つ：設定1〜6
     bonus: z.coerce.string().default(''),  // ボーナス合成確率（例 1/163.8〜1/114.6）
     payout: z.coerce.string().default(''), // 出玉率＝機械割（例 97.0%〜109.4%）

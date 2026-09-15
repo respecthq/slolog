@@ -19,6 +19,7 @@ export type MachineSpec = {
   gen?: string;     // 号機区分（アプリの号機チップ）
   machineType?: string; // 実機のタイプ（ノーマル／AT など）。契約識別子 type とは別の項目（監査 F11）
   cabinet?: string; // 筐体
+  modelName?: string; // 型式名（検定上の正式名）
   bonus?: string;   // ボーナス合成確率（メーカー公表）
   payout?: string;  // 出玉率＝機械割（メーカー公表）
   ceilingBonus?: string; // 天井恩恵
@@ -44,6 +45,7 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   if (d.gen) spec.gen = d.gen;
   if (d.type) spec.machineType = d.type;
   if (d.cabinet) spec.cabinet = d.cabinet;
+  if (d.modelName) spec.modelName = d.modelName;
   if (d.ceilingBonus) spec.ceilingBonus = d.ceilingBonus;
   if (d.bonus) spec.bonus = d.bonus;
   if (d.payout) spec.payout = d.payout;
