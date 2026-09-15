@@ -13,6 +13,7 @@ draft: false
 bonus: '1/165.9〜1/119.6'
 payout: '97.0%〜109.0%'
 noCeiling: true
+gen: '6号機'
 modelName: 'Sファンキージャグラー2KT'
 modelNameSource: https://www.p-world.co.jp/machine/database/9446
 kenteiNo: '0S0234'

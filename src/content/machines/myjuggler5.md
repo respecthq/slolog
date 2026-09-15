@@ -13,6 +13,7 @@ draft: false
 bonus: '1/163.8〜1/114.6'
 payout: '97.0%〜109.4%'
 noCeiling: true
+gen: '6号機'
 modelName: 'SマイジャグラーVKD'
 modelNameSource: https://www.p-world.co.jp/machine/database/9514
 kenteiNo: '9S1793'

@@ -14,6 +14,7 @@ added: 2026-09-04
 crosscheckUrl: https://p.hisshobon.jp/machine/4624
 draft: false
 noCeiling: true
+gen: 'スマスロ'
 modelName: 'LB／シェイクボーナストリガー／A1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10361
 kenteiNo: '530293'

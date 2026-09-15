@@ -18,6 +18,7 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/7008
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4692
+gen: 'スマスロ'
 modelName: 'LアニマルスロットドッチZT'
 modelNameSource: https://www.p-world.co.jp/machine/database/10427
 kenteiNo: '530564'

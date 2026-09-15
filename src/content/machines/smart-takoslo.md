@@ -7,7 +7,7 @@ zone: ''
 released: 2026-09
 koyaku: ''
 type: ノーマル（ボーナストリガー）
-gen: 6号機（スマスロ）
+gen: 'スマスロ'
 modelName: 'LB／タコスロBD'
 modelNameSource: https://www.p-world.co.jp/machine/database/10510
 kenteiNo: '6S0085'

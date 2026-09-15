@@ -14,6 +14,7 @@ draft: false
 bonus: '1/169.8〜1/126.8'
 payout: '97.4%〜110.0%'
 noCeiling: true
+gen: 'スマスロ'
 modelName: 'LBマタドールIII TT'
 modelNameSource: https://www.p-world.co.jp/machine/database/10287
 kenteiNo: '530169'

@@ -18,6 +18,7 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/6568
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4289
+gen: 'スマスロ'
 modelName: 'L押忍！番長4 A3'
 modelNameSource: https://www.p-world.co.jp/machine/database/10023
 kenteiNo: '3S1296'

@@ -13,6 +13,7 @@ draft: false
 bonus: '1/164.3〜1/121.6'
 payout: '97.0%〜108.1%'
 noCeiling: true
+gen: '6号機'
 modelName: 'SウルトラミラクルジャグラーKT'
 modelNameSource: https://www.p-world.co.jp/machine/database/10145
 kenteiNo: '330695'

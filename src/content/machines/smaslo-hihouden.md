@@ -1,6 +1,6 @@
 ---
 name: スマスロ秘宝伝
-maker: 大都技研
+maker: パオン・ディーピー（販売：大都技研）
 ceiling: BIG後799G+α ／ REG後649G+α（設定変更時499G+α）
 junzo: ''
 zone: ''
@@ -19,6 +19,7 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/6975
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4655
+gen: 'スマスロ'
 modelName: 'L／スマスロ秘宝伝／PA7'
 modelNameSource: https://www.p-world.co.jp/machine/database/10390
 kenteiNo: '5S0926'

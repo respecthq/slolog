@@ -19,6 +19,7 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/7095
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4750
+gen: 'スマスロ'
 modelName: 'L／ソードアート・オンラインII／PA1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10483
 kenteiNo: '531088'

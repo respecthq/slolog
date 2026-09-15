@@ -13,6 +13,7 @@ draft: false
 bonus: '1/159.1〜1/119.2'
 payout: '97.0%〜107.5%'
 noCeiling: true
+gen: '6号機'
 modelName: 'SジャグラーガールズSS-KH'
 modelNameSource: https://www.p-world.co.jp/machine/database/10009
 kenteiNo: '330257'

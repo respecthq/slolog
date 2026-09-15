@@ -18,6 +18,7 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/7082
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4754
+gen: 'スマスロ'
 modelName: 'LローティスTN'
 modelNameSource: https://www.p-world.co.jp/machine/database/10491
 kenteiNo: '531154'
