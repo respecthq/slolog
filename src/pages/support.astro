@@ -18,7 +18,7 @@ const sections = [
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><span aria-current="page">サポート</span></nav>
     <div class="page-title"><p class="eyebrow">SUPPORT</p><h1>サポート</h1><p>不具合・ご要望・データの引っ越しについて。</p></div>
     <div class="document-grid">
-      <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次">{sections.map(s=><a href={`#${s.id}`}>{s.title}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={`mailto:${SUPPORT_EMAIL}`}>メールで問い合わせ <Icon name="arrow-up-right" /></a></div></aside>
+      <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次">{sections.map(s=><a href={`#${s.id}`}>{s.title}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={`mailto:${SUPPORT_EMAIL}`}>メールで問い合わせ <Icon name="external-link" /></a></div></aside>
       <article class="legal-text">
         <h2 id="contact">お問い合わせ</h2>
         <p>不具合の報告・ご要望は <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> までお送りください。端末の機種とiOSのバージョン、どの画面で何をしたときに起きたかを書いていただけると、原因を特定しやすくなります。</p>

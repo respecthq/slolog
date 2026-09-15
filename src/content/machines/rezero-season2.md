@@ -20,4 +20,3 @@ verified:
   crosscheck: https://p.hisshobon.jp/machine/4377
 ---
 
-※ 筐体画像はメーカー各社の利用条件により掲載していません。画像と詳細は出典の公式ページをご確認ください。

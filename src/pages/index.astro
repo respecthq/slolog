@@ -10,7 +10,7 @@ import {url} from '../lib/url';
         <h1 id="hero-title"><img src={url("editorial/assets/logo.png")} alt="スロログ" width="400" height="133"></h1>
         <p class="hero-headline">記録から、<em>判断へ。</em></p>
         <p class="hero-lead">収支も、期待値も、答え合わせも。<br class="mobile-only">次の一手につながる、実戦の記録。</p>
-        <a class="button primary" href={url("#features")}>スロログでできること <img src={url("editorial/assets/arrow-right.svg")} alt=""></a>
+        <a class="button primary" href={url("#features")}>スロログでできること <img src={url("editorial/assets/chevron-right.svg")} alt=""></a>
         <p class="release-status">iPhone向け / App Store 公開準備中</p>
       </div>
       <div class="hero-stage">
@@ -30,7 +30,7 @@ import {url} from '../lib/url';
       <div class="section-heading"><p class="eyebrow"><b>01</b> THINK. RECORD. REVIEW.</p><h2>「なんとなく」を、<br><em>自分のデータに。</em></h2><p>打つ前も、ホールでも、帰ってからも。<br>実戦の流れを、ひとつのアプリで。</p></div>
       <div class="feature-tabs" role="tablist" aria-label="アプリの機能"><button role="tab" id="tab-ev" aria-controls="feature-panel" aria-selected="true" data-feature="ev">01 <span>狙い目を決める</span></button><button role="tab" id="tab-record" aria-controls="feature-panel" aria-selected="false" tabindex="-1" data-feature="record">02 <span>記録する</span></button><button role="tab" id="tab-graph" aria-controls="feature-panel" aria-selected="false" tabindex="-1" data-feature="graph">03 <span>振り返る</span></button></div>
       <div class="feature-panel" id="feature-panel" role="tabpanel" aria-labelledby="tab-ev" tabindex="0">
-        <div class="feature-copy"><span class="feature-label" id="feature-label">期待値メモ / 1機種無料</span><h3 id="feature-title">自分の基準で、<br>狙い目を決める。</h3><p id="feature-description">信頼する期待値表を取り込んで、マイボーダーを設定。その基準を超える狙い目G数を逆引きできます。</p><ul id="feature-list"><li>表を貼り付け、またはファイルから取込</li><li>2つ以上のレート列がある表なら換金率を換算</li><li>実在機種の期待値表は同梱していません</li></ul><a class="text-link" href={url("#plans")}>無料で使える機能を見る <img src={url("editorial/assets/arrow-up-right.svg")} alt=""></a></div>
+        <div class="feature-copy"><span class="feature-label" id="feature-label">期待値メモ / 1機種無料</span><h3 id="feature-title">自分の基準で、<br>狙い目を決める。</h3><p id="feature-description">信頼する期待値表を取り込んで、マイボーダーを設定。その基準を超える狙い目G数を逆引きできます。</p><ul id="feature-list"><li>表を貼り付け、またはファイルから取込</li><li>2つ以上のレート列がある表なら換金率を換算</li><li>実在機種の期待値表は同梱していません</li></ul><a class="text-link" href={url("#plans")}>無料で使える機能を見る <img src={url("editorial/assets/chevron-right.svg")} alt=""></a></div>
         <div class="feature-screen"><span class="screen-word" aria-hidden="true" id="screen-word">THINK</span><div class="phone"><img id="feature-image" src={url("editorial/assets/ev.webp")} alt="換金率とマイボーダーから狙い目G数を表示する期待値メモ画面" width="900" height="1955" loading="lazy"></div></div>
       </div>
       <p class="image-note">画面は開発中のアプリです。機種・店舗・実戦記録は架空のサンプルです。</p>
@@ -46,12 +46,12 @@ import {url} from '../lib/url';
     <section class="review-band"><div class="section review-inner"><div><p class="eyebrow"><b>03</b> MAKE IT YOUR STANDARD</p><h2>その立ち回り、<br><em>記録で答え合わせ。</em></h2><p>マイボーダー以上で打った実戦と、未満で打った実戦。<br>成績を分けて比べると、自分の判断が見えてくる。</p><span class="pro-tag">スロログ Pro / マイボーダー検証</span><p class="fine-print">期待値・分析結果は、将来の収支を保証するものではありません。</p></div><div class="review-crop"><img src={url("editorial/assets/review-detail.webp")} width="844" height="400" alt="マイボーダー以上・未満の実戦を比較するアプリ画面" loading="lazy"></div></div></section>
 
     <section class="section plans" id="plans"><div class="section-heading"><p class="eyebrow"><b>04</b> SIMPLE PLANS</p><h2>記録は、ずっと無料。<br>もっと深く使うなら、Pro。</h2><p>どちらのプランも、広告はありません。</p></div><div class="billing" role="group" aria-label="料金の表示期間"><button data-billing="month" aria-pressed="true">月払い</button><button data-billing="year" aria-pressed="false">年払い</button></div>
-      <div class="plan-grid"><article class="plan"><span class="plan-kicker">毎日の記録と分析に</span><h3>スロログ Free</h3><p class="price">¥0 <small>ずっと無料</small></p><ul><li>実戦記録・収支・カレンダー</li><li>グラフと機種・店舗・タグ・曜日別分析</li><li>台メモ・小役カウンタ・タイマー</li><li>CSV入出力・写真込みバックアップ</li><li>期待値メモ：1機種</li></ul><a class="button" href={url("#release")}>リリース情報を見る <img src={url("editorial/assets/arrow-right.svg")} alt=""></a></article>
-      <article class="plan pro"><span class="plan-kicker">自分の基準を、もっと深く</span><h3>スロログ Pro</h3><p class="price" aria-live="polite"><span id="pro-price">¥480</span> <small id="pro-period">/ 月（税込）</small></p><ul><li>Freeのすべての機能</li><li><strong>期待値メモ：機種数無制限</strong></li><li><strong>マイボーダー検証</strong></li><li>基準以上・未満の実戦を分けて比較</li></ul><a class="button primary" href={url("#release")}>Proのリリース情報を見る <img src={url("editorial/assets/arrow-right.svg")} alt=""></a></article></div>
+      <div class="plan-grid"><article class="plan"><span class="plan-kicker">毎日の記録と分析に</span><h3>スロログ Free</h3><p class="price">¥0 <small>ずっと無料</small></p><ul><li>実戦記録・収支・カレンダー</li><li>グラフと機種・店舗・タグ・曜日別分析</li><li>台メモ・小役カウンタ・タイマー</li><li>CSV入出力・写真込みバックアップ</li><li>期待値メモ：1機種</li></ul><a class="button" href={url("#release")}>リリース情報を見る <img src={url("editorial/assets/chevron-right.svg")} alt=""></a></article>
+      <article class="plan pro"><span class="plan-kicker">自分の基準を、もっと深く</span><h3>スロログ Pro</h3><p class="price" aria-live="polite"><span id="pro-price">¥480</span> <small id="pro-period">/ 月（税込）</small></p><ul><li>Freeのすべての機能</li><li><strong>期待値メモ：機種数無制限</strong></li><li><strong>マイボーダー検証</strong></li><li>基準以上・未満の実戦を分けて比較</li></ul><a class="button primary" href={url("#release")}>Proのリリース情報を見る <img src={url("editorial/assets/chevron-right.svg")} alt=""></a></article></div>
       <p class="image-note">価格・無料体験の対象条件は、公開時のApp Store購入確認画面でご確認ください。実在機種の期待値表は同梱していません。</p>
     </section>
 
-    <section class="section faq" id="faq"><div><p class="eyebrow"><b>05</b> QUESTIONS &amp; ANSWERS</p><h2>よくある質問</h2><a class="text-link" href="mailto:respecthq.dev@gmail.com">お問い合わせ <img src={url("editorial/assets/arrow-up-right.svg")} alt=""></a></div><div class="faq-list">
+    <section class="section faq" id="faq"><div><p class="eyebrow"><b>05</b> QUESTIONS &amp; ANSWERS</p><h2>よくある質問</h2><a class="text-link" href="mailto:respecthq.dev@gmail.com">お問い合わせ <img src={url("editorial/assets/external-link.svg")} alt=""></a></div><div class="faq-list">
       <details><summary>本当に無料で使えますか？<img src={url("editorial/assets/plus.svg")} alt=""></summary><p>実戦記録、収支・カレンダー・グラフ、各種分析、台メモ、小役カウンタ、バックアップまで無料です。期待値メモも1機種で使えます。広告はありません。</p></details>
       <details><summary>期待値表はアプリに付いていますか？<img src={url("editorial/assets/plus.svg")} alt=""></summary><p>実在機種の期待値表は同梱していません。ご自身が信頼する表を貼り付けるか、ファイルから取り込んで使います。回胴キナナの架空機種によるサンプルを用意しています。</p></details>
       <details><summary>記録や写真は、どこに保存されますか？<img src={url("editorial/assets/plus.svg")} alt=""></summary><p>入力した記録・写真・メモは端末内に保存し、運営者のサーバーには送信しません。課金管理にはRevenueCatを利用し、公開機種情報の取得時にも通信します。</p></details>
@@ -60,6 +60,6 @@ import {url} from '../lib/url';
     </div></section>
 
     <div id="download"></div>
-    <section class="release" id="release"><div class="release-inner"><img src={url("editorial/assets/app-icon.webp")} class="app-icon" width="76" height="76" alt="スロログのアプリアイコン"><p class="eyebrow">YOUR NEXT PLAY STARTS HERE.</p><h2>今日の記録が、<br>次の自分の味方になる。</h2><p>スロログ / パチスロ収支・立ち回りアプリ</p><div class="coming-soon"><span></span>App Store 公開準備中</div><p class="release-fine">iPhone向け・記録と分析は無料・広告なし</p><a class="text-link" href={url("machines/")}>公開中の機種情報を見る <img src={url("editorial/assets/arrow-up-right.svg")} alt=""></a></div></section>
+    <section class="release" id="release"><div class="release-inner"><img src={url("editorial/assets/app-icon.webp")} class="app-icon" width="76" height="76" alt="スロログのアプリアイコン"><p class="eyebrow">YOUR NEXT PLAY STARTS HERE.</p><h2>今日の記録が、<br>次の自分の味方になる。</h2><p>スロログ / パチスロ収支・立ち回りアプリ</p><div class="coming-soon"><span></span>App Store 公開準備中</div><p class="release-fine">iPhone向け・記録と分析は無料・広告なし</p><a class="text-link" href={url("machines/")}>公開中の機種情報を見る <img src={url("editorial/assets/chevron-right.svg")} alt=""></a></div></section>
   
 </Editorial>

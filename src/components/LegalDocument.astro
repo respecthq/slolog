@@ -13,7 +13,7 @@ const headings=blocks.map((b,i)=>({name:b.replace(/^■ /,''),id:`section-${i}`,
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><span aria-current="page">{title}</span></nav>
     <div class="page-title"><p class="eyebrow">{label}</p><h1>{title}</h1><p>最終更新：{UPDATED_AT}</p></div>
     <div class="document-grid">
-      <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次">{headings.map(h=><a href={`#${h.id}`}>{h.name}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={url('support/')}>お問い合わせ <Icon name="arrow-up-right" /></a></div></aside>
+      <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次">{headings.map(h=><a href={`#${h.id}`}>{h.name}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={url('support/')}>お問い合わせ <Icon /></a></div></aside>
       <article class="legal-text">{blocks.map((b,i)=>b.startsWith('■')?<h2 id={`section-${i}`}>{b.replace(/^■ /,'')}</h2>:<LegalBlock text={b}/>)}<div class="document-end"><span>スロログ / Re:Spect</span><a href={url('')}>トップに戻る <Icon /></a></div></article>
     </div>
   </div>

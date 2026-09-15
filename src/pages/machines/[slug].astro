@@ -29,7 +29,7 @@ const ceiling=[['天井',d.ceiling],['天井恩恵',d.ceilingBonus],['ゾーン'
         <section class="spec-section"><div class="section-label"><span>01 / BASIC INFORMATION</span><h2>基本情報</h2></div>
           <SpecRows items={[['メーカー',d.maker],['導入時期',d.fictional?'架空機のため実機導入なし':fmt(d.released)],['タイプ',d.type],['分類',d.gen],['筐体',d.cabinet]]} />
           <h3>基本スペック</h3>{specs.some(([,v])=>v)?<SpecRows items={specs}/>:<p class="muted">公表値の記載はありません。</p>}
-          <div class="source-note">{d.fictional?'出典：Re:Spect（自社シミュレーター）':<>{d.source&&<>出典：<a href={d.source} target="_blank" rel="noopener noreferrer">メーカー・公式情報 <Icon name="arrow-up-right" /></a></>}{d.fetched&&<span>取得日：{fmt(d.fetched)}</span>}</>}</div>
+          <div class="source-note">{d.fictional?'出典：Re:Spect（自社シミュレーター）':<>{d.source&&<>出典：<a href={d.source} target="_blank" rel="noopener noreferrer">メーカー・公式情報 <Icon name="external-link" /></a></>}{d.fetched&&<span>取得日：{fmt(d.fetched)}</span>}</>}</div>
         </section>
         <section class="spec-section"><div class="section-label"><span>02 / {d.fictional?'OWN SIMULATOR':'CROSS-CHECKED'}</span><h2>天井・ゾーン</h2></div>
           {d.noCeiling?<p>この機種に天井はありません。</p>:ceiling.some(([,v])=>v)?<SpecRows items={ceiling}/>:<p class="muted">確認できる公開情報は、まだ掲載されていません。</p>}
@@ -40,7 +40,7 @@ const ceiling=[['天井',d.ceiling],['天井恩恵',d.ceilingBonus],['ゾーン'
         {!d.fictional&&<details class="spec-json"><summary>取り込まれるデータを確認 <Icon name="plus" /></summary><pre tabindex="0">{specJson}</pre></details>}
       </div>
       {d.fictional?<aside class="import-panel"><p class="eyebrow">SAMPLE MACHINE</p><h2>自分の記録を変えずに、<br />スロログを試す。</h2><p>実在しないオリジナル機です。アプリの「サンプルを入れる」から、架空の機種と実戦データを追加できます。</p><a class="button primary" href={url('#features')}>スロログの機能を見る <Icon /></a></aside>:
-      <aside class="import-panel"><p class="eyebrow">ADD TO SLOLOG</p><h2>この機種を、<br />自分のスロログへ。</h2><p>基本情報を取り込んで、狙い目や期待値メモはアプリで追加できます。</p><ol><li>機種データをコピー</li><li>アプリの「機種を取り込む」を開く</li><li>貼り付けて登録</li></ol><button class="button primary" id="copy-spec">機種データをコピー <Icon name="copy" /></button><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p><div id="copy-fallback" hidden><label for="manual-spec">データを選択してコピー</label><textarea id="manual-spec" readonly rows="8">{specJson}</textarea></div><script is:inline id="machine-spec" type="application/json" set:html={specJson.replaceAll('<','\u005cu003c')}></script><a class="text-link" href={url(`machines/${m.id}.json`)}>JSONファイルを直接開く <Icon name="arrow-up-right" /></a></aside>}
+      <aside class="import-panel"><p class="eyebrow">ADD TO SLOLOG</p><h2>この機種を、<br />自分のスロログへ。</h2><p>基本情報を取り込んで、狙い目や期待値メモはアプリで追加できます。</p><ol><li>機種データをコピー</li><li>アプリの「機種を取り込む」を開く</li><li>貼り付けて登録</li></ol><button class="button primary" id="copy-spec">機種データをコピー <Icon name="copy" /></button><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p><div id="copy-fallback" hidden><label for="manual-spec">データを選択してコピー</label><textarea id="manual-spec" readonly rows="8">{specJson}</textarea></div><script is:inline id="machine-spec" type="application/json" set:html={specJson.replaceAll('<','\u005cu003c')}></script><a class="text-link" href={url(`machines/${m.id}.json`)}>JSONファイルを直接開く <Icon name="external-link" /></a></aside>}
     </div>
     <div class="back-to-catalog"><a href={url('machines/')} class="button">機種一覧へ戻る <Icon /></a></div>
   </div>
