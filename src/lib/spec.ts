@@ -47,7 +47,8 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   if (d.ceilingBonus) spec.ceilingBonus = d.ceilingBonus;
   if (d.bonus) spec.bonus = d.bonus;
   if (d.payout) spec.payout = d.payout;
-  // 現行アプリは bonus/payout を直接は読まないので、memo に畳んで機種メモへ出す
+  // 現行アプリは bonus/payout を直接は読まないので、memo に畳んで機種メモへ出す。
+  // 天井の確認元（媒体名）はサイトの機種ページにだけ出し、アプリのメモには送らない
   const notes = [
     d.type ? `タイプ ${d.type}` : '',
     d.cabinet ? `筐体 ${d.cabinet}` : '',
@@ -55,8 +56,6 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
     d.payout ? `出玉率 ${d.payout}` : '',
     d.ceilingBonus ? `天井恩恵 ${d.ceilingBonus}` : '',
     d.resetBehavior ? `設定変更時 ${d.resetBehavior}` : '',
-    // 利用規約 第2条「出典を明示します」に合わせ、メーカー非公表の項目は確認元も一緒に送る
-    d.verified ? `天井の確認: ${d.verified.by.join('・')}（${d.verified.date}時点・メーカー非公表）` : '',
   ].filter(Boolean);
   if (notes.length) spec.memo = notes.join(' ／ ');
   if (d.source) spec.source = d.source;
