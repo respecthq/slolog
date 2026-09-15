@@ -3,6 +3,8 @@ import Editorial from '../layouts/Editorial.astro';
 import Icon from '../components/editorial/Icon.astro';
 import { SUPPORT_EMAIL } from '../lib/legal';
 import { url } from '../lib/url';
+const arrow = '<svg class="ico-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="→"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+const withArrows = (t: string) => t.replaceAll('→', arrow);
 const sections = [
   { id: 'contact', title: 'お問い合わせ', body: null },
   { id: 'lost', title: '記録が消えてしまった', body: 'アプリは起動時、1日1回端末内へ自動バックアップを取っています（直近3世代・写真本体は含みません）。マイページ →「自動バックアップから復元」を開くと、日時と件数を見ながら戻す世代を選べます。手動で書き出したバックアップZIPがあれば、そちらからも復元できます。' },
@@ -20,9 +22,10 @@ const sections = [
       <article class="legal-text">
         <h2 id="contact">お問い合わせ</h2>
         <p>不具合の報告・ご要望は <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> までお送りください。端末の機種とiOSのバージョン、どの画面で何をしたときに起きたかを書いていただけると、原因を特定しやすくなります。</p>
-        {sections.filter(s=>s.body).map(s=><><h2 id={s.id}>{s.title}</h2><p>{s.body}</p></>)}
+        {sections.filter(s=>s.body).map(s=><><h2 id={s.id}>{s.title}</h2><p set:html={withArrows(s.body!)} /></>)}
         <div class="document-end"><span>スロログ / Re:Spect</span><a href={url('')}>トップに戻る <Icon /></a></div>
       </article>
     </div>
   </div>
 </Editorial>
+<style is:global>.ico-inline{width:1em;height:1em;vertical-align:-0.15em;margin:0 .15em}</style>
