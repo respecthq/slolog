@@ -18,5 +18,8 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/6805
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4492
+modelName: 'L／ヨシムネS／SC2'
+modelNameSource: https://www.p-world.co.jp/machine/database/10242
+kenteiNo: '430582'
 ---
 

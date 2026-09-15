@@ -8,6 +8,9 @@ released: 2026-09
 koyaku: ''
 type: ノーマル（ボーナストリガー）
 gen: 6号機（スマスロ）
+modelName: 'LB／タコスロBD'
+modelNameSource: https://www.p-world.co.jp/machine/database/10510
+kenteiNo: '6S0085'
 cabinet: アーチャー
 source: https://www.universal-777.co.jp/news/20260608002509/
 fetched: 2026-09-01

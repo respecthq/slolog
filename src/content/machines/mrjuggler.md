@@ -13,6 +13,9 @@ draft: false
 bonus: '1/156.4〜1/118.7'
 payout: '97.0%〜107.3%'
 noCeiling: true
+modelName: 'SミスタージャグラーKK'
+modelNameSource: https://www.p-world.co.jp/machine/database/10056
+kenteiNo: '3S0174'
 ---
 
 

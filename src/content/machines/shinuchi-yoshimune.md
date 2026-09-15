@@ -19,6 +19,9 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/7047
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4715
+modelName: 'L／真打吉宗／A1'
+modelNameSource: https://www.p-world.co.jp/machine/database/10448
+kenteiNo: '530504'
 ---
 
 

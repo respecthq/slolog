@@ -18,5 +18,8 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/6670
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4377
+modelName: 'L Re：ゼロから始める異世界生活 season2PA5'
+modelNameSource: https://www.p-world.co.jp/machine/database/10121
+kenteiNo: '430205'
 ---
 

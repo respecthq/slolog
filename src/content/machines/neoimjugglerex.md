@@ -13,6 +13,9 @@ draft: false
 bonus: '1/168.5〜1/127.5'
 payout: '97.0%〜105.5%'
 noCeiling: true
+modelName: 'SネオアイムジャグラーEX-KK'
+modelNameSource: https://www.p-world.co.jp/machine/database/10269
+kenteiNo: '4S0346'
 ---
 
 

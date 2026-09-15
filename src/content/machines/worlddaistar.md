@@ -19,6 +19,9 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/7104
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4783
+modelName: 'L／ワールドダイスター／PA3'
+modelNameSource: https://www.p-world.co.jp/machine/database/10517
+kenteiNo: '6S0003'
 ---
 
 

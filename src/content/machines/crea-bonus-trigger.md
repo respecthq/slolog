@@ -14,6 +14,9 @@ added: 2026-09-04
 crosscheckUrl: https://p.hisshobon.jp/machine/4587
 draft: false
 noCeiling: true
+modelName: 'LB／クレアの秘宝伝ボーナストリガーVER．／A2'
+modelNameSource: https://www.p-world.co.jp/machine/database/10325
+kenteiNo: '530057'
 ---
 
 

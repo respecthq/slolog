@@ -18,5 +18,8 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/6838
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4512
+modelName: 'L／いざ番長／SB8'
+modelNameSource: https://www.p-world.co.jp/machine/database/10275
+kenteiNo: '430901'
 ---
 

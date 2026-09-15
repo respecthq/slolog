@@ -13,6 +13,9 @@ draft: false
 bonus: '1/149.6〜1/117.4'
 payout: '97.2%〜106.5%'
 noCeiling: true
+modelName: 'Sゴーゴージャグラー3KA'
+modelNameSource: https://www.p-world.co.jp/machine/database/9848
+kenteiNo: '2S0743'
 ---
 
 

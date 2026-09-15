@@ -18,5 +18,8 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/6910
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4619
+modelName: 'LバーニングエクスプレスZN'
+modelNameSource: https://www.p-world.co.jp/machine/database/10351
+kenteiNo: '5S0259'
 ---
 

@@ -19,6 +19,9 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/6975
   date: 2026-09-09
   crosscheck: https://p.hisshobon.jp/machine/4655
+modelName: 'L／スマスロ秘宝伝／PA7'
+modelNameSource: https://www.p-world.co.jp/machine/database/10390
+kenteiNo: '5S0926'
 ---
 
 
