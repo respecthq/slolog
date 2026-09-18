@@ -44,18 +44,15 @@ import {icons} from '../lib/icons';
       <article><img src={url("editorial/assets/hard-drive-download.svg")} alt=""><h3>写真込みバックアップ</h3><p>大切な記録はZIPで保存。CSVの取込・書き出しにも対応。</p></article>
     </div></section>
 
-    <section class="review-band"><div class="section review-inner"><div><p class="eyebrow"><b>03</b> MAKE IT YOUR STANDARD</p><h2>その立ち回り、<br><em>記録で答え合わせ。</em></h2><p>マイボーダー以上で打った実戦と、未満で打った実戦。<br>成績を分けて比べると、自分の判断が見えてくる。</p><span class="pro-tag">スロログ Pro / マイボーダー検証</span><p class="fine-print">期待値・分析結果は、将来の収支を保証するものではありません。</p></div><div class="kensho-screen" aria-label="マイボーダー検証の画面例">
-      <div class="k-bar"><span class="k-back" set:html={icons.chevronLeft} /><b>回胴キナナ トロピカルパラダイス</b></div>
-      <figure class="kensho-card">
+    <section class="review-band"><div class="section review-inner"><div><p class="eyebrow"><b>03</b> MAKE IT YOUR STANDARD</p><h2>その立ち回り、<br><em>記録で答え合わせ。</em></h2><p>マイボーダー以上で打った実戦と、未満で打った実戦。<br>成績を分けて比べると、自分の判断が見えてくる。</p><span class="pro-tag">スロログ Pro / マイボーダー検証</span><p class="fine-print">期待値・分析結果は、将来の収支を保証するものではありません。</p></div><figure class="kensho-card" aria-label="マイボーダー検証の画面例">
         <figcaption class="k-head"><span class="k-ico" set:html={icons.scale} /><b>マイボーダー検証</b><span class="k-pro">Pro</span></figcaption>
         <p class="k-border">あなたの狙い目：<b>509G〜</b>（等価）</p>
         <div class="k-cols">
           <div class="k-col"><span class="k-label">狙い目以上で打った日</span><span class="k-count">5回</span><span class="k-total pos">+29,600円</span><span class="k-avg pos">平均 +5,920円</span></div>
           <div class="k-col"><span class="k-label">狙い目未満で打った日</span><span class="k-count">7回</span><span class="k-total neg">-17,000円</span><span class="k-avg neg">平均 -2,428円</span></div>
         </div>
-      </figure>
-      <p class="k-note">画面は開発中のアプリです。数値は架空のサンプルです。</p>
-      </div></div></section>
+        <p class="k-note">画面は開発中のアプリです。数値は架空のサンプルです。</p>
+      </figure></div></section>
 
     <section class="section plans" id="plans"><div class="section-heading"><p class="eyebrow"><b>04</b> SIMPLE PLANS</p><h2>記録は、ずっと無料。<br>もっと深く使うなら、Pro。</h2><p>どちらのプランも、広告はありません。</p></div><div class="billing" role="group" aria-label="料金の表示期間"><button data-billing="month" aria-pressed="true">月払い</button><button data-billing="year" aria-pressed="false">年払い</button></div>
       <div class="plan-grid"><article class="plan"><span class="plan-kicker">毎日の記録と分析に</span><h3>スロログ Free</h3><p class="price">¥0 <small>ずっと無料</small></p><ul><li>実戦記録・収支・カレンダー</li><li>グラフと機種・店舗・タグ・曜日別分析</li><li>台メモ・小役カウンタ・タイマー</li><li>CSV入出力・写真込みバックアップ</li><li>期待値メモ：1機種</li></ul><a class="button" href={url("#release")}>リリース情報を見る <img src={url("editorial/assets/chevron-right.svg")} alt=""></a></article>
