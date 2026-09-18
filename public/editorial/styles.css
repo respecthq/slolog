@@ -9,7 +9,7 @@
 .stage-label{color:#fff}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 /* マイボーダー検証の見本カード（画像ではなくHTMLで組む。数値は架空のサンプル） */
-.kensho-card{margin:0;background:#1a1d26;border:1px solid #2c303c;border-radius:16px;padding:22px 24px;max-width:520px;width:100%;justify-self:end;box-shadow:0 14px 40px #0007}
+.kensho-card{margin:0;background:#1a1d26;border:1.5px solid #f5972a;border-radius:16px;padding:22px 24px;max-width:520px;width:100%;justify-self:end;box-shadow:0 14px 40px #0007,0 0 0 1px #f5972a22}
 .k-head{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:700;color:#fff}
 .k-ico{display:inline-flex;color:#f5972a}.k-ico svg{width:19px;height:19px}
 .k-pro{margin-left:auto;background:#f5972a;color:#1a1206;font-size:12px;font-weight:800;padding:3px 10px;border-radius:7px}
