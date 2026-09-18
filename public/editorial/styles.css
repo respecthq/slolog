@@ -9,7 +9,7 @@
 .stage-label{color:#fff}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 /* マイボーダー検証の見本カード（画像ではなくHTMLで組む。数値は架空のサンプル） */
-.kensho-card{margin:0;background:#1a1d26;border:1.5px solid #f5972a;border-radius:16px;padding:22px 24px;max-width:520px;width:100%;justify-self:end;box-shadow:0 14px 40px #0007,0 0 0 1px #f5972a22}
+.kensho-card{margin:0;background:#1a1d26;border:1.5px solid #f5972a;border-radius:16px;padding:22px 24px 14px;max-width:520px;width:100%;justify-self:end;box-shadow:0 14px 40px #0007,0 0 0 1px #f5972a22}
 .k-head{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:700;color:#fff}
 .k-ico{display:inline-flex;color:#f5972a}.k-ico svg{width:19px;height:19px}
 .k-pro{margin-left:auto;background:#f5972a;color:#1a1206;font-size:12px;font-weight:800;padding:3px 10px;border-radius:7px}
@@ -19,5 +19,5 @@
 .k-label{font-size:13px;font-weight:600;color:#9aa0ae}.k-count{font-size:13px;color:#c4c9d4}
 .k-total{font-size:27px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;margin-top:2px;line-height:1.2}
 .k-avg{font-size:13px}.k-total.pos,.k-avg.pos{color:#22c55e}.k-total.neg,.k-avg.neg{color:#ff5a5f}
-.review-inner p.k-note{font-size:10px;color:#8b8f99;margin:14px 0 0}
+.review-inner p.k-note{font-size:10px;color:#8b8f99;margin:12px 0 0;line-height:1.4}
 @media(max-width:700px){.kensho-card{padding:18px;max-width:none;justify-self:stretch}.k-col{padding:12px}.k-total{font-size:23px}}
