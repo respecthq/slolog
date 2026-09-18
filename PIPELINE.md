@@ -126,3 +126,15 @@ LPは「アプリに取り込む機種データ」であって、機種の総合
 - 型式名の末尾の記号はメーカー記号（KK/KT/KA/KD/ZT/ZN/TN/TT＝北電子、A1〜A3＝大都技研、PA1〜PA7＝パオン・ディーピー、SB/SC＝サボハニ、BD＝ユニバーサルブロス）。
   **maker と食い違ったら maker を疑う**（例：スマスロ秘宝伝は PA7＝パオン・ディーピー製、大都技研は販売）。
 - 表示は機種ページの基本情報「型式名」の1行だけ。検定番号と確認元URLはページに出さない（照合用）。
+
+## LPのアプリ画面を撮り直したとき
+
+スロログ側で `flutter drive --driver=test_driver/integration_test.dart --target=integration_test/shots_test.dart -d <simulator>` を回して
+`~/slolog/screenshots/raw/` が更新されたら、LP側でこれを実行する。
+
+```
+node scripts/refresh-screens.mjs
+```
+
+`public/editorial/assets/` の home / ev / graph / record / calendar / review / review-detail を作り直す。
+サンプルの筐体画像を差し替えたときも、これを回さないとLPだけ古い絵のまま残る。
