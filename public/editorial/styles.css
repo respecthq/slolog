@@ -21,3 +21,4 @@
 .k-avg{font-size:13px}.k-total.pos,.k-avg.pos{color:#22c55e}.k-total.neg,.k-avg.neg{color:#ff5a5f}
 .review-inner p.k-note{font-size:10px;color:#8b8f99;margin:12px 0 0;line-height:1.4}
 @media(max-width:700px){.kensho-card{padding:18px;max-width:none;justify-self:stretch}.k-col{padding:12px}.k-total{font-size:23px}}
+.store-badge{display:inline-block;margin-top:28px;transition:transform .18s}.store-badge:hover{transform:translateY(-2px)}.store-badge img{display:block;height:60px;width:auto}.hero-badge{display:block;width:max-content;margin:16px auto 0}.hero-badge img{height:50px}
