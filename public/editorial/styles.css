@@ -22,3 +22,5 @@
 .review-inner p.k-note{font-size:10px;color:#8b8f99;margin:12px 0 0;line-height:1.4}
 @media(max-width:700px){.kensho-card{padding:18px;max-width:none;justify-self:stretch}.k-col{padding:12px}.k-total{font-size:23px}}
 .store-badge{display:inline-block;margin-top:28px;transition:transform .18s}.store-badge:hover{transform:translateY(-2px)}.store-badge img{display:block;height:60px;width:auto}.hero-badge{display:block;width:max-content;margin:16px auto 0}.hero-badge img{height:50px}
+/* 見出しを読点の単位でしか折らない（単語の途中で折れないように） */
+.nowrap-parts span{display:inline-block}
