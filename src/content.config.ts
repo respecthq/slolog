@@ -107,6 +107,8 @@ const machines = defineCollection({
     fetched: dateish.default(''), // 取得日 YYYY-MM-DD
     // 更新履歴（ホームの新着ブロック用。一覧の並び順は導入日のままにする）
     crosscheckUrl: httpsUrl('照合URL'), // 転記ミス検出の照合先（verified が無い機種用・非表示）
+    // 情報が増えたかを見張る追加のページ（製品ページなど。scripts/watch-sources.mjs が読む・ページには出さない）
+    watch: z.array(z.string().url()).default([]),
     added: dateish.default(''),       // LPに載せた日
     updated: dateish.default(''),     // 最後に内容を更新した日（任意）
     updateNote: z.coerce.string().default(''), // 新着に出す一言（例 天井・ゾーンを追加）

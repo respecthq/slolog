@@ -15,6 +15,8 @@ source: https://www.sammy.co.jp/japanese/news/detail/?id=306
 fetched: 2026-09-21
 added: 2026-09-21
 draft: false
+watch:
+  - https://www.sammy.co.jp/japanese/product/pachislot/sp_twi_an_p2/
 ---
 
 ## 導入前の機種です
