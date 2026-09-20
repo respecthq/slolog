@@ -142,6 +142,22 @@ node scripts/watch-sources.mjs --all   # 全機種の現在の状態
 - ★★ が出たら：2 媒体の数値が一致するか読む → `ceiling` / `ceilingBonus` と `verified`（by・url・date・crosscheck）を入れる → `node scripts/crosscheck.mjs <slug>`
 
 
+## 進行表（notes/LP_BOARD.md）と OK の流れ
+
+ユーザーが毎週ざっと確認するための一覧。`node scripts/lp-board.mjs` で作り直す（週次の検証の最後に必ず回す）。
+
+| 段 | 中身 | 元データ |
+|---|---|---|
+| 🟠 OK 待ち | 出典を見て OK を出せば、すぐ反映できるもの（🆕 新しいページ／✏️ 更新） | `notes/lp-proposals.json` |
+| 🔵 候補 | まだページがない機種（検定通過／メーカー公開／導入済み・未掲載）と、次にやること | `notes/lp-queue.json` |
+| 🟡 更新待ち | ページはあるが、情報がまだ増える（導入前／公表値がまだ／天井がまだ／下書き） | 機種 md から自動判定 |
+| 🟢 完了 | 情報が出そろった。以後は見張りだけ | 同上 |
+
+- **完了の条件**：型式名あり＋天井が決着（あり／`noCeiling`）＋公表値が決着（掲載済み／`specNone: true`／導入から 60 日たっても未公表）＋導入済み
+- **提案の作り方**（Claude）：新規は機種 md を `draft: true` で作り、`lp-proposals.json` に `{id:"A1", kind:"new", slug, name, summary, source}` を足す。更新は `{id, kind:"update", slug, name, summary, changes:{ceiling:…, verified:{…}}, source, crosscheck, updateNote}`。**必ず出典 URL を付ける**
+- **OK が出たら**：`node scripts/lp-apply.mjs A1 A3`（全部なら `all`）→ `npm run build` → `node scripts/crosscheck.mjs <slug>` → `node scripts/verify-editorial.mjs dist` → push → `node scripts/lp-board.mjs`
+- 候補がページになったら `lp-queue.json` から消す。`notes/` は非公開
+
 ## 型式名（modelName）の取り方
 
 - 型式名はメーカーの製品ページには載っていない。公安委員会の検定公示（型式試験の適合・検定通過の公示）に載る正式名で、
