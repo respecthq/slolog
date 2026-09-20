@@ -38,7 +38,10 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
     const c = snap['ceiling:' + slug]; const st = (x) => (x?.url ? (x.has ? '天井あり' : '天井まだ') : 'ページ未登録');
     wait.push(`天井がまだ（パチガブ：${st(c?.gabu)}／必勝本：${st(c?.hissho)}）`);
   }
-  machines.push({ slug, name: one('name'), maker: one('maker'), rel, source: one('source'), draft: flag('draft'), wait,
+  // 天井の確認先（777パチガブ・必勝本）。verified / crosscheckUrl / watch のどこに書いてあっても拾う
+  const refUrls = [...new Set([...fm.matchAll(/https:\/\/[^\s'"]*(?:p-gabu\.jp|hisshobon\.jp)[^\s'"]*/g)].map((x) => x[0]))];
+  const refs = { gabu: refUrls.find((u) => u.includes('p-gabu.jp')), hissho: refUrls.find((u) => u.includes('hisshobon.jp')) };
+  machines.push({ slug, name: one('name'), maker: one('maker'), rel, source: one('source'), draft: flag('draft'), wait, refs, ceiling: one('ceiling'), noCeiling: flag('noCeiling'),
     note: !hasSpec && specSettled && !flag('specNone') ? '公表値はメーカー未公表（導入から 60 日超）' : '' });
 }
 const byRel = (a, b) => (b.rel || '').localeCompare(a.rel || '');
@@ -58,6 +61,7 @@ for (const p of pending) {
   for (const [k, v] of Object.entries(p.changes ?? {})) md += `  - \`${k}\` → ${typeof v === 'object' ? JSON.stringify(v) : v}\n`;
   md += `  - 出典：${p.source}\n`;
   if (p.crosscheck) md += `  - 照合：${p.crosscheck}\n`;
+  for (const r of p.refs ?? []) md += `  - 天井の確認先：${r}\n`;
   if (p.note) md += `  - メモ：${p.note}\n`;
 }
 md += `\n## 🔵 候補（まだ LP にページがない）\n\n`;
@@ -74,6 +78,7 @@ for (const m of waiting) {
   md += `- **${m.name}**（${m.maker}）｜導入 ${m.rel || '未定'}${m.draft ? '｜下書き（非公開）' : ''}\n`;
   for (const w of m.wait) md += `  - ⏳ ${w}\n`;
   md += `  - ページ：${m.draft ? '（下書きのため非公開）' : SITE + m.slug + '/'}${m.source ? '｜出典：' + m.source : '｜出典：なし'}\n`;
+  if (m.refs.gabu || m.refs.hissho) md += `  - 天井の確認先：${m.refs.gabu ? 'パチガブ ' + m.refs.gabu : ''}${m.refs.gabu && m.refs.hissho ? '｜' : ''}${m.refs.hissho ? '必勝本 ' + m.refs.hissho : ''}\n`;
 }
 md += `\n## 🟢 完了（情報が出そろった。以後は見張りだけ）\n\n`;
 for (const m of done) md += `- ${m.name}（${m.maker}）｜${m.rel}${m.note ? '｜' + m.note : ''}\n`;
@@ -84,10 +89,12 @@ writeFileSync('notes/LP_BOARD.md', md);
 const esc = (x) => String(x ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const link = (u, label) => (u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(label)}</a>` : '<span class="mute">—</span>');
 const chip = (t) => { const k = /導入前/.test(t) ? 'pre' : /天井/.test(t) ? 'ceil' : /公表値/.test(t) ? 'spec' : /下書き|型式/.test(t) ? 'draft' : 'etc'; return `<span class="chip ${k}">${esc(t)}</span>`; };
-const rowsPending = pending.map((p) => `<tr><td><button class="ok" data-copy="${esc(p.id)} OK">${esc(p.id)}</button></td><td>${p.kind === 'new' ? '🆕 新しいページ' : '✏️ 更新'}</td><td><b>${esc(p.name)}</b><div class="sub">${esc(p.summary)}</div>${Object.entries(p.changes ?? {}).map(([k, v]) => `<div class="kv"><code>${esc(k)}</code> → ${esc(typeof v === 'object' ? JSON.stringify(v) : v)}</div>`).join('')}</td><td>${link(p.source, '出典を開く')}${p.crosscheck ? '<br>' + link(p.crosscheck, '照合先') : ''}</td></tr>`).join('');
+const refLinks = (r) => [r?.gabu ? link(r.gabu, 'パチガブ') : '', r?.hissho ? link(r.hissho, '必勝本') : ''].filter(Boolean).join(' · ');
+const ceilCell = (m) => `${m.ceiling ? esc(m.ceiling) : m.noCeiling ? '<span class="mute">なし（仕様）</span>' : '<span class="mute">まだ</span>'}${refLinks(m.refs) ? `<div class="sub">${refLinks(m.refs)}</div>` : ''}`;
+const rowsPending = pending.map((p) => `<tr><td><button class="ok" data-copy="${esc(p.id)} OK">${esc(p.id)}</button></td><td><span class="chip ${p.kind === 'new' ? 'pre' : 'ceil'}">${p.kind === 'new' ? '新しいページ' : '更新'}</span></td><td><b>${esc(p.name)}</b><div class="sub">${esc(p.summary)}</div>${Object.entries(p.changes ?? {}).map(([k, v]) => `<div class="kv"><code>${esc(k)}</code> → ${esc(typeof v === 'object' ? JSON.stringify(v) : v)}</div>`).join('')}</td><td>${link(p.source, '出典を開く')}${p.crosscheck ? '<br>' + link(p.crosscheck, '照合先') : ''}${(p.refs ?? []).map((r) => '<br>' + link(r, r.includes('p-gabu') ? 'パチガブ' : '必勝本')).join('')}</td></tr>`).join('');
 const rowsQueue = [...queue].sort((a, b) => (order[a.stage] ?? 9) - (order[b.stage] ?? 9)).map((q) => `<tr><td><b>${esc(q.name)}</b><div class="sub">${esc(q.maker || 'メーカー不明')}</div></td><td><span class="chip etc">${esc(q.stage)}</span></td><td class="num">${esc(q.release || '—')}</td><td>${esc(q.next)}${q.note ? `<div class="sub">${esc(q.note)}</div>` : ''}</td><td>${link(q.officialUrl, '公式')}</td></tr>`).join('');
-const rowsWait = waiting.map((m) => `<tr><td><b>${esc(m.name)}</b><div class="sub">${esc(m.maker)}</div></td><td class="num">${esc(m.rel || '未定')}</td><td>${m.wait.map(chip).join(' ')}</td><td>${m.draft ? '<span class="mute">非公開</span>' : link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
-const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}<div class="sub">${esc(m.maker)}</div></td><td class="num">${esc(m.rel)}</td><td class="sub">${esc(m.note || '')}</td><td>${link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
+const rowsWait = waiting.map((m) => `<tr><td><b>${esc(m.name)}</b><div class="sub">${esc(m.maker)}</div></td><td class="num">${esc(m.rel || '未定')}</td><td>${m.wait.map(chip).join(' ')}</td><td>${ceilCell(m)}</td><td>${m.draft ? '<span class="mute">非公開</span>' : link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
+const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}<div class="sub">${esc(m.maker)}</div></td><td class="num">${esc(m.rel)}</td><td>${ceilCell(m)}</td><td class="sub">${esc(m.note || '')}</td><td>${link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
 const section = (id, title, hint, head, rows, empty) => `<section id="${id}"><h2>${title}</h2><p class="hint">${hint}</p>${rows ? `<div class="scroll"><table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="empty">${empty}</p>`}</section>`;
 const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LP 進行表</title><style>
 :root{--bg:#f6f5f2;--card:#fff;--ink:#1c1d21;--mute:#6d707a;--line:#dedcd6;--accent:#d9650a;--pre:#e8eefc;--preI:#23408f;--ceil:#fdebd6;--ceilI:#8a4300;--spec:#ece8fb;--specI:#47318f;--draft:#ececec;--draftI:#4a4a4a;--ok:#1d7a46}
@@ -108,8 +115,8 @@ footer{color:var(--mute);font-size:12.5px;margin-top:24px}@media (max-width:640p
 <div class="counts"><a class="count ${pending.length ? 'hot' : ''}" href="#ok"><b>${pending.length}</b><span>OK 待ち</span></a><a class="count" href="#queue"><b>${queue.length}</b><span>候補（ページなし）</span></a><a class="count" href="#wait"><b>${waiting.length}</b><span>更新待ち</span></a><a class="count" href="#done"><b>${done.length}</b><span>完了</span></a></div>
 ${section('ok', 'OK 待ち', '出典を開いて確かめ、左のボタンを押すと「A1 OK」がコピーされます。それを Claude に貼れば、その場で反映して公開します。', ['番号', '種類', '内容', '確認先'], rowsPending, 'いまはありません。')}
 ${section('queue', '候補（まだ LP にページがない）', '検定通過・メーカー公開・導入済みで未掲載の機種。メーカー公式の出典が取れたら「OK 待ち」に上がります。', ['機種', '段階', '導入', '次にやること', '公式'], rowsQueue, 'いまはありません。')}
-${section('wait', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。', ['機種', '導入', '待っているもの', 'リンク'], rowsWait, 'ありません。')}
-${section('done', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', 'メモ', 'リンク'], rowsDone, 'ありません。')}
+${section('wait', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。', ['機種', '導入', '待っているもの', '天井と確認先', 'リンク'], rowsWait, 'ありません。')}
+${section('done', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', '天井と確認先', 'メモ', 'リンク'], rowsDone, 'ありません。')}
 <footer>完了の条件：型式名あり ＋ 天井が決着（あり／仕様上なし）＋ 公表値が決着（掲載済み／導入から 60 日たっても未公表）＋ 導入済み。<br>このページは <code>node scripts/lp-board.mjs</code> が作り直します（手で編集しない）。同じ内容の md は notes/LP_BOARD.md。</footer>
 </main><script>document.querySelectorAll('button.ok').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){}const t=b.textContent;b.textContent='コピーした';b.classList.add('copied');setTimeout(()=>{b.textContent=t;b.classList.remove('copied')},1200)}));</script></body></html>`;
 writeFileSync('notes/LP_BOARD.html', html);
