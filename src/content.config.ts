@@ -109,6 +109,7 @@ const machines = defineCollection({
     crosscheckUrl: httpsUrl('照合URL'), // 転記ミス検出の照合先（verified が無い機種用・非表示）
     // 情報が増えたかを見張る追加のページ（製品ページなど。scripts/watch-sources.mjs が読む・ページには出さない）
     watch: z.array(z.string().url()).default([]),
+    watchKeyword: z.coerce.string().default(''), // 2 媒体を検索するときの語（省略時は機種名の先頭の語）
     added: dateish.default(''),       // LPに載せた日
     updated: dateish.default(''),     // 最後に内容を更新した日（任意）
     updateNote: z.coerce.string().default(''), // 新着に出す一言（例 天井・ゾーンを追加）

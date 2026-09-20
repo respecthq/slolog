@@ -15,6 +15,7 @@ source: https://www.kitadenshi.co.jp/products/2026/ryza/
 fetched: 2026-09-21
 added: 2026-09-21
 draft: false
+watchKeyword: ライザのアトリエ
 ---
 
 ## 導入前の機種です
