@@ -14,7 +14,7 @@ kenteiNo: '630270'
 source: https://www.sankyo-fever.co.jp/corporate/modify/IR/Timely/files/press_20260610.pdf
 fetched: 2026-09-21
 added: 2026-09-21
-draft: true
+draft: false
 watchKeyword: 彼女、お借りします
 ---
 

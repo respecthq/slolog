@@ -4,14 +4,14 @@ maker: ミズホ
 ceiling: GG間1480G+α
 junzo: ''
 zone: ''
-released: 2026-04-20
+released: '2026-04'
 koyaku: ''
-source: '' # 出典URL（メーカー公式/ニュース）を入れる
-fetched: 2026-07-08 # 取得日
+source: 'https://www.universal-777.com/product/slot/milliongod_kiseki/'
+fetched: '2026-09-21'
 added: 2026-07-11
-updated: 2026-09-09
-updateNote: 天井・ゾーンを追加
-draft: true # 出典URLが未確認のため下書き。本文にあった解析値（小役確率・ループ率・コイン持ち）は方針に反するので削除済み
+updated: 2026-09-21
+updateNote: メーカー公式の出典を確認して公開
+draft: false
 ceilingBonus: GG当選
 resetBehavior: 設定変更後の天井は 510G／1000G／1480G のいずれか
 verified:
@@ -19,6 +19,12 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/7036
   date: 2026-09-21
   crosscheck: https://p.hisshobon.jp/machine/4693
+type: AT
+gen: 'スマスロ'
+cabinet: 'ランドマークS'
+modelName: 'L／ミリオンゴッド／CX'
+modelNameSource: 'https://www.p-world.co.jp/machine/database/10424'
+kenteiNo: '530692'
 ---
 
 ## ゲーム性
