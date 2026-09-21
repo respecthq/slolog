@@ -48,6 +48,7 @@ const byRel = (a, b) => (b.rel || '').localeCompare(a.rel || '');
 const waiting = machines.filter((m) => m.wait.length).sort(byRel);
 const done = machines.filter((m) => !m.wait.length).sort(byRel);
 const pending = proposals.filter((p) => !p.appliedAt);
+const weekly = load('notes/weekly/index.json', []).sort((x, y) => y.date.localeCompare(x.date));   // 週次レポート：下書き（未検証の原文）と検証結果
 
 let md = `# LP 進行表（${ymd}）\n\n`;
 md += `OK 待ち **${pending.length}**／候補 **${queue.length}**／更新待ち **${waiting.length}**／完了 **${done.length}**\n\n`;
@@ -64,6 +65,8 @@ for (const p of pending) {
   for (const r of p.refs ?? []) md += `  - 天井の確認先：${r}\n`;
   if (p.note) md += `  - メモ：${p.note}\n`;
 }
+md += `\n## 📰 週次レポート\n\n`;
+for (const w of weekly) md += `- ${w.date}｜${w.verified ? '検証済み（' + w.verifiedAt + '）' : '未検証'}｜${w.summary || ''}${w.verified ? '｜weekly/' + w.verified : ''}${w.draft ? '｜下書き weekly/' + w.draft : ''}\n`;
 md += `\n## 🔵 候補（まだ LP にページがない）\n\n`;
 if (!queue.length) md += `いまはありません。\n\n`;
 const order = { 'メーカー公開': 0, '導入済み・未掲載': 1, '検定通過': 2 };
@@ -95,6 +98,8 @@ const rowsPending = pending.map((p) => `<tr><td><button class="ok" data-copy="${
 const rowsQueue = [...queue].sort((a, b) => (order[a.stage] ?? 9) - (order[b.stage] ?? 9)).map((q) => `<tr><td><b>${esc(q.name)}</b><div class="sub">${esc(q.maker || 'メーカー不明')}</div></td><td><span class="chip etc">${esc(q.stage)}</span></td><td class="num">${esc(q.release || '—')}</td><td>${esc(q.next)}${q.note ? `<div class="sub">${esc(q.note)}</div>` : ''}</td><td>${link(q.officialUrl, '公式')}</td></tr>`).join('');
 const rowsWait = waiting.map((m) => `<tr><td><b>${esc(m.name)}</b><div class="sub">${esc(m.maker)}</div></td><td class="num">${esc(m.rel || '未定')}</td><td>${m.wait.map(chip).join(' ')}</td><td>${ceilCell(m)}</td><td>${m.draft ? '<span class="mute">非公開</span>' : link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
 const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}<div class="sub">${esc(m.maker)}</div></td><td class="num">${esc(m.rel)}</td><td>${ceilCell(m)}</td><td class="sub">${esc(m.note || '')}</td><td>${link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
+const wfile = (f) => 'file://' + process.cwd() + '/notes/weekly/' + f;
+const rowsWeekly = weekly.map((w) => `<tr data-week="${esc(w.date)}"><td class="num"><b>${esc(w.date)}</b></td><td>${w.verified ? `<span class="chip okc">検証済み ${esc(w.verifiedAt)}</span>` : '<span class="chip ceil">未検証</span>'} <span class="chip unread" hidden>未読</span></td><td>${esc(w.summary || '')}</td><td>${w.verified ? `<a class="wk" href="${esc(wfile(w.verified))}" target="_blank">検証結果</a>` : '<span class="mute">—</span>'}${w.draft ? ` · <a class="wk" href="${esc(wfile(w.draft))}" target="_blank">下書き</a>` : ''}</td></tr>`).join('');
 const section = (id, title, hint, head, rows, empty) => `<section id="${id}"><h2>${title}</h2><p class="hint">${hint}</p>${rows ? `<div class="scroll"><table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="empty">${empty}</p>`}</section>`;
 const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LP 進行表</title><style>
 :root{--bg:#f6f5f2;--card:#fff;--ink:#1c1d21;--mute:#6d707a;--line:#dedcd6;--accent:#d9650a;--pre:#e8eefc;--preI:#23408f;--ceil:#fdebd6;--ceilI:#8a4300;--spec:#ece8fb;--specI:#47318f;--draft:#ececec;--draftI:#4a4a4a;--ok:#1d7a46}
@@ -105,19 +110,20 @@ main{max-width:1180px;margin:auto;padding:28px 16px 80px}h1{font-size:26px;margi
 .count b{display:block;font-size:30px;line-height:1.2;font-variant-numeric:tabular-nums}.count span{color:var(--mute);font-size:13px}.count.hot b{color:var(--accent)}
 section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:20px}.hint{color:var(--mute);margin:0 0 12px;font-size:13px}.empty{color:var(--mute);margin:0}
 .scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:720px}th{text-align:left;font-size:12px;color:var(--mute);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}.num{font-variant-numeric:tabular-nums;white-space:nowrap}.sub{color:var(--mute);font-size:12.5px}.mute{color:var(--mute)}
+td:last-child{white-space:nowrap}td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}.num{font-variant-numeric:tabular-nums;white-space:nowrap}.sub{color:var(--mute);font-size:12.5px}.mute{color:var(--mute)}
 .kv{font-size:13px;margin-top:3px}code{background:var(--draft);padding:1px 5px;border-radius:4px;font-size:12px}a{color:var(--accent);text-underline-offset:3px}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.chip{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;margin:2px 2px 2px 0;background:var(--draft);color:var(--draftI)}.chip.pre{background:var(--pre);color:var(--preI)}.chip.ceil{background:var(--ceil);color:var(--ceilI)}.chip.spec{background:var(--spec);color:var(--specI)}
+.chip{display:inline-block;white-space:nowrap;font-size:12px;padding:2px 9px;border-radius:999px;margin:2px 2px 2px 0;background:var(--draft);color:var(--draftI)}.chip.pre{background:var(--pre);color:var(--preI)}.chip.ceil{background:var(--ceil);color:var(--ceilI)}.chip.spec{background:var(--spec);color:var(--specI)}.chip.okc{background:transparent;border:1px solid var(--ok);color:var(--ok)}.chip.unread{background:var(--accent);color:#fff}
 button.ok{font:inherit;font-weight:700;border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:8px;padding:4px 12px;cursor:pointer}button.ok.copied{border-color:var(--ok);color:var(--ok)}
 footer{color:var(--mute);font-size:12.5px;margin-top:24px}@media (max-width:640px){.counts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head><body><main>
 <h1>LP 進行表</h1><div class="date">${ymd} 時点 ／ スロログ 機種ハブ</div>
 <div class="counts"><a class="count ${pending.length ? 'hot' : ''}" href="#ok"><b>${pending.length}</b><span>OK 待ち</span></a><a class="count" href="#queue"><b>${queue.length}</b><span>候補（ページなし）</span></a><a class="count" href="#wait"><b>${waiting.length}</b><span>更新待ち</span></a><a class="count" href="#done"><b>${done.length}</b><span>完了</span></a></div>
 ${section('ok', 'OK 待ち', '出典を開いて確かめ、左のボタンを押すと「A1 OK」がコピーされます。それを Claude に貼れば、その場で反映して公開します。', ['番号', '種類', '内容', '確認先'], rowsPending, 'いまはありません。')}
+${section('weekly', '週次レポート', '月曜に届く下書きと、その検証結果。リンクを開くと「未読」が消えます（このブラウザだけの記録）。', ['週', '状態', '要点', '開く'], rowsWeekly, 'まだありません。')}
 ${section('queue', '候補（まだ LP にページがない）', '検定通過・メーカー公開・導入済みで未掲載の機種。メーカー公式の出典が取れたら「OK 待ち」に上がります。', ['機種', '段階', '導入', '次にやること', '公式'], rowsQueue, 'いまはありません。')}
 ${section('wait', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。', ['機種', '導入', '待っているもの', '天井と確認先', 'リンク'], rowsWait, 'ありません。')}
 ${section('done', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', '天井と確認先', 'メモ', 'リンク'], rowsDone, 'ありません。')}
 <footer>完了の条件：型式名あり ＋ 天井が決着（あり／仕様上なし）＋ 公表値が決着（掲載済み／導入から 60 日たっても未公表）＋ 導入済み。<br>このページは <code>node scripts/lp-board.mjs</code> が作り直します（手で編集しない）。同じ内容の md は notes/LP_BOARD.md。</footer>
-</main><script>document.querySelectorAll('button.ok').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){}const t=b.textContent;b.textContent='コピーした';b.classList.add('copied');setTimeout(()=>{b.textContent=t;b.classList.remove('copied')},1200)}));</script></body></html>`;
+</main><script>(function(){var K='lpboard-read';var read={};try{read=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}document.querySelectorAll('tr[data-week]').forEach(function(tr){var d=tr.dataset.week;var u=tr.querySelector('.unread');if(u&&!read[d])u.hidden=false;tr.querySelectorAll('a.wk').forEach(function(a){a.addEventListener('click',function(){read[d]=1;try{localStorage.setItem(K,JSON.stringify(read))}catch(e){}if(u)u.hidden=true})})})})();document.querySelectorAll('button.ok').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){}const t=b.textContent;b.textContent='コピーした';b.classList.add('copied');setTimeout(()=>{b.textContent=t;b.classList.remove('copied')},1200)}));</script></body></html>`;
 writeFileSync('notes/LP_BOARD.html', html);
 console.log(`notes/LP_BOARD.md と LP_BOARD.html を更新：OK 待ち ${pending.length}／候補 ${queue.length}／更新待ち ${waiting.length}／完了 ${done.length}`);

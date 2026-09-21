@@ -21,6 +21,8 @@ verified:
   url: https://p-gabu.jp/guideworks/machinecontents/detail/7125
   date: 2026-09-21
   crosscheck: https://p.hisshobon.jp/machine/4770
+watch:
+  - https://www.sammy.co.jp/japanese/product/pachislot/sp_lyc_re/
 ---
 
 ## メーカーの発表
