@@ -20,6 +20,7 @@ const kinana = machines.find(m=>m.data.fictional);
         <div class="catalog-grid">{real.map(m=><article class="catalog-item" data-search={`${m.data.name} ${m.data.maker}`.normalize('NFKC').toLowerCase()}>
           <a href={url(`machines/${m.id}/`)}><div class="catalog-meta"><span>{m.data.maker}</span><time datetime={m.data.added} title="このページを載せた日">{m.data.added?.replaceAll('-','.')}</time></div><h2>{m.data.name}</h2><p>{m.data.type||m.data.gen||'公表スペック・基本情報'}</p><div class="catalog-foot"><span class="catalog-ceiling">{m.data.released?`${m.data.released.replaceAll('-','.')} 導入`:'導入時期未定'}</span><Icon /></div></a>
         </article>)}</div>
+        <nav id="pager" class="pager" aria-label="ページ" hidden></nav>
         <div id="no-results" class="no-results" hidden><h2>一致する機種がありません</h2><p>機種名やメーカー名を変えて検索してください。</p><button id="clear-search" class="button">検索をクリア</button></div>
       </section>
       <aside class="catalog-aside">
