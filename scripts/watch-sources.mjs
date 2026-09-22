@@ -36,7 +36,7 @@ function targets() {
       slug: f.replace(/\.md$/, ''), name: one('name'),
       urls: all.filter((u) => !isRef(u)),                 // メーカー側（公式）
       refs: all.filter(isRef),                            // 天井の確認に使う 2 媒体（watch に書いた分）
-      needsCeiling: !one('ceiling') && !/^noCeiling:\s*true/m.test(fm),
+      needsSpec: !(one('bonus') || one('payout') || one('junzo')) && !/^specNone:\s*true/m.test(fm),
       keyword: one('watchKeyword') || one('name').replace(/^(スマスロ|パチスロ|Lパチスロ|L)\s*/, '').split(/[\s　～~]/)[0],
     });
   }
@@ -47,6 +47,8 @@ async function look(url) {
   const r = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
   if (r.status !== 200) return { status: r.status };
   const html = await r.text();
+  // SANKYO（sankyo-fever.jp）などは自動アクセスを弾く画面を 200 で返す。中身が無いので「読めない」として扱う
+  if (/Incapsula|_Incapsula_Resource|cf-chl-bypass|Just a moment\.\.\./.test(html) && html.length < 20000) return { status: 'BLOCKED' };
   const text = strip(html);
   const words = Object.fromEntries(WORDS.map((w) => [w, text.split(w).length - 1]));
   const imgs = [...html.matchAll(/<img[^>]+src="([^"]+)"/g)].map((m) => m[1].split('?')[0].split('/').pop())
@@ -54,6 +56,7 @@ async function look(url) {
   return { status: 200, len: text.length, tables: (html.match(/<table/g) || []).length, words, imgs: [...new Set(imgs)].sort() };
 }
 
+const ack = existsSync('notes/spec-ack.json') ? JSON.parse(readFileSync('notes/spec-ack.json', 'utf8')) : {};
 const prev = existsSync(SNAP) ? JSON.parse(readFileSync(SNAP, 'utf8')) : {};
 const next = {};
 const first = Object.keys(prev).length === 0;
@@ -66,7 +69,8 @@ for (const t of targets()) {
     next[url] = { ...now, slug: t.slug, checkedAt: new Date().toISOString().slice(0, 10) };
     const old = prev[url];
     const notes = [];
-    if (now.status !== 200) notes.push(`取得できない（${now.status}）`);
+    if (now.status === 'BLOCKED') notes.push('自動では読めない（ボット対策の画面）');
+    else if (now.status !== 200) notes.push(`取得できない（${now.status}）`);
     else if (!old || old.status !== 200) { if (!first) notes.push('初めて記録（次回から比較）'); }
     else {
       const newWords = WORDS.filter((w) => (old.words?.[w] ?? 0) === 0 && now.words[w] > 0);
@@ -79,6 +83,14 @@ for (const t of targets()) {
       const diff = now.len - (old.len ?? 0);
       if (Math.abs(diff) > Math.max(400, (old.len ?? 0) * 0.25)) notes.push(`本文の長さが変わった（${diff > 0 ? '+' : ''}${diff} 字）`);
     }
+    // 変化が無くても、公表値待ちの機種の公式ページにスペックらしきもの（画像・表・出玉率など）があれば毎回知らせる。
+    // 初回の記録時点ですでに載っていると「変化」にならず、見落とす（2026-09 のリコリス・リコイルで発生）
+    if (now.status === 200 && t.needsSpec && !notes.some((n) => n.startsWith('★'))) {
+      const sig = [...(now.imgs.length ? [`画像 ${now.imgs.slice(0, 3).join(', ')}`] : []), ...(now.tables ? [`表 ${now.tables}`] : []),
+        ...['出玉率', '機械割', '純増'].filter((w) => now.words[w] > 0)];
+      // 人が見て「スペックではなかった」と確かめたものは notes/spec-ack.json に URL→中身 を書いておくと、同じ中身の間は黙る
+      if (sig.length && ack[url] !== sig.join('・')) notes.push(`★ 公表値待ちだが、公式ページにスペックらしきものがある：${sig.join('・')}（確認して違えば notes/spec-ack.json へ）`);
+    }
     if (notes.length || showAll) {
       if (notes.length) changed++;
       console.log(`${notes.some((n) => n.startsWith('★')) ? '★' : notes.length ? '△' : '・'} ${t.slug}  ${t.name}`);
@@ -90,10 +102,18 @@ for (const t of targets()) {
   }
 }
 
+// 公表値待ちなのに、見張れるページが無い機種（PDF だけ／ボット対策で読めない）。ここは人がブラウザで見る
+const manual = targets().filter((t) => t.needsSpec && !t.urls.some((u) => next[u]?.status === 200 && !/\.pdf$/i.test(u)));
+if (manual.length) {
+  console.log('\n🔒 自動で見張れない機種（公表値待ち）：メーカーの機種サイトをブラウザで開いて、スペック表が出ていないか見る');
+  for (const t of manual) console.log(`   ${t.slug}  ${t.name}  ${t.urls.map((u) => `${u.split('/')[2]}${/\.pdf$/i.test(u) ? '（PDF）' : next[u]?.status === 'BLOCKED' ? '（読めない）' : ''}`).join(' ')}`);
+}
+
 // 天井の見張りは 2026-09-23 に廃止（天井・ゾーンは LP で扱わない）。メーカー公式ページの見張りだけ続ける
 
 if (!existsSync('notes')) mkdirSync('notes');
 writeFileSync(SNAP, JSON.stringify(next, null, 1));
+writeFileSync('notes/watch-manual.json', JSON.stringify(manual.map((t) => t.slug)));   // 進行表が「手で確認」を出すのに使う
 const nPages = Object.keys(next).filter((k) => !k.startsWith('ceiling:')).length;
 console.log(first ? `\n初回：${nPages} ページの状態を記録しました（次回から比較します）`
   : `\nメーカー公式 ${nPages} ページを確認／変化あり ${changed} 件（★＝載せられる情報が増えた可能性が高い）`);

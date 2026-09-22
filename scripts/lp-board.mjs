@@ -35,6 +35,7 @@ const lastChange = (path) => (git('status', '--porcelain', '--', path) ? ymd : g
 const queueFresh = (q) => (inWin(q.foundAt) ? { kind: 'new', date: q.foundAt, note: '候補入り' }
   : inWin(q.updatedAt) ? { kind: 'upd', date: q.updatedAt, note: q.updateNote || '情報が増えた' } : null);
 
+const manualWatch = new Set(existsSync('notes/watch-manual.json') ? JSON.parse(readFileSync('notes/watch-manual.json', 'utf8')) : []);
 const machines = [];
 for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWith('_'))) {
   const fm = readFileSync(join(dir, f), 'utf8').split('---')[1] ?? '';
@@ -51,7 +52,7 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
   if (flag('draft')) wait.push('下書き');
   if (!released) wait.push(`導入前（${rel || '時期未定'}）`);
   if (!one('modelName')) wait.push('型式名待ち');
-  if (!specSettled) wait.push('公表値待ち');
+  if (!specSettled) wait.push(manualWatch.has(slug) ? '公表値待ち（手で確認）' : '公表値待ち');   // 手で確認＝公式ページが PDF だけ／ボット対策で自動では見張れない（watch-sources.mjs が書く）
   // 天井の確認先（777パチガブ・必勝本）。verified / crosscheckUrl / watch のどこに書いてあっても拾う
   const refUrls = [...new Set([...fm.matchAll(/https:\/\/[^\s'"]*(?:p-gabu\.jp|hisshobon\.jp)[^\s'"]*/g)].map((x) => x[0]))];
   const refs = { gabu: refUrls.find((u) => u.includes('p-gabu.jp')), hissho: refUrls.find((u) => u.includes('hisshobon.jp')) };
