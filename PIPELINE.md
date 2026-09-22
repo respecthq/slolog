@@ -158,6 +158,7 @@ node scripts/watch-sources.mjs --all   # 全機種の現在の状態
 - **提案の作り方**（Claude）：新規は機種 md を `draft: true` で作り、`lp-proposals.json` に `{id:"A1", kind:"new", slug, name, summary, source}` を足す。更新は `{id, kind:"update", slug, name, summary, changes:{ceiling:…, verified:{…}}, source, crosscheck, updateNote}`。**必ず出典 URL を付ける**
 - **OK が出たら**：`node scripts/lp-apply.mjs A1 A3`（全部なら `all`）→ `npm run build` → `node scripts/crosscheck.mjs <slug>` → `node scripts/verify-editorial.mjs dist` → push → `node scripts/lp-board.mjs`
 - 候補がページになったら `lp-queue.json` から消す。`notes/` は非公開
+- **区分の正は週次レポート**（2026-09-23〜）：クラウドの週次ルーティンが LP のリポジトリを読み、機種ごとに 🆕 NEW／➕ 追加情報／＝ 既報 を付けてくる。受け取ったら `node scripts/weekly-import.mjs <レポート.md> --session <URL>` で取り込む（notes/weekly/<日付>_draft.md に保存し、index.json の items に区分を入れる。候補にある機種の NEW は「候補の続報」に補正）。進行表はいちばん新しいレポートの区分を印にし、レポートに載った機種は既報も含めてレポートの判定だけを使う。レポートに無い LP 側の更新だけ、下の記録で補う
 - **NEW と追加情報**（2026-09-23〜）：ユーザーが「完全に新しい情報か、前からある機種の続報か」を見分けるための印。記録を付け忘れると印が出ないので必ず書く
   - 機種ページを新しく作ったら frontmatter の `added: YYYY-MM-DD`（LP に載せた日）→ NEW
   - 前からある機種に情報を足したら `updated: YYYY-MM-DD` と `updateNote`（例「天井・ゾーンを追加」）→ 追加情報。`lp-apply.mjs` の update は自動で付く。手で直したときも付ける
