@@ -9,6 +9,7 @@ koyaku: ''
 type: ''
 gen: 'スマスロ'
 source: https://okazakisangyo.com/machine/umc-top/
+newsSource: https://web-greenbelt.jp/post-117915/
 fetched: 2026-09-23
 added: 2026-09-23
 draft: true

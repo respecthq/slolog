@@ -9,6 +9,7 @@ koyaku: ''
 type: ''
 gen: 'スマスロ'
 source: https://www.heiwanet.co.jp/products/pachislot/sns3/
+newsSource: https://web-greenbelt.jp/post-112732/
 fetched: 2026-09-23
 added: 2026-09-23
 draft: true

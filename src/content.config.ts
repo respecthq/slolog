@@ -105,6 +105,7 @@ const machines = defineCollection({
     // 出典・トレーサビリティ（メーカー公表事実の裏取り。出典明示にもなる）
     source: httpsUrl('出典URL'), // 出典URL（メーカー公式/ニュース）
     fetched: dateish.default(''), // 取得日 YYYY-MM-DD
+    newsSource: httpsUrl('業界紙URL'), // 導入日・製造元・型式名を確かめた業界紙の記事（進行表の確認用。ページとアプリには出さない）
     // 更新履歴（ホームの新着ブロック用。一覧の並び順は導入日のままにする）
     crosscheckUrl: httpsUrl('照合URL'), // 転記ミス検出の照合先（verified が無い機種用・非表示）
     // 情報が増えたかを見張る追加のページ（製品ページなど。scripts/watch-sources.mjs が読む・ページには出さない）
