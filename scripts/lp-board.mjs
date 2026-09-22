@@ -82,7 +82,7 @@ const done = machines.filter((m) => !m.wait.length).sort(byRel);
 const pending = proposals.filter((p) => !p.appliedAt);
 // ---- 区分の正は週次レポート（scripts/weekly-import.mjs が index.json の items に入れたもの）----
 //   いちばん新しいレポートの 🆕 NEW／➕ 追加情報 を印にする。レポートに無い機種だけ、LP 側の記録（added／updated・git）で補う
-const reports = load('notes/weekly/index.json', []).filter((w) => w.items?.length).sort((a, b) => b.date.localeCompare(a.date));
+const reports = load('notes/weekly/index.json', []).filter((w) => w.items?.length && !w.backfill).sort((a, b) => b.date.localeCompare(a.date));
 const latest = reports[0] ?? null;
 const reportMap = new Map((latest?.items ?? []).map((i) => [norm(i.name), i]));
 const fromReport = (name) => { const i = reportMap.get(norm(name)); return i && i.kind !== 'known' ? { kind: i.kind === 'new' ? 'new' : 'upd', date: latest.date, note: i.note || (i.kind === 'new' ? 'レポートで初出' : '情報が増えた'), src: 'report' } : null; };
