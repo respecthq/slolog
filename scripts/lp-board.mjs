@@ -32,7 +32,7 @@ const INFO = { ceiling: '天井・ゾーン', ceilingBonus: '天井・ゾーン'
   type: '機種の種類', gen: '機種の種類', cabinet: '機種の種類', source: '出典', image: '画像', name: '機種名', maker: 'メーカー', draft: '公開・非公開' };
 const blocks = (fm) => { const o = {}; let k = null; for (const line of fm.split('\n')) { const m = line.match(/^([A-Za-z]+):/); if (m) { k = m[1]; o[k] = line; } else if (k) o[k] += '\n' + line; } return o; };
 const lastChange = (path) => (git('status', '--porcelain', '--', path) ? ymd : git('log', '-1', '--format=%cs', '--', path) || ymd);
-const queueFresh = (q) => (inWin(q.foundAt) ? { kind: 'new', date: q.foundAt, note: '候補に追加' }
+const queueFresh = (q) => (inWin(q.foundAt) ? { kind: 'new', date: q.foundAt, note: '候補入り' }
   : inWin(q.updatedAt) ? { kind: 'upd', date: q.updatedAt, note: q.updateNote || '情報が増えた' } : null);
 
 const machines = [];
@@ -48,20 +48,20 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
   const hasSpec = !!(one('bonus') || one('payout') || one('junzo'));
   const specSettled = hasSpec || flag('specNone') || (released && daysSince > 60);
   const wait = [];
-  if (flag('draft')) wait.push('下書き（出典が未確認）');
+  if (flag('draft')) wait.push('下書き');
   if (!released) wait.push(`導入前（${rel || '時期未定'}）`);
-  if (!one('modelName')) wait.push('型式名がまだ');
-  if (!specSettled) wait.push('公表値がまだ（メーカーの公表待ち）');
+  if (!one('modelName')) wait.push('型式名待ち');
+  if (!specSettled) wait.push('公表値待ち');
   // 天井の確認先（777パチガブ・必勝本）。verified / crosscheckUrl / watch のどこに書いてあっても拾う
   const refUrls = [...new Set([...fm.matchAll(/https:\/\/[^\s'"]*(?:p-gabu\.jp|hisshobon\.jp)[^\s'"]*/g)].map((x) => x[0]))];
   const refs = { gabu: refUrls.find((u) => u.includes('p-gabu.jp')), hissho: refUrls.find((u) => u.includes('hisshobon.jp')) };
   let fresh = null;
   const backfill = relDate && one('added') && relDate < new Date(new Date(one('added')) - 30 * 86400000);   // 導入から 30 日以上たってから載せた
-  if (inWin(one('added'))) fresh = { kind: 'new', date: one('added'), note: (flag('draft') ? '下書きを作成（非公開）' : 'LP に新しいページ') + (backfill ? '・稼働中の機種を後から追加' : '') };
-  else if (inWin(one('updated'))) fresh = { kind: 'upd', date: one('updated'), note: one('updateNote') || '情報を更新' };
+  if (inWin(one('added'))) fresh = { kind: 'new', date: one('added'), note: (flag('draft') ? '下書き作成' : '新規ページ') + (backfill ? '（後追い掲載）' : '') };
+  else if (inWin(one('updated'))) fresh = { kind: 'upd', date: one('updated'), note: one('updateNote') || '更新' };
   else if (baseRev) {
     const path = join(dir, f); const old = git('show', `${baseRev}:${path}`);
-    if (!old) fresh = { kind: 'new', date: lastChange(path), note: 'LP に新しいページ' };
+    if (!old) fresh = { kind: 'new', date: lastChange(path), note: '新規ページ' };
     else {
       const a = blocks(old.split('---')[1] ?? ''), b = blocks(fm);
       const changed = [...new Set(Object.keys(INFO).filter((k) => (a[k] ?? '').trimEnd() !== (b[k] ?? '').trimEnd()).map((k) => INFO[k]))];
@@ -69,7 +69,7 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
     }
   }
   machines.push({ slug, fresh, name: one('name'), maker: one('maker'), rel, source: one('source'), draft: flag('draft'), wait, refs, ceiling: one('ceiling'), noCeiling: flag('noCeiling'),
-    note: !hasSpec && specSettled && !flag('specNone') ? '公表値はメーカー未公表（導入から 60 日超）' : '' });
+    note: !hasSpec && specSettled && !flag('specNone') ? '公表値なし（導入60日超）' : '' });
 }
 const byRel = (a, b) => (b.rel || '').localeCompare(a.rel || '');
 const pending = proposals.filter((p) => !p.appliedAt);
@@ -81,7 +81,7 @@ const done = machines.filter((m) => !m.wait.length).sort(byRel);
 const reports = load('notes/weekly/index.json', []).filter((w) => w.items?.length && !w.backfill).sort((a, b) => b.date.localeCompare(a.date));
 const latest = reports[0] ?? null;
 const reportMap = new Map((latest?.items ?? []).map((i) => [norm(i.name), i]));
-const fromReport = (name) => { const i = reportMap.get(norm(name)); return i && i.kind !== 'known' ? { kind: i.kind === 'new' ? 'new' : 'upd', date: latest.date, note: i.note || (i.kind === 'new' ? 'レポートで初出' : '情報が増えた'), src: 'report' } : null; };
+const fromReport = (name) => { const i = reportMap.get(norm(name)); return i && i.kind !== 'known' ? { kind: i.kind === 'new' ? 'new' : 'upd', date: latest.date, note: i.note || (i.kind === 'new' ? '初出' : '情報が増えた'), src: 'report' } : null; };
 const inReport = (name) => reportMap.has(norm(name));   // レポートに載った機種は、既報も含めてレポートの判定だけを使う
 for (const m of machines) m.fresh = inReport(m.name) ? fromReport(m.name) : (m.fresh ? { ...m.fresh, src: 'lp' } : null);
 const qFresh = new Map(queue.map((q) => [q, inReport(q.name) ? fromReport(q.name) : (queueFresh(q) ? { ...queueFresh(q), src: 'lp' } : null)]));
@@ -101,13 +101,13 @@ const weekly = [...weeklyAll.filter((w) => !w.backfill), ...(back.length ? [{ da
 let md = `# LP 進行表（${ymd}）\n\n`;
 md += `OK 待ち **${pending.length}**／候補 **${queue.length}**／更新待ち **${waiting.length}**／完了 **${done.length}**\n\n`;
 md += `この ${FRESH_DAYS} 日（${cutoff} 以降）：🆕 NEW **${nNew}**／➕ 追加情報 **${nUpd}**\n\n`;
-md += `使い方：「OK 待ち」の出典を開いて確かめ、**「A1 と A3 OK」** のように Claude に伝える → その場で反映して公開します。\n\n---\n\n`;
+md += `使い方：出典を確認 → **「A1 と A3 OK」** と Claude に送ると公開\n\n---\n\n`;
 
-md += `## 🟠 OK 待ち（出典を見て OK を出せば、すぐ反映できるもの）\n\n`;
+md += `## 🟠 OK 待ち\n\n`;
 if (!pending.length) md += `いまはありません。\n\n`;
 for (const p of pending) {
-  md += `- [ ] **${p.id}**｜${p.kind === 'new' ? '🆕 NEW（新しいページ）' : '➕ 追加情報（前からある機種の更新）'}｜**${p.name}**\n`;
-  md += `  - 内容：${p.summary}\n`;
+  md += `- [ ] **${p.id}**｜${p.kind === 'new' ? '🆕 NEW（新規ページ）' : '➕ 追加情報（前からある機種の更新）'}｜**${p.name}**\n`;
+  md += `  - ${p.summary}\n`;
   for (const [k, v] of Object.entries(p.changes ?? {})) md += `  - \`${k}\` → ${typeof v === 'object' ? JSON.stringify(v) : v}\n`;
   md += `  - 出典：${p.source}\n`;
   if (p.crosscheck) md += `  - 照合：${p.crosscheck}\n`;
@@ -119,22 +119,22 @@ if (!recent.length) md += `ありません。\n\n`;
 for (const r of recent) md += `- ${mdMark(r.f)}**${r.name}**｜いまの場所：${r.where}｜${r.f.note}｜${r.f.src === 'report' ? '週次レポート' : 'LP'} ${r.f.date}\n`;
 md += `\n## 📰 週次レポート\n\n`;
 for (const w of weekly) md += `- ${w.date}｜${w.verified ? '検証済み（' + w.verifiedAt + '）' : '未検証'}｜${w.summary || ''}${w.verified ? '｜weekly/' + w.verified : ''}${w.draft ? '｜下書き weekly/' + w.draft : ''}${w.sessionUrl ? '｜原文 ' + w.sessionUrl : ''}\n`;
-md += `\n## 🔵 候補（まだ LP にページがない）\n\n`;
+md += `\n## 🔵 候補\n\n`;
 if (!queue.length) md += `いまはありません。\n\n`;
 const order = { 'メーカー公開': 0, '導入済み・未掲載': 1, '検定通過': 2 };
 for (const q of [...queue].sort((a, b) => (order[a.stage] ?? 9) - (order[b.stage] ?? 9))) {
   md += `- ${mdMark(qFresh.get(q))}**${q.name}**（${q.maker || 'メーカー不明'}）｜${q.stage}${q.release ? '｜導入 ' + q.release : ''}\n`;
-  md += `  - 次にやること：${q.next}\n`;
+  md += `  - 次の作業：${q.next}\n`;
   if (q.officialUrl) md += `  - 公式：${q.officialUrl}\n`;
   if (q.note) md += `  - メモ：${q.note}\n`;
 }
-md += `\n## 🟡 LP 作成済み・更新待ち（情報がまだ増える）\n\n`;
+md += `\n## 🟡 更新待ち\n\n`;
 for (const m of waiting) {
   md += `- ${mdMark(m.fresh)}**${m.name}**（${m.maker}）｜導入 ${m.rel || '未定'}${m.draft ? '｜下書き（非公開）' : ''}\n`;
   for (const w of m.wait) md += `  - ⏳ ${w}\n`;
   md += `  - ページ：${m.draft ? '（下書きのため非公開）' : SITE + m.slug + '/'}${m.source ? '｜出典：' + m.source : '｜出典：なし'}\n`;
 }
-md += `\n## 🟢 完了（情報が出そろった。以後は見張りだけ）\n\n`;
+md += `\n## 🟢 完了\n\n`;
 for (const m of done) md += `- ${mdMark(m.fresh)}${m.name}（${m.maker}）｜${m.rel}${m.note ? '｜' + m.note : ''}\n`;
 md += `\n---\n\n判定の決まり：完了＝型式名あり＋公表値が決着（掲載済み／導入から 60 日たっても未公表）＋導入済み。\n完了した機種も \`watch-sources.mjs\` が見張り続け、公式ページに変化があれば「OK 待ち」に戻します。\n`;
 writeFileSync('notes/LP_BOARD.md', md);
@@ -147,7 +147,7 @@ const fchip = (f) => (f ? ` <span class="chip ${f.kind === 'new' ? 'new' : 'upd'
 const fnote = (f) => (f ? `<div class="sub">${f.kind === 'new' ? 'NEW' : '追加情報'} ${esc(f.date)}：${esc(f.note)}</div>` : '');
 const refLinks = (r) => [r?.gabu ? link(r.gabu, 'パチガブ') : '', r?.hissho ? link(r.hissho, '必勝本') : ''].filter(Boolean).join(' · ');
 const ceilCell = (m) => `${m.ceiling ? esc(m.ceiling) : m.noCeiling ? '<span class="mute">なし（仕様）</span>' : '<span class="mute">まだ</span>'}${refLinks(m.refs) ? `<div class="sub">${refLinks(m.refs)}</div>` : ''}`;
-const rowsPending = pending.map((p) => `<tr><td><button class="ok" data-copy="${esc(p.id)} OK">${esc(p.id)}</button></td><td><span class="chip ${p.kind === 'new' ? 'new' : 'upd'}">${p.kind === 'new' ? 'NEW' : '追加情報'}</span><div class="sub">${p.kind === 'new' ? '新しいページ' : '前からある機種'}</div></td><td><b>${esc(p.name)}</b><div class="sub">${esc(p.summary)}</div>${Object.entries(p.changes ?? {}).map(([k, v]) => `<div class="kv"><code>${esc(k)}</code> → ${esc(typeof v === 'object' ? JSON.stringify(v) : v)}</div>`).join('')}</td><td>${link(p.source, '出典を開く')}${p.crosscheck ? '<br>' + link(p.crosscheck, '照合先') : ''}${p.slug ? '<br>' + link('file://' + process.cwd() + '/src/content/machines/' + p.slug + '.md', p.kind === 'new' ? '下書きの中身' : 'いまの中身') : ''}</td></tr>`).join('');
+const rowsPending = pending.map((p) => `<tr><td><button class="ok" data-copy="${esc(p.id)} OK">${esc(p.id)}</button></td><td><span class="chip ${p.kind === 'new' ? 'new' : 'upd'}">${p.kind === 'new' ? 'NEW' : '追加情報'}</span><div class="sub">${p.kind === 'new' ? '新規ページ' : '既存機種'}</div></td><td><b>${esc(p.name)}</b><div class="sub">${esc(p.summary)}</div>${Object.entries(p.changes ?? {}).map(([k, v]) => `<div class="kv"><code>${esc(k)}</code> → ${esc(typeof v === 'object' ? JSON.stringify(v) : v)}</div>`).join('')}</td><td>${link(p.source, '出典')}${p.crosscheck ? '<br>' + link(p.crosscheck, '照合') : ''}${p.slug ? '<br>' + link('file://' + process.cwd() + '/src/content/machines/' + p.slug + '.md', p.kind === 'new' ? '下書き' : '現状') : ''}</td></tr>`).join('');
 const rowsQueue = [...queue].sort((a, b) => (order[a.stage] ?? 9) - (order[b.stage] ?? 9)).map((q) => `<tr><td><b>${esc(q.name)}</b>${fchip(qFresh.get(q))}<div class="sub">${esc(q.maker || 'メーカー不明')}</div>${fnote(qFresh.get(q))}</td><td><span class="chip etc">${esc(q.stage)}</span></td><td class="num">${esc(q.release || '—')}</td><td>${esc(q.next)}${q.note ? `<div class="sub">${esc(q.note)}</div>` : ''}</td><td>${link(q.officialUrl, '公式')}</td></tr>`).join('');
 const rowsWait = waiting.map((m) => `<tr><td><b>${esc(m.name)}</b>${fchip(m.fresh)}<div class="sub">${esc(m.maker)}</div>${fnote(m.fresh)}</td><td class="num">${esc(m.rel || '未定')}</td><td>${m.wait.map(chip).join(' ')}</td><td>${m.draft ? '<span class="mute">非公開</span>' : link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
 const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}${fchip(m.fresh)}<div class="sub">${esc(m.maker)}</div>${fnote(m.fresh)}</td><td class="num">${esc(m.rel)}</td><td class="sub">${esc(m.note || '')}</td><td>${link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
@@ -205,17 +205,17 @@ footer{border-top:1px solid var(--line)}footer .wrap{padding:26px 16px 40px;colo
 <header class="top"><div class="wrap"><img class="brand" src="../public/editorial/assets/logo.png" alt="スロログ"><div class="top-meta"><span class="private">非公開</span><time>${ymd} 時点</time></div></div></header>
 <div class="hero"><div class="wrap hero-copy"><p class="eyebrow"><b>LP BOARD</b>スロログ 機種ハブ</p><h1>LP 進行表</h1><p class="lead">候補 → 更新待ち → 完了。今週の動きと、あなたの OK 待ちがひと目でわかる。</p></div>
 <div class="stage"><div class="band"></div><div class="wrap">
-<nav class="counts" aria-label="件数">${count('#ok', 'OK', pending.length, 'OK 待ち', pending.length > 0)}${count('#queue', '01', queue.length, '候補（ページなし）')}${count('#wait', '02', waiting.length, '更新待ち')}${count('#done', '03', done.length, '完了')}</nav>
+<nav class="counts" aria-label="件数">${count('#ok', 'OK', pending.length, 'OK 待ち', pending.length > 0)}${count('#queue', '01', queue.length, '候補')}${count('#wait', '02', waiting.length, '更新待ち')}${count('#done', '03', done.length, '完了')}</nav>
 <div class="stage-label" aria-hidden="true"><span>CHECK.<br>OK.<br>PUBLISH.</span><small>powered by 回胴キナナ</small></div>
 <div class="kina"><p class="bubble" role="status">${say}<span class="more" id="unreadMsg" hidden>週次レポートに未読があるよ</span></p><img src="../public/images/kina-chibi.webp" alt="ちびキナナ"></div>
 </div></div></div>
 <main class="wrap">
-${section('ok', '<b>OK</b>WAITING FOR YOU', 'OK 待ち', '出典を開いて確かめ、左のボタンを押すと「A1 OK」がコピーされます。それを Claude に貼れば、その場で反映して公開します。', ['番号', '種類', '内容', '確認先'], rowsPending, 'いまはありません。')}
-${section('recent', "<b>THIS WEEK</b>WHAT'S NEW", '今週の NEW と追加情報', latest ? `<b>週次レポート ${esc(latest.date)}</b> の区分です（既報 ${knownN} 件は省略）。<b>NEW</b>＝LP にまだ無い機種／<b>追加情報</b>＝前からある機種に情報が増えた。LP 側で作ったページは「OK 待ち」に出ます。` : `週次レポートの取り込みがまだありません。`, ['種類', '機種', 'いまの場所', '内容', '出どころ'], rowsRecent, '今週の動きはありません。')}
-${section('weekly', '<b>MON</b>WEEKLY REPORT', '週次レポート', '月曜に届く下書きと、その検証結果。リンクを開くと「未読」が消えます（このブラウザだけの記録）。', ['週', '状態', '要点', '開く'], rowsWeekly, 'まだありません。')}
-${section('queue', '<b>01</b>CANDIDATES', '候補（まだ LP にページがない）', '検定通過・メーカー公開・導入済みで未掲載の機種。メーカー公式の出典が取れたら「OK 待ち」に上がります。', ['機種', '段階', '導入', '次にやること', '公式'], rowsQueue, 'いまはありません。')}
-${section('wait', '<b>02</b>IN PROGRESS', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。OK 待ちの下書きはここには出しません。', ['機種', '導入', '待っているもの', 'リンク'], rowsWait, 'ありません。')}
-${section('done', '<b>03</b>COMPLETE', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', 'メモ', 'リンク'], rowsDone, 'ありません。', done.length)}
+${section('ok', '<b>OK</b>WAITING FOR YOU', 'OK 待ち', '出典を確認 → ボタンで「A1 OK」をコピー → Claude に貼ると公開。', ['番号', '種類', '内容', '確認先'], rowsPending, 'なし。')}
+${section('recent', "<b>THIS WEEK</b>WHAT'S NEW", '今週の NEW と追加情報', latest ? `週次レポート ${esc(latest.date)} より（既報 ${knownN} 件は省略）。<b>NEW</b>＝LP 未掲載／<b>追加情報</b>＝既存機種の続報。` : `週次レポートの取り込みがまだありません。`, ['種類', '機種', '状態', '内容', '出所'], rowsRecent, '今週の動きなし。')}
+${section('weekly', '<b>MON</b>WEEKLY REPORT', '週次レポート', '月曜のレポートと検証結果。開くと「未読」が消える。', ['週', '状態', '要点', '開く'], rowsWeekly, 'まだありません。')}
+${section('queue', '<b>01</b>CANDIDATES', '候補', 'LP 未掲載の機種。公式の出典が取れたら OK 待ちへ。', ['機種', '段階', '導入', '次の作業', '公式'], rowsQueue, 'なし。')}
+${section('wait', '<b>02</b>IN PROGRESS', '更新待ち', '情報待ちの機種。ラベルが待っているもの。', ['機種', '導入', '待ち', 'リンク'], rowsWait, 'なし。')}
+${section('done', '<b>03</b>COMPLETE', '完了', '情報が出そろった機種。公式ページの見張りだけ続ける。', ['機種', '導入', 'メモ', 'リンク'], rowsDone, 'なし。', done.length)}
 </main>
 <footer><div class="wrap"><p class="sig"><b>SLOLOG</b>powered by 回胴キナナ</p>完了の条件：型式名あり ＋ 公表値が決着（掲載済み／導入から 60 日たっても未公表）＋ 導入済み。<br>このページは <code>node scripts/lp-board.mjs</code> が作り直します（手で編集しない）。同じ内容の md は notes/LP_BOARD.md。</div></footer>
 <script>(function(){var K='lpboard-read';var read={};try{read=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}var msg=document.getElementById('unreadMsg');function sync(){if(msg)msg.hidden=!document.querySelector('tr[data-week] .unread:not([hidden])')}document.querySelectorAll('tr[data-week]').forEach(function(tr){var d=tr.dataset.week;var u=tr.querySelector('.unread');if(u&&!read[d])u.hidden=false;tr.querySelectorAll('a.wk').forEach(function(a){['click','auxclick'].forEach(function(ev){a.addEventListener(ev,mark)});function mark(){read[d]=1;try{localStorage.setItem(K,JSON.stringify(read))}catch(e){}if(u)u.hidden=true;sync()}})});sync()})();document.querySelectorAll('button.ok').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){}const t=b.textContent;b.textContent='コピーした';b.classList.add('copied');setTimeout(()=>{b.textContent=t;b.classList.remove('copied')},1200)}));</script></body></html>`;
