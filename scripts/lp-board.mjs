@@ -86,7 +86,7 @@ const fromReport = (name) => { const i = reportMap.get(norm(name)); return i && 
 const inReport = (name) => reportMap.has(norm(name));   // レポートに載った機種は、既報も含めてレポートの判定だけを使う
 for (const m of machines) m.fresh = inReport(m.name) ? fromReport(m.name) : (m.fresh ? { ...m.fresh, src: 'lp' } : null);
 const qFresh = new Map(queue.map((q) => [q, inReport(q.name) ? fromReport(q.name) : (queueFresh(q) ? { ...queueFresh(q), src: 'lp' } : null)]));
-const where = (name) => { const k = norm(name); const q = queue.find((x) => norm(x.name) === k); if (q) return ['候補', 'queue']; const m = machines.find((x) => norm(x.name) === k); if (m) return m.wait.length ? ['更新待ち', 'wait'] : ['完了', 'done']; return ['LP 未登録', 'queue']; };
+const where = (name) => { const k = norm(name); const q = queue.find((x) => norm(x.name) === k); if (q) return ['候補', 'queue']; const m = machines.find((x) => norm(x.name) === k); if (m) return pendingSlugs.has(m.slug) ? ['OK 待ち', 'ok'] : m.wait.length ? ['更新待ち', 'wait'] : ['完了', 'done']; return ['LP 未登録', 'queue']; };
 const recent = [
   ...(latest?.items ?? []).filter((i) => i.kind !== 'known').map((i) => { const [w, a] = where(i.name); return { f: fromReport(i.name), name: i.name, where: w, anchor: a }; }),
 ].filter((r) => r.f).sort((a, b) => (b.f.date || '').localeCompare(a.f.date || '') || (a.f.kind === 'new' ? -1 : 1));
