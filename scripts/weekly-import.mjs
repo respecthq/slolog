@@ -13,7 +13,7 @@ const file = args.find((a) => !a.startsWith('--') && !/^\d{4}-\d{2}-\d{2}$/.test
 const opt = (k) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : null; };
 if (!file || !existsSync(file)) { console.error('使い方: node scripts/weekly-import.mjs <レポート.md> [--date YYYY-MM-DD] [--session URL]'); process.exit(1); }
 const text = readFileSync(file, 'utf8');
-const date = opt('date') || text.match(/パチスロ新台(?:日報|週報)\s*(\d{4}-\d{2}-\d{2})/)?.[1];
+const date = opt('date') || text.match(/新台\s*(?:日報|週報)\s*(\d{4}-\d{2}-\d{2})/)?.[1];
 if (!date) { console.error('レポートの日付が読めません。--date YYYY-MM-DD を付けてください'); process.exit(1); }
 
 
@@ -27,12 +27,20 @@ for (const raw of text.split('\n')) {
   if (/^\|\s*-/.test(line)) continue;
   const cells = line.split('|').slice(1, -1).map((c) => c.trim());
   if (cells[0] === '区分') { head = cells; continue; }
-  if (!head || !head.includes('機種名')) continue;
-  const kind = kindOf(cells[0]); const name = cells[head.indexOf('機種名')];
+  const col = head ? (head.includes('機種名') ? head.indexOf('機種名') : head.indexOf('型式名')) : -1;   // 検定通過の表は型式名の列
+  if (col < 0) continue;
+  const kind = kindOf(cells[0]); const name = cells[col];
   if (!kind || !name || name === '—') continue;
-  const note = (cells[0].split(/[：:]/).slice(1).join('：') || '').trim();
+  const extra = head.indexOf('増えた情報');   // 新しい形は「増えた情報」の列に中身が入る
+  const note = ((cells[0].split(/[：:]/).slice(1).join('：') || '').trim()) || (extra >= 0 ? cells[extra] : '');
   const key = norm(name);
   if (!items.has(key) || (!items.get(key).note && note)) items.set(key, { kind, name: name.replace(/\*\*/g, ''), note, section });
+}
+// 既報は「＝ 既報：A、B、C」の 1 行で来る（2026-09-23 のレポート改訂から）
+for (const m of text.matchAll(/^＝\s*既報[：:]\s*(.+)$/gm)) {
+  for (const n of m[1].split(/[、,，]/).map((x) => x.replace(/[（(].*$/, '').trim()).filter(Boolean)) {
+    const k = norm(n); if (!items.has(k)) items.set(k, { kind: 'known', name: n, note: '', section: '既報' });
+  }
 }
 // 表が読めなかったときは JSON の kubun を使う
 if (!items.size) {

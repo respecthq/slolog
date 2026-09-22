@@ -12,7 +12,7 @@ const args = process.argv.slice(2);
 const file = args.find((a) => !a.startsWith('--') && !/^\d{4}-\d{2}-\d{2}$/.test(a));
 const di = args.indexOf('--date');
 const text = readFileSync(file, 'utf8');
-const date = (di >= 0 && args[di + 1]) || text.match(/新台(?:日報|週報)\s*(\d{4}-\d{2}-\d{2})/)?.[1] || text.match(/"date":\s*"(\d{4}-\d{2}-\d{2})"/)?.[1];
+const date = (di >= 0 && args[di + 1]) || text.match(/新台\s*(?:日報|週報)\s*(\d{4}-\d{2}-\d{2})/)?.[1] || text.match(/"date":\s*"(\d{4}-\d{2}-\d{2})"/)?.[1];
 if (!date) { console.error('日付が読めません。--date YYYY-MM-DD を付けてください'); process.exit(1); }
 const today = new Date().toISOString().slice(0, 10);
 
