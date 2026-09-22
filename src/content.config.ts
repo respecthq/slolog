@@ -119,11 +119,12 @@ const machines = defineCollection({
     // （アプリはサンプルとして同じ機種を内蔵しており、取り込むと二重になる）。
     fictional: z.boolean().default(false),
   }).refine(
-    (d) => d.fictional || !(d.ceiling || d.zone || d.ceilingBonus || d.resetBehavior) || d.verified,
+    // 2026-09-23〜 天井・ゾーンは扱わない（メーカー非公表の解析値で、条件の注釈を漏らすとクレームになるため）。実機には入れさせない
+    (d) => d.fictional || !(d.ceiling || d.zone || d.ceilingBonus || d.resetBehavior || d.noCeiling || d.verified),
     {
       // メーカー非公表の項目は、確認元と確認日を持たずに配信させない。
       // 詳細は PIPELINE.md「どこから取るか」と SOURCES.md。
-      message: '天井・ゾーン・天井恩恵・設定変更を載せる場合は verified（by / date）が必要です',
+      message: '天井・ゾーン・天井恩恵・設定変更時・天井なし・確認元（verified）は扱いません（2026-09-23 決定）。架空機以外では空にしてください',
       path: ['verified'],
     },
   ).refine((d) => d.draft || d.fictional || d.source.trim() !== '', {

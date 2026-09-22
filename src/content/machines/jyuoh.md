@@ -16,8 +16,6 @@ fetched: 2026-09-21
 added: 2026-09-21
 draft: false
 watch:
-  - https://p-gabu.jp/guideworks/machinecontents/detail/7151
-  - https://p.hisshobon.jp/machine/4786
   - https://www.sammy.co.jp/japanese/product/pachislot/sp_jyu_oh/
 ---
 

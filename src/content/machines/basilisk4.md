@@ -16,8 +16,6 @@ source: https://www.universal-777.com/product/slot/basilisk4/
 fetched: 2026-09-21
 added: 2026-09-21
 draft: false
-watch:
-  - https://p.hisshobon.jp/machine/4829
 ---
 
 ## ゲーム性

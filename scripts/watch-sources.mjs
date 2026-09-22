@@ -25,7 +25,7 @@ function targets() {
   const out = [];
   for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWith('_'))) {
     const fm = readFileSync(join(dir, f), 'utf8').split('---')[1] ?? '';
-    if (/^fictional:\s*true/m.test(fm)) continue;   // 下書きも見張る（公開前に天井が出そろうことが多い。2026-09-23〜）
+    if (/^fictional:\s*true/m.test(fm)) continue;   // 下書きも見張る（公開前に公式ページが更新されることがある）
     const one = (k) => (fm.match(new RegExp(`^${k}:\\s*(.*)$`, 'm'))?.[1] ?? '').trim().replace(/^['"]|['"]$/g, '');
     const urls = [one('source')];
     const w = fm.match(/^watch:\s*\n((?:\s+-\s+.*\n?)+)/m);
@@ -90,53 +90,7 @@ for (const t of targets()) {
   }
 }
 
-// ---- 天井の見張り：メーカーは天井を公表しないので、確認に使う 2 媒体（777パチガブ・必勝本）を見る ----
-// 対象は「天井が空で、天井なし（noCeiling）でもない」機種だけ。
-//   ・watch に 2 媒体の URL があれば、そのページに天井の記載が出たかを見る
-//   ・無ければ、機種名で 2 媒体を検索して「ページができた」ことを知らせる（URL は人が確かめて watch に足す。同名の旧機種・パチンコ版に注意）
-const REF = {
-  // minId：これより小さい番号のページは旧機種（同名シリーズの昔の台）とみなして候補にしない。年に一度、その年の新台の番号に合わせて上げる
-  gabu: { label: '777パチガブ', host: 'p-gabu.jp', minId: 7000,
-    search: (k) => 'https://p-gabu.jp/guideworks/machine?machine_keyword=' + encodeURIComponent(k),
-    link: /href="(https:\/\/p-gabu\.jp\/guideworks\/machinecontents\/detail\/\d+)"[^>]*>([\s\S]*?)<\/a>/g,
-    isSlot: (t) => !/^(e|P|PA|CR)\s?/.test(t),
-    hasCeiling: (text) => /天井機能[\s\S]{0,300}?\d{2,4}\s*G/.test(text) },
-  hissho: { label: '必勝本', host: 'hisshobon.jp', minId: 4700,
-    search: (k) => 'https://p.hisshobon.jp/search?key=' + encodeURIComponent(k),
-    link: /href="(\/machine\/\d+)\/?"[^>]*>([\s\S]*?)<\/a>/g,
-    isSlot: (t) => /^S/.test(t),
-    hasCeiling: (text) => /天井\s*[&＆]\s*設定変更|天井[^。]{0,12}\d{3,4}\s*G/.test(text) },
-};
-const page = async (u) => { try { const r = await fetch(u, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) }); return r.status === 200 ? await r.text() : ''; } catch { return ''; } };
-console.log('\n— 天井の見張り（777パチガブ・必勝本）—');
-let ceilChanged = 0;
-for (const t of targets().filter((x) => x.needsCeiling)) {
-  const key = 'ceiling:' + t.slug; const old = prev[key] ?? {}; const now = {};
-  const notes = [];
-  for (const [id, site] of Object.entries(REF)) {
-    const url = t.refs.find((u) => u.includes(site.host));
-    if (url) {
-      const has = site.hasCeiling(strip(await page(url)));
-      now[id] = { url, has };
-      if (has && !old[id]?.has) notes.push(`★ ${site.label}に天井の記載が出た  ${url}`);
-    } else {
-      const html = await page(site.search(t.keyword));
-      const found = [...html.matchAll(site.link)].map((m) => [m[1].startsWith('/') ? 'https://p.hisshobon.jp' + m[1] : m[1], strip(m[2])])
-        .filter(([u, title]) => title && title.includes(t.keyword) && site.isSlot(title) && Number(u.match(/(\d+)\/?$/)?.[1] ?? 0) >= site.minId);
-      const uniq = [...new Map(found).entries()].slice(0, 3);
-      now[id] = { url: null, candidates: uniq.map(([u]) => u) };
-      const fresh = uniq.filter(([u]) => !(old[id]?.candidates ?? []).includes(u));
-      for (const [u, title] of fresh) notes.push(`★ ${site.label}にページ候補：${title}  ${u}（確かめて watch に足す）`);
-    }
-    await new Promise((r) => setTimeout(r, 400));
-  }
-  if (now.gabu?.has && now.hissho?.has) notes.push('★★ 2 媒体とも天井の記載あり → 数値が一致するか照合して、確認元つきで載せられる');
-  next[key] = { ...now, checkedAt: new Date().toISOString().slice(0, 10) };
-  const state = `パチガブ:${now.gabu?.url ? (now.gabu.has ? '天井あり' : '天井まだ') : 'ページ未登録'}／必勝本:${now.hissho?.url ? (now.hissho.has ? '天井あり' : '天井まだ') : 'ページ未登録'}`;
-  if (notes.length) ceilChanged++;
-  if (notes.length || showAll) { console.log(`${notes.length ? '★' : '・'} ${t.slug}  ${t.name}  [${state}]`); for (const n of notes) console.log('   ' + n); }
-}
-console.log(`天井が空の機種 ${targets().filter((x) => x.needsCeiling).length} 件／変化あり ${ceilChanged} 件`);
+// 天井の見張りは 2026-09-23 に廃止（天井・ゾーンは LP で扱わない）。メーカー公式ページの見張りだけ続ける
 
 if (!existsSync('notes')) mkdirSync('notes');
 writeFileSync(SNAP, JSON.stringify(next, null, 1));

@@ -12,7 +12,6 @@ modelName: 'LBケロット5ND05H'
 source: https://yamasa-next.co.jp/slot/tlkfv/
 fetched: 2026-09-23
 added: 2026-09-23
-noCeiling: true
 draft: true
 watchKeyword: ケロット
 ---

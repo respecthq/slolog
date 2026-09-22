@@ -1,9 +1,9 @@
 ---
 name: スロット ワールドダイスター
 maker: パオン・ディーピー（販売：大都技研）
-ceiling: 通常時最大999G+α（設定変更・上位ST終了時は600G+α）
+ceiling: ''
 junzo: 約8.0枚/G（ダイスターボーナス）
-zone: 100G・300G・600G到達でゲーム数前兆（200G/400G/500G/700G/800Gは夕方ステージへ）
+zone: ''
 released: 2026-08
 koyaku: ''
 payout: '97.8%〜112.4%'
@@ -13,12 +13,6 @@ added: 2026-09-04
 updated: 2026-09-09
 updateNote: 天井・ゾーンを追加
 draft: false
-ceilingBonus: 初当たりボーナス当選
-verified:
-  by: ['777パチガブ']
-  url: https://p-gabu.jp/guideworks/machinecontents/detail/7104
-  date: 2026-09-09
-  crosscheck: https://p.hisshobon.jp/machine/4783
 gen: 'スマスロ'
 modelName: 'L／ワールドダイスター／PA3'
 modelNameSource: https://www.p-world.co.jp/machine/database/10517

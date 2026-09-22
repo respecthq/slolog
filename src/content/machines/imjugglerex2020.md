@@ -12,7 +12,6 @@ added: 2026-09-04
 draft: false
 bonus: '1/168.5〜1/127.5'
 payout: '97.0%〜105.5%'
-noCeiling: true
 gen: '6号機'
 modelName: 'SアイムジャグラーEX-TP'
 modelNameSource: https://www.p-world.co.jp/machine/database/9126

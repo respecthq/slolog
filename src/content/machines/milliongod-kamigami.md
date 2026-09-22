@@ -1,7 +1,7 @@
 ---
 name: スマスロ ミリオンゴッド-神々の軌跡-
 maker: ミズホ
-ceiling: GG間1480G+α
+ceiling: ''
 junzo: ''
 zone: ''
 released: '2026-04'
@@ -12,13 +12,6 @@ added: 2026-07-11
 updated: 2026-09-21
 updateNote: メーカー公式の出典を確認して公開
 draft: false
-ceilingBonus: GG当選
-resetBehavior: 設定変更後の天井は 510G／1000G／1480G のいずれか
-verified:
-  by: ['777パチガブ']
-  url: https://p-gabu.jp/guideworks/machinecontents/detail/7036
-  date: 2026-09-21
-  crosscheck: https://p.hisshobon.jp/machine/4693
 type: AT
 gen: 'スマスロ'
 cabinet: 'ランドマークS'

@@ -11,9 +11,9 @@ export type MachineSpec = {
   id: string; // 機種のスラッグ（安定ID）。アプリは lpId として保存し、名前より先に同一判定に使う
   name: string;
   maker: string;
-  ceiling: string;
+  ceiling: string; // 2026-09-23〜 常に空（天井・ゾーンは扱わない。契約 v1 の形を保つため項目だけ残す）
   junzo: string;
-  zone: string;
+  zone: string;    // 同上
   released: string;
   koyaku?: string;
   gen?: string;     // 号機区分（アプリの号機チップ）
@@ -22,7 +22,6 @@ export type MachineSpec = {
   modelName?: string; // 型式名（検定上の正式名）
   bonus?: string;   // ボーナス合成確率（メーカー公表）
   payout?: string;  // 出玉率＝機械割（メーカー公表）
-  ceilingBonus?: string; // 天井恩恵
   memo?: string;    // アプリ側は memo をそのまま機種メモに使う
   source?: string; // 出典URL（トレーサビリティ）
 };
@@ -36,9 +35,9 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
     id: entry.id,
     name: d.name,
     maker: d.maker,
-    ceiling: d.ceiling,
+    ceiling: '',
     junzo: d.junzo,
-    zone: d.zone,
+    zone: '',
     released: d.released,
   };
   if (d.koyaku) spec.koyaku = d.koyaku;
@@ -46,18 +45,14 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   if (d.type) spec.machineType = d.type;
   if (d.cabinet) spec.cabinet = d.cabinet;
   if (d.modelName) spec.modelName = d.modelName;
-  if (d.ceilingBonus) spec.ceilingBonus = d.ceilingBonus;
   if (d.bonus) spec.bonus = d.bonus;
   if (d.payout) spec.payout = d.payout;
   // 現行アプリは bonus/payout を直接は読まないので、memo に畳んで機種メモへ出す。
-  // 天井の確認元（媒体名）はサイトの機種ページにだけ出し、アプリのメモには送らない
   const notes = [
     d.type ? `タイプ ${d.type}` : '',
     d.cabinet ? `筐体 ${d.cabinet}` : '',
     d.bonus ? `ボーナス合成 ${d.bonus}` : '',
     d.payout ? `出玉率 ${d.payout}` : '',
-    d.ceilingBonus ? `天井恩恵 ${d.ceilingBonus}` : '',
-    d.resetBehavior ? `設定変更時 ${d.resetBehavior}` : '',
   ].filter(Boolean);
   if (notes.length) spec.memo = notes.join(' ／ ');
   if (d.source) spec.source = d.source;

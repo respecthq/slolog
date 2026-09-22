@@ -17,7 +17,6 @@ fetched: 2026-09-01
 added: 2026-09-02
 crosscheckUrl: https://p.hisshobon.jp/machine/4774
 draft: false
-noCeiling: true
 watch:
   - https://www.universal-777.com/product/slot/taco_2026/
 ---

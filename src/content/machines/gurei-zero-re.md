@@ -1,7 +1,7 @@
 ---
 name: Lパチスロ 喰霊-零-Re
 maker: オーイズミラボ（販売：オーイズミ）
-ceiling: 'ボーナス・ART間 最大999G+α'
+ceiling: ''
 junzo: '約1.0枚/G（ART「喰霊CHANCE」）'
 zone: ''
 released: 2026-08
@@ -12,12 +12,6 @@ modelName: 'Lパチスロ喰霊零Re／L3'
 source: https://www.oizumi.co.jp/machine/garei-zero-re/
 fetched: 2026-09-23
 added: 2026-09-23
-ceilingBonus: '無限ART'
-verified:
-  by: ['777パチガブ', 'パチ＆スロ必勝本']
-  url: https://p-gabu.jp/guideworks/machinecontents/detail/7098/summarize
-  date: 2026-09-23
-  crosscheck: https://p.hisshobon.jp/machine/4755/1/115800
 draft: true
 watchKeyword: 喰霊
 ---

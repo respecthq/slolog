@@ -12,7 +12,6 @@ added: 2026-09-04
 draft: false
 bonus: '1/156.4〜1/118.7'
 payout: '97.0%〜107.3%'
-noCeiling: true
 gen: '6号機'
 modelName: 'SミスタージャグラーKK'
 modelNameSource: https://www.p-world.co.jp/machine/database/10056

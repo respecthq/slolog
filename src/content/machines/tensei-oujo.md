@@ -15,8 +15,6 @@ source: https://www.heiwanet.co.jp/products/pachislot/ltt1/
 fetched: 2026-09-21
 added: 2026-09-21
 draft: false
-watch:
-  - https://p.hisshobon.jp/machine/4814
 ---
 
 ## メーカーの発表
