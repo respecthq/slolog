@@ -6,9 +6,12 @@ junzo: ''
 zone: ''
 released: 2020-12
 koyaku: ''
+bonusPayout: 'BIG 280枚超の払い出しで終了／REG 98枚超の払い出しで終了'
 source: https://www.kitadenshi.co.jp/slot/imjugglerex2020/
 fetched: 2026-09-04
 added: 2026-09-04
+updated: 2026-09-23
+updateNote: ボーナスの終了条件を追加（北電子の配当表）
 draft: false
 bonus: '1/168.5〜1/127.5'
 payout: '97.0%〜105.5%'

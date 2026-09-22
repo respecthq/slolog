@@ -6,10 +6,13 @@ junzo: ''
 zone: ''
 released: 2025-08
 koyaku: ''
+bonusPayout: 'BIG 最大獲得 約302枚／REG 最大獲得 約104枚（BT含む）'
 source: https://www.kitadenshi.co.jp/slot/matador3/
 fetched: 2026-09-04
 added: 2026-09-04
 crosscheckUrl: https://p.hisshobon.jp/machine/4531
+updated: 2026-09-23
+updateNote: ボーナスの終了条件を追加（北電子の配当表）
 draft: false
 bonus: '1/169.8〜1/126.8'
 payout: '97.4%〜110.0%'

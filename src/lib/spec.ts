@@ -53,6 +53,8 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
     d.cabinet ? `筐体 ${d.cabinet}` : '',
     d.bonus ? `ボーナス合成 ${d.bonus}` : '',
     d.payout ? `出玉率 ${d.payout}` : '',
+    d.bonusPayout ? `ボーナス ${d.bonusPayout}` : '',
+    d.complete ? 'コンプリート機能搭載' : '',
   ].filter(Boolean);
   if (notes.length) spec.memo = notes.join(' ／ ');
   if (d.source) spec.source = d.source;

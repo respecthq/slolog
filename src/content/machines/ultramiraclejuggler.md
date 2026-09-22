@@ -6,9 +6,12 @@ junzo: ''
 zone: ''
 released: 2024-12
 koyaku: ''
+bonusPayout: 'BIG 266枚超の払い出しで終了／REG 98枚超の払い出しで終了'
 source: https://www.kitadenshi.co.jp/slot/ultramiraclejuggler/
 fetched: 2026-09-04
 added: 2026-09-04
+updated: 2026-09-23
+updateNote: ボーナスの終了条件を追加（北電子の配当表）
 draft: false
 bonus: '1/164.3〜1/121.6'
 payout: '97.0%〜108.1%'

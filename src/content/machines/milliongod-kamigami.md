@@ -6,11 +6,12 @@ junzo: ''
 zone: ''
 released: '2026-04'
 koyaku: ''
+complete: true
 source: 'https://www.universal-777.com/product/slot/milliongod_kiseki/'
 fetched: '2026-09-21'
 added: 2026-07-11
-updated: 2026-09-21
-updateNote: メーカー公式の出典を確認して公開
+updated: 2026-09-23
+updateNote: コンプリート機能搭載を追加（メーカー公式）
 draft: false
 type: AT
 gen: 'スマスロ'

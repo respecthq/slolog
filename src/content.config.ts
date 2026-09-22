@@ -105,6 +105,8 @@ const machines = defineCollection({
     // 出典・トレーサビリティ（メーカー公表事実の裏取り。出典明示にもなる）
     source: httpsUrl('出典URL'), // 出典URL（メーカー公式/ニュース）
     fetched: dateish.default(''), // 取得日 YYYY-MM-DD
+    bonusPayout: z.coerce.string().default(''), // ボーナスの終了条件・獲得枚数（メーカー公表。例 BIG 266枚超の払い出しで終了）
+    complete: z.boolean().default(false),        // コンプリート機能搭載（メーカーが公表している場合だけ true）
     newsSource: httpsUrl('業界紙URL'), // 導入日・製造元・型式名を確かめた業界紙の記事（進行表の確認用。ページとアプリには出さない）
     // 更新履歴（ホームの新着ブロック用。一覧の並び順は導入日のままにする）
     crosscheckUrl: httpsUrl('照合URL'), // 転記ミス検出の照合先（verified が無い機種用・非表示）

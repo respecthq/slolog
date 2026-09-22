@@ -12,10 +12,13 @@ modelName: 'LB／タコスロBD'
 modelNameSource: https://www.p-world.co.jp/machine/database/10510
 kenteiNo: '6S0085'
 cabinet: アーチャー
+complete: true
 source: https://www.universal-777.co.jp/news/20260608002509/
 fetched: 2026-09-01
 added: 2026-09-02
 crosscheckUrl: https://p.hisshobon.jp/machine/4774
+updated: 2026-09-23
+updateNote: コンプリート機能搭載を追加（メーカー公式）
 draft: false
 watch:
   - https://www.universal-777.com/product/slot/taco_2026/
