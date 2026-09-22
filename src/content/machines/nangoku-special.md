@@ -8,6 +8,8 @@ released: 2026-07-06
 koyaku: ''
 type: ''
 gen: 'スマスロ'
+modelName: 'L南国育ちSPM1'
+modelNameSource: https://www.p-world.co.jp/machine/database/10488
 source: https://www.heiwanet.co.jp/products/pachislot/sns3/
 newsSource: https://web-greenbelt.jp/post-112732/
 fetched: 2026-09-23

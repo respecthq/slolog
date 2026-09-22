@@ -8,6 +8,8 @@ released: 2026-09-07
 koyaku: ''
 type: ''
 gen: 'スマスロ'
+modelName: 'L青春ブタ野郎L1'
+modelNameSource: https://www.p-world.co.jp/machine/database/10527
 source: https://www.heiwanet.co.jp/products/pachislot/ssb1/
 newsSource: https://web-greenbelt.jp/post-115158/
 fetched: 2026-09-23

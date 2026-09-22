@@ -8,6 +8,8 @@ released: 2026-09
 koyaku: ''
 type: ''
 gen: 'スマスロ'
+modelName: 'L見える子ちゃんSC'
+modelNameSource: https://www.p-world.co.jp/machine/database/10501
 source: https://www.slot-pioneer.co.jp/product/mierukochan/
 newsSource: https://web-greenbelt.jp/post-113548/
 fetched: 2026-09-23

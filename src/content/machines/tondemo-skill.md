@@ -8,6 +8,8 @@ released: 2026-08-03
 koyaku: ''
 type: ''
 gen: 'スマスロ'
+modelName: 'LとんでもスキルKM'
+modelNameSource: https://www.p-world.co.jp/machine/database/10493
 source: https://www.konami.com/amusement/psm/slot/tondemoskill/
 newsSource: https://prtimes.jp/main/html/rd/p/000000490.000053327.html
 fetched: 2026-09-23

@@ -8,6 +8,8 @@ released: 2026-07
 koyaku: ''
 type: ''
 gen: 'スマスロ'
+modelName: 'L戦国コレクション6KS'
+modelNameSource: https://www.p-world.co.jp/machine/database/10471
 source: https://www.konami.com/amusement/psm/slot/sengokucollection6/
 newsSource: https://web-greenbelt.jp/post-111443/
 fetched: 2026-09-23
