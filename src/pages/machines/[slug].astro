@@ -22,7 +22,7 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
   <div class="page-wrap">
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">{d.name}</span></nav>
     <div class:list={['detail-heading',{'has-image':!!d.image}]}>
-      <div><p class="eyebrow">MACHINE GUIDE / {d.maker}</p><h1>{d.name}</h1><div class="detail-meta"><span>{d.fictional?'架空機 / サンプル':`${fmt(d.released)} 導入`}</span>{d.type&&<span>{d.type}</span>}</div><p>{d.fictional?'Re:Spectのオリジナル機です。実在するホールには設置されていません。掲載値は自社シミュレーターの実装・実測に基づきます。':'基本情報・公表スペックと、確認元をまとめています。未確認の情報は掲載していません。'}</p></div>
+      <div><p class="eyebrow">MACHINE GUIDE / {d.maker}</p><h1>{d.name}</h1><div class="detail-meta"><span>{d.fictional?'架空機 / サンプル':`${fmt(d.released)} 導入`}</span>{d.type&&<span>{d.type}</span>}</div>{d.fictional?<p>Re:Spectのオリジナル機です。実在するホールには設置されていません。掲載値は自社シミュレーターの実装・実測に基づきます。</p>:d.added&&<p class="detail-dates">掲載 <time datetime={d.added}>{fmt(d.added)}</time>{d.updated&&d.updated>d.added&&<> ／ 更新 <time datetime={d.updated}>{fmt(d.updated)}</time></>}</p>}</div>
       {d.image&&<figure><img src={url(d.image.src)} alt={d.image.alt} width="230" height="380" /><figcaption>{d.image.credit}</figcaption></figure>}
     </div>
     <div class="detail-layout">

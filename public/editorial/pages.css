@@ -8,3 +8,5 @@
 @media(prefers-reduced-motion:reduce){.catalog-item{transition:none}}
 .catalog-ceiling{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .catalog-layout>section,.catalog-item,.catalog-item a{min-width:0}
+
+.detail-dates{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
