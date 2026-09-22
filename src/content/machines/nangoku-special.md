@@ -17,7 +17,7 @@ specSource: https://www.heiwanet.co.jp/assets/images/products/guide/sns3.pdf
 newsSource: https://web-greenbelt.jp/post-112732/
 fetched: 2026-09-23
 added: 2026-09-23
-draft: true
+draft: false
 watchKeyword: 南国育ち
 ---
 
