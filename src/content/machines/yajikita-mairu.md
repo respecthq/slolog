@@ -2,7 +2,7 @@
 name: スマスロ やじきた道中記参る！
 maker: ユニバーサルブロス（販売：ユニバーサルエンターテインメント）
 ceiling: ''
-junzo: ''
+junzo: '約2.5枚/G（AT「やじきた祭」）／疑似ボーナス・上位AT 約5.0枚/G'
 zone: ''
 released: 2026-08
 koyaku: ''

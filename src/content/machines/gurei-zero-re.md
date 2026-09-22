@@ -2,7 +2,7 @@
 name: Lパチスロ 喰霊-零-Re
 maker: オーイズミラボ（販売：オーイズミ）
 ceiling: ''
-junzo: ''
+junzo: '約1.0枚/G（ART「喰霊CHANCE」）'
 zone: ''
 released: 2026-08
 koyaku: ''

@@ -2,7 +2,7 @@
 name: Lパチスロ からくりサーカス2
 maker: ジェイビー（販売：SANKYO）
 ceiling: ''
-junzo: ''
+junzo: '約2.8枚/G（AT）／上位AT 約8.0枚/G'
 zone: ''
 released: 2026-07-06
 koyaku: ''

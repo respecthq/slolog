@@ -2,7 +2,7 @@
 name: L ULTRAMAN 最終決戦
 maker: オッケー．（販売：フィールズ）
 ceiling: ''
-junzo: ''
+junzo: '約7.0枚/G（AT「ULTRA RUSH」）'
 zone: ''
 released: 2026-07-06
 koyaku: ''

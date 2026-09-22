@@ -2,7 +2,7 @@
 name: L聖闘士星矢 黄金十二宮
 maker: サンスリー（販売：三洋販売）
 ceiling: ''
-junzo: ''
+junzo: '約4.0枚/G（AT「Battle of ZODIAC」）／上位AT「千日戦争」 約6.6枚/G'
 zone: ''
 released: 2026-11-02
 koyaku: ''

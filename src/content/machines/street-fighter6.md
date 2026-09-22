@@ -2,7 +2,7 @@
 name: スマスロ ストリートファイター6
 maker: レオスター（販売：フィールズ）
 ceiling: ''
-junzo: ''
+junzo: '約6.0枚/G（ファイターズバトル・疑似ボーナス）'
 zone: ''
 released: 2026-08-03
 koyaku: ''

@@ -2,7 +2,7 @@
 name: スマスロ とある魔術の禁書目録2
 maker: 藤商事
 ceiling: ''
-junzo: ''
+junzo: '約4.0枚/G（AT「幻想殺しRUSH」）'
 zone: ''
 released: 2026-08
 koyaku: ''
