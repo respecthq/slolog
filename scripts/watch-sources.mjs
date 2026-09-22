@@ -25,7 +25,7 @@ function targets() {
   const out = [];
   for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWith('_'))) {
     const fm = readFileSync(join(dir, f), 'utf8').split('---')[1] ?? '';
-    if (/^draft:\s*true/m.test(fm) || /^fictional:\s*true/m.test(fm)) continue;
+    if (/^fictional:\s*true/m.test(fm)) continue;   // 下書きも見張る（公開前に天井が出そろうことが多い。2026-09-23〜）
     const one = (k) => (fm.match(new RegExp(`^${k}:\\s*(.*)$`, 'm'))?.[1] ?? '').trim().replace(/^['"]|['"]$/g, '');
     const urls = [one('source')];
     const w = fm.match(/^watch:\s*\n((?:\s+-\s+.*\n?)+)/m);
