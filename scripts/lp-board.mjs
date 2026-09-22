@@ -60,7 +60,8 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
   const refUrls = [...new Set([...fm.matchAll(/https:\/\/[^\s'"]*(?:p-gabu\.jp|hisshobon\.jp)[^\s'"]*/g)].map((x) => x[0]))];
   const refs = { gabu: refUrls.find((u) => u.includes('p-gabu.jp')), hissho: refUrls.find((u) => u.includes('hisshobon.jp')) };
   let fresh = null;
-  if (inWin(one('added'))) fresh = { kind: 'new', date: one('added'), note: flag('draft') ? '下書きを作成（非公開）' : 'LP に新しいページ' };
+  const backfill = relDate && one('added') && relDate < new Date(new Date(one('added')) - 30 * 86400000);   // 導入から 30 日以上たってから載せた
+  if (inWin(one('added'))) fresh = { kind: 'new', date: one('added'), note: (flag('draft') ? '下書きを作成（非公開）' : 'LP に新しいページ') + (backfill ? '・稼働中の機種を後から追加' : '') };
   else if (inWin(one('updated'))) fresh = { kind: 'upd', date: one('updated'), note: one('updateNote') || '情報を更新' };
   else if (baseRev) {
     const path = join(dir, f); const old = git('show', `${baseRev}:${path}`);
@@ -144,31 +145,69 @@ const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}${fchip(m.fresh)}<div cl
 const rowsRecent = recent.map((r) => `<tr><td>${fchip(r.f).trim()}</td><td><b>${esc(r.name)}</b></td><td><a href="#${r.anchor}">${esc(r.where)}</a></td><td class="sub">${esc(r.f.note)}</td><td class="num">${esc(r.f.date)}</td></tr>`).join('');
 const wfile = (f) => 'file://' + process.cwd() + '/notes/weekly/' + f;
 const rowsWeekly = weekly.map((w) => `<tr data-week="${esc(w.date)}"><td class="num"><b>${esc(w.date)}</b></td><td>${w.verified ? `<span class="chip okc">検証済み ${esc(w.verifiedAt)}</span>` : '<span class="chip ceil">未検証</span>'} <span class="chip unread" hidden>未読</span></td><td>${esc(w.summary || '')}</td><td>${w.verified ? `<a class="wk" href="${esc(wfile(w.verified))}" target="_blank">検証結果</a>` : '<span class="mute">—</span>'}${w.draft ? ` · <a class="wk" href="${esc(wfile(w.draft))}" target="_blank">下書きの要約</a>` : ''}${w.sessionUrl ? ` · <a class="wk" href="${esc(w.sessionUrl)}" target="_blank" rel="noopener">原文（claude.ai）</a>` : ''}</td></tr>`).join('');
-const section = (id, title, hint, head, rows, empty) => `<section id="${id}"><h2>${title}</h2><p class="hint">${hint}</p>${rows ? `<div class="scroll"><table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="empty">${empty}</p>`}</section>`;
+const section = (id, eyebrow, title, hint, head, rows, empty) => `<section id="${id}" class="block"><div class="block-head"><p class="eyebrow">${eyebrow}</p><h2>${title}</h2><p class="hint">${hint}</p></div>${rows ? `<div class="card scroll"><table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>` : `<div class="card empty">${empty}</div>`}</section>`;
+// ちびキナナの吹き出し（いちばん先に見てほしいことを 1 つ）
+const say = pending.length ? `OK 待ちが <b>${pending.length} 件</b>あるよ！<br>出典を見て OK してね`
+  : recent.length ? `この ${FRESH_DAYS} 日で<br>NEW <b>${nNew}</b> 件・追加情報 <b>${nUpd}</b> 件！`
+  : `今週は動きなし。<br>見張りは続けてるよ`;
+const count = (href, tag, n, label, hot) => `<a class="count${hot ? ' hot' : ''}" href="${href}"><span class="count-tag">${tag}</span><b>${n}</b><span class="count-label">${label}</span></a>`;
 const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LP 進行表</title><style>
-:root{--bg:#f6f5f2;--card:#fff;--ink:#1c1d21;--mute:#6d707a;--line:#dedcd6;--accent:#d9650a;--pre:#e8eefc;--preI:#23408f;--ceil:#fdebd6;--ceilI:#8a4300;--spec:#ece8fb;--specI:#47318f;--draft:#ececec;--draftI:#4a4a4a;--ok:#1d7a46;--new:#1d7a46;--newI:#fff;--upd:#dcedf3;--updI:#0f5670}
-@media (prefers-color-scheme:dark){:root{--bg:#121317;--card:#1a1c22;--ink:#eceef2;--mute:#9a9eaa;--line:#2c2f38;--accent:#ff9a3f;--pre:#1c2748;--preI:#a9bcff;--ceil:#3a2710;--ceilI:#ffc98a;--spec:#271f45;--specI:#c9bcff;--draft:#2a2b30;--draftI:#c4c6cc;--ok:#52c787;--new:#52c787;--newI:#0b2215;--upd:#12303a;--updI:#8fd3ea}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
-main{max-width:1180px;margin:auto;padding:28px 16px 80px}h1{font-size:26px;margin:0 0 4px}h2{font-size:19px;margin:0 0 2px}.date{color:var(--mute)}
-.counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0 8px}.count{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit}
-.count b{display:block;font-size:30px;line-height:1.2;font-variant-numeric:tabular-nums}.count span{color:var(--mute);font-size:13px}.count.hot b{color:var(--accent)}
-section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:20px}.hint{color:var(--mute);margin:0 0 12px;font-size:13px}.empty{color:var(--mute);margin:0}
-.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:720px}th{text-align:left;font-size:12px;color:var(--mute);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-td:last-child{white-space:nowrap}td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}tr:last-child td{border-bottom:0}.num{font-variant-numeric:tabular-nums;white-space:nowrap}.sub{color:var(--mute);font-size:12.5px}.mute{color:var(--mute)}
-.kv{font-size:13px;margin-top:3px}code{background:var(--draft);padding:1px 5px;border-radius:4px;font-size:12px}a{color:var(--accent);text-underline-offset:3px}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.chip{display:inline-block;white-space:nowrap;font-size:12px;padding:2px 9px;border-radius:999px;margin:2px 2px 2px 0;background:var(--draft);color:var(--draftI)}.chip.pre{background:var(--pre);color:var(--preI)}.chip.ceil{background:var(--ceil);color:var(--ceilI)}.chip.spec{background:var(--spec);color:var(--specI)}.chip.okc{background:transparent;border:1px solid var(--ok);color:var(--ok)}.chip.unread{background:var(--accent);color:#fff}.chip.new{background:var(--new);color:var(--newI);font-weight:700;letter-spacing:.04em}.chip.upd{background:var(--upd);color:var(--updI);font-weight:600}[hidden]{display:none!important}
-button.ok{font:inherit;font-weight:700;border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:8px;padding:4px 12px;cursor:pointer}button.ok.copied{border-color:var(--ok);color:var(--ok)}
-footer{color:var(--mute);font-size:12.5px;margin-top:24px}@media (max-width:640px){.counts{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style></head><body><main>
-<h1>LP 進行表</h1><div class="date">${ymd} 時点 ／ スロログ 機種ハブ</div>
-<div class="counts"><a class="count ${pending.length ? 'hot' : ''}" href="#ok"><b>${pending.length}</b><span>OK 待ち</span></a><a class="count" href="#queue"><b>${queue.length}</b><span>候補（ページなし）</span></a><a class="count" href="#wait"><b>${waiting.length}</b><span>更新待ち</span></a><a class="count" href="#done"><b>${done.length}</b><span>完了</span></a></div>
-${section('ok', 'OK 待ち', '出典を開いて確かめ、左のボタンを押すと「A1 OK」がコピーされます。それを Claude に貼れば、その場で反映して公開します。', ['番号', '種類', '内容', '確認先'], rowsPending, 'いまはありません。')}
-${section('recent', `この ${FRESH_DAYS} 日の動き`, `${cutoff} 以降。<b>NEW</b>＝この期間に初めて載った機種／<b>追加情報</b>＝前からある機種に情報が増えた。下の各表の機種名にも同じ印が付きます。`, ['種類', '機種', 'いまの場所', '内容', '日付'], rowsRecent, 'この期間の動きはありません。')}
-${section('weekly', '週次レポート', '月曜に届く下書きと、その検証結果。リンクを開くと「未読」が消えます（このブラウザだけの記録）。', ['週', '状態', '要点', '開く'], rowsWeekly, 'まだありません。')}
-${section('queue', '候補（まだ LP にページがない）', '検定通過・メーカー公開・導入済みで未掲載の機種。メーカー公式の出典が取れたら「OK 待ち」に上がります。', ['機種', '段階', '導入', '次にやること', '公式'], rowsQueue, 'いまはありません。')}
-${section('wait', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。', ['機種', '導入', '待っているもの', '天井と確認先', 'リンク'], rowsWait, 'ありません。')}
-${section('done', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', '天井と確認先', 'メモ', 'リンク'], rowsDone, 'ありません。')}
-<footer>完了の条件：型式名あり ＋ 天井が決着（あり／仕様上なし）＋ 公表値が決着（掲載済み／導入から 60 日たっても未公表）＋ 導入済み。<br>このページは <code>node scripts/lp-board.mjs</code> が作り直します（手で編集しない）。同じ内容の md は notes/LP_BOARD.md。</footer>
-</main><script>(function(){var K='lpboard-read';var read={};try{read=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}document.querySelectorAll('tr[data-week]').forEach(function(tr){var d=tr.dataset.week;var u=tr.querySelector('.unread');if(u&&!read[d])u.hidden=false;tr.querySelectorAll('a.wk').forEach(function(a){['click','auxclick'].forEach(function(ev){a.addEventListener(ev,mark)});function mark(){read[d]=1;try{localStorage.setItem(K,JSON.stringify(read))}catch(e){}if(u)u.hidden=true}})})})();document.querySelectorAll('button.ok').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){}const t=b.textContent;b.textContent='コピーした';b.classList.add('copied');setTimeout(()=>{b.textContent=t;b.classList.remove('copied')},1200)}));</script></body></html>`;
+:root{--paper:#fafbfc;--card:#fff;--ink:#111216;--muted:#62656c;--orange:#ef6b12;--link:#b84a00;--band:#ff8b32;--line:#dedfe3;--soft:#f3f4f6;--bubble:#fff;--shadow:0 16px 34px #1112161c;
+--new:#ef6b12;--newI:#fff;--upd:#fff1e6;--updI:#a63c00;--updB:#f0c4a4;--pre:#e9effd;--preI:#2a4494;--ceil:#fff4cc;--ceilI:#6e4c00;--spec:#f0ebfd;--specI:#4a3596;--draft:#eef0f3;--draftI:#4b4e55;--ok:#1b7a47;--unread:#111216;--unreadI:#fff;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--paper:#0c0d10;--card:#181b21;--ink:#f5f5f7;--muted:#afb3be;--orange:#f5972a;--link:#ffab5c;--band:#c9661a;--line:#2b2f37;--soft:#1e2128;--bubble:#20242b;--shadow:0 16px 34px #0009;
+--new:#f5972a;--newI:#1a0f03;--upd:#2e2012;--updI:#ffc98a;--updB:#6b4521;--pre:#1c2748;--preI:#a9bcff;--ceil:#33290f;--ceilI:#ffd66b;--spec:#271f45;--specI:#c9bcff;--draft:#23262e;--draftI:#c4c7cf;--ok:#52c787;--unread:#f5f5f7;--unreadI:#111216;color-scheme:dark}.brand{filter:invert(1) hue-rotate(180deg)}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:16px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.75 -apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-synthesis:none}
+h1,h2,p{margin:0}a{color:var(--link);text-underline-offset:3px}a:focus-visible,button:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.top{border-bottom:1px solid var(--line)}.top .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{width:128px;display:block}
+.top-meta{display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}.private{font-size:11px;font-weight:750;border:1px solid var(--line);border-radius:4px;padding:3px 8px;color:var(--muted)}
+.eyebrow{font-size:12px;font-weight:750;letter-spacing:.06em;line-height:1.5}.eyebrow b{color:var(--orange);margin-right:12px}
+.hero-copy{padding-top:44px;padding-bottom:28px}.hero h1{font-size:46px;font-weight:900;line-height:1.3;margin-top:14px;letter-spacing:.01em}.hero h1 em{font-style:normal;color:var(--orange)}.lead{color:var(--muted);margin-top:10px;font-size:15px}
+.stage{position:relative}.band{position:absolute;inset:58px 0 0;background:var(--band)}
+.stage .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;min-height:320px}
+.counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-self:start}
+.count{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px 14px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:transform .18s,border-color .18s;display:flex;flex-direction:column}
+.count:hover{transform:translateY(-3px);border-color:var(--orange)}.count-tag{font-size:11px;font-weight:750;letter-spacing:.06em;color:var(--orange)}
+.count b{font-size:42px;font-weight:900;line-height:1.15;font-variant-numeric:tabular-nums;margin-top:4px}.count-label{font-size:12.5px;font-weight:700;color:var(--muted)}
+.count.hot{border:2px solid var(--orange)}.count.hot b{color:var(--orange)}
+.stage-label{position:absolute;left:16px;bottom:30px;color:#fff;pointer-events:none}.stage-label span{display:block;font-size:24px;font-weight:900;line-height:1.1;letter-spacing:.01em}.stage-label small{display:block;font-size:10.5px;font-weight:700;margin-top:12px;opacity:.95}
+.kina{position:relative;align-self:end;justify-self:end;width:230px}.kina img{display:block;width:200px;margin-left:auto;filter:drop-shadow(0 10px 18px #0000002e)}
+.bubble{position:absolute;right:190px;top:128px;width:250px;background:var(--bubble);color:var(--ink);border:2px solid var(--ink);border-radius:18px;padding:12px 14px;font-size:13.5px;font-weight:750;line-height:1.55;box-shadow:var(--shadow);z-index:2}
+.bubble b{color:var(--orange);font-size:16px}.bubble::after{content:"";position:absolute;right:-11px;top:30px;width:16px;height:16px;background:var(--bubble);border-right:2px solid var(--ink);border-top:2px solid var(--ink);transform:rotate(45deg) skew(8deg,8deg)}
+.bubble .more{display:block;margin-top:6px;font-size:12px;color:var(--muted)}
+main{padding-bottom:64px}.block{margin-top:60px}.block-head{margin-bottom:16px}.block h2{font-size:27px;font-weight:850;line-height:1.4;margin-top:8px}.hint{color:var(--muted);font-size:13.5px;margin-top:6px;max-width:72ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px}.scroll{overflow-x:auto}.empty{padding:22px 20px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;min-width:760px}th{text-align:left;font-size:11.5px;font-weight:750;color:var(--muted);letter-spacing:.04em;padding:12px 16px;background:var(--soft);white-space:nowrap}
+td{padding:15px 16px;border-top:1px solid var(--line);vertical-align:top}tbody tr{transition:background .15s}tbody tr:hover{background:var(--soft)}td:last-child{white-space:nowrap}
+td b{font-weight:800}.num{font-variant-numeric:tabular-nums;white-space:nowrap}.sub{color:var(--muted);font-size:12.5px;margin-top:2px}.mute{color:var(--muted)}.kv{font-size:13px;margin-top:4px}
+code{background:var(--draft);color:var(--draftI);padding:1px 6px;border-radius:4px;font-size:12px}
+.chip{display:inline-block;white-space:nowrap;font-size:11.5px;font-weight:700;line-height:1.6;padding:2px 10px;border-radius:999px;margin:2px 3px 2px 0;background:var(--draft);color:var(--draftI);vertical-align:1px}
+.chip.pre{background:var(--pre);color:var(--preI)}.chip.ceil{background:var(--ceil);color:var(--ceilI)}.chip.spec{background:var(--spec);color:var(--specI)}
+.chip.new{background:var(--new);color:var(--newI);font-weight:850;letter-spacing:.08em}.chip.upd{background:var(--upd);color:var(--updI);box-shadow:inset 0 0 0 1px var(--updB)}
+.chip.okc{background:transparent;box-shadow:inset 0 0 0 1px var(--ok);color:var(--ok)}.chip.unread{background:var(--unread);color:var(--unreadI)}[hidden]{display:none!important}
+button.ok{font:inherit;font-size:13px;font-weight:750;border:0;background:var(--ink);color:var(--paper);border-radius:6px;padding:7px 14px;cursor:pointer;transition:transform .15s}button.ok:hover{transform:translateY(-2px)}button.ok.copied{background:var(--ok);color:#fff}
+footer{border-top:1px solid var(--line)}footer .wrap{padding:26px 16px 40px;color:var(--muted);font-size:12.5px;line-height:1.9}footer .sig{font-size:11px;font-weight:750;letter-spacing:.06em;color:var(--ink);margin-bottom:8px}footer .sig b{color:var(--orange)}
+@media (max-width:860px){.counts{grid-template-columns:repeat(2,minmax(0,1fr))}.stage .wrap{grid-template-columns:minmax(0,1fr);min-height:0}.stage-label{display:none}
+.kina{width:100%;display:flex;align-items:flex-end;justify-content:flex-end;gap:16px;margin-top:8px}.kina img{width:150px;margin:0;flex:none}.bubble{position:relative;right:auto;top:auto;width:auto;max-width:340px;flex:0 1 auto;margin:0 0 72px}.bubble::after{top:auto;bottom:24px}}
+@media (max-width:640px){.hero h1{font-size:34px}.hero-copy{padding-top:32px;padding-bottom:22px}.top-meta time{display:none}.kina img{width:118px}.bubble{margin-bottom:56px;font-size:13px}.count{padding:14px 14px 12px}.count b{font-size:34px}.block{margin-top:44px}.block h2{font-size:22px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style></head><body>
+<header class="top"><div class="wrap"><img class="brand" src="../public/editorial/assets/logo.png" alt="スロログ"><div class="top-meta"><span class="private">非公開</span><time>${ymd} 時点</time></div></div></header>
+<div class="hero"><div class="wrap hero-copy"><p class="eyebrow"><b>LP BOARD</b>スロログ 機種ハブ</p><h1>LP 進行表</h1><p class="lead">候補 → 更新待ち → 完了。今週の動きと、あなたの OK 待ちがひと目でわかる。</p></div>
+<div class="stage"><div class="band"></div><div class="wrap">
+<nav class="counts" aria-label="件数">${count('#ok', 'OK', pending.length, 'OK 待ち', pending.length > 0)}${count('#queue', '01', queue.length, '候補（ページなし）')}${count('#wait', '02', waiting.length, '更新待ち')}${count('#done', '03', done.length, '完了')}</nav>
+<div class="stage-label" aria-hidden="true"><span>CHECK.<br>OK.<br>PUBLISH.</span><small>powered by 回胴キナナ</small></div>
+<div class="kina"><p class="bubble" role="status">${say}<span class="more" id="unreadMsg" hidden>週次レポートに未読があるよ</span></p><img src="../public/images/kina-chibi.webp" alt="ちびキナナ"></div>
+</div></div></div>
+<main class="wrap">
+${section('ok', '<b>OK</b>WAITING FOR YOU', 'OK 待ち', '出典を開いて確かめ、左のボタンを押すと「A1 OK」がコピーされます。それを Claude に貼れば、その場で反映して公開します。', ['番号', '種類', '内容', '確認先'], rowsPending, 'いまはありません。')}
+${section('recent', `<b>${FRESH_DAYS} DAYS</b>WHAT'S NEW`, `この ${FRESH_DAYS} 日の動き`, `${cutoff} 以降。<b>NEW</b>＝この期間に初めて載った機種／<b>追加情報</b>＝前からある機種に情報が増えた。下の各表の機種名にも同じ印が付きます。`, ['種類', '機種', 'いまの場所', '内容', '日付'], rowsRecent, 'この期間の動きはありません。')}
+${section('weekly', '<b>MON</b>WEEKLY REPORT', '週次レポート', '月曜に届く下書きと、その検証結果。リンクを開くと「未読」が消えます（このブラウザだけの記録）。', ['週', '状態', '要点', '開く'], rowsWeekly, 'まだありません。')}
+${section('queue', '<b>01</b>CANDIDATES', '候補（まだ LP にページがない）', '検定通過・メーカー公開・導入済みで未掲載の機種。メーカー公式の出典が取れたら「OK 待ち」に上がります。', ['機種', '段階', '導入', '次にやること', '公式'], rowsQueue, 'いまはありません。')}
+${section('wait', '<b>02</b>IN PROGRESS', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。', ['機種', '導入', '待っているもの', '天井と確認先', 'リンク'], rowsWait, 'ありません。')}
+${section('done', '<b>03</b>COMPLETE', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', '天井と確認先', 'メモ', 'リンク'], rowsDone, 'ありません。')}
+</main>
+<footer><div class="wrap"><p class="sig"><b>SLOLOG</b>powered by 回胴キナナ</p>完了の条件：型式名あり ＋ 天井が決着（あり／仕様上なし）＋ 公表値が決着（掲載済み／導入から 60 日たっても未公表）＋ 導入済み。<br>このページは <code>node scripts/lp-board.mjs</code> が作り直します（手で編集しない）。同じ内容の md は notes/LP_BOARD.md。</div></footer>
+<script>(function(){var K='lpboard-read';var read={};try{read=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}var msg=document.getElementById('unreadMsg');function sync(){if(msg)msg.hidden=!document.querySelector('tr[data-week] .unread:not([hidden])')}document.querySelectorAll('tr[data-week]').forEach(function(tr){var d=tr.dataset.week;var u=tr.querySelector('.unread');if(u&&!read[d])u.hidden=false;tr.querySelectorAll('a.wk').forEach(function(a){['click','auxclick'].forEach(function(ev){a.addEventListener(ev,mark)});function mark(){read[d]=1;try{localStorage.setItem(K,JSON.stringify(read))}catch(e){}if(u)u.hidden=true;sync()}})});sync()})();document.querySelectorAll('button.ok').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){}const t=b.textContent;b.textContent='コピーした';b.classList.add('copied');setTimeout(()=>{b.textContent=t;b.classList.remove('copied')},1200)}));</script></body></html>`;
 writeFileSync('notes/LP_BOARD.html', html);
 console.log(`notes/LP_BOARD.md と LP_BOARD.html を更新：OK 待ち ${pending.length}／候補 ${queue.length}／更新待ち ${waiting.length}／完了 ${done.length}`);
