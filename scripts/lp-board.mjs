@@ -77,9 +77,10 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
     note: !hasSpec && specSettled && !flag('specNone') ? '公表値はメーカー未公表（導入から 60 日超）' : '' });
 }
 const byRel = (a, b) => (b.rel || '').localeCompare(a.rel || '');
-const waiting = machines.filter((m) => m.wait.length).sort(byRel);
-const done = machines.filter((m) => !m.wait.length).sort(byRel);
 const pending = proposals.filter((p) => !p.appliedAt);
+const pendingSlugs = new Set(pending.filter((p) => p.kind === 'new').map((p) => p.slug));   // OK 待ちの下書きは更新待ちに重ねて出さない
+const waiting = machines.filter((m) => m.wait.length && !pendingSlugs.has(m.slug)).sort(byRel);
+const done = machines.filter((m) => !m.wait.length).sort(byRel);
 // ---- 区分の正は週次レポート（scripts/weekly-import.mjs が index.json の items に入れたもの）----
 //   いちばん新しいレポートの 🆕 NEW／➕ 追加情報 を印にする。レポートに無い機種だけ、LP 側の記録（added／updated・git）で補う
 const reports = load('notes/weekly/index.json', []).filter((w) => w.items?.length && !w.backfill).sort((a, b) => b.date.localeCompare(a.date));
@@ -92,13 +93,15 @@ const qFresh = new Map(queue.map((q) => [q, inReport(q.name) ? fromReport(q.name
 const where = (name) => { const k = norm(name); const q = queue.find((x) => norm(x.name) === k); if (q) return ['候補', 'queue']; const m = machines.find((x) => norm(x.name) === k); if (m) return m.wait.length ? ['更新待ち', 'wait'] : ['完了', 'done']; return ['LP 未登録', 'queue']; };
 const recent = [
   ...(latest?.items ?? []).filter((i) => i.kind !== 'known').map((i) => { const [w, a] = where(i.name); return { f: fromReport(i.name), name: i.name, where: w, anchor: a }; }),
-  ...queue.filter((q) => qFresh.get(q)?.src === 'lp').map((q) => ({ f: qFresh.get(q), name: q.name, where: '候補', anchor: 'queue' })),
-  ...machines.filter((m) => m.fresh?.src === 'lp').map((m) => ({ f: m.fresh, name: m.name, where: m.wait.length ? '更新待ち' : '完了', anchor: m.wait.length ? 'wait' : 'done' })),
 ].filter((r) => r.f).sort((a, b) => (b.f.date || '').localeCompare(a.f.date || '') || (a.f.kind === 'new' ? -1 : 1));
 const nNew = recent.filter((r) => r.f.kind === 'new').length, nUpd = recent.length - nNew;
 const knownN = latest?.counts?.known ?? 0;
 const mdMark = (f) => (f ? (f.kind === 'new' ? '🆕 NEW｜' : '➕ 追加情報｜') : '');
-const weekly = load('notes/weekly/index.json', []).sort((x, y) => y.date.localeCompare(x.date));   // 週次レポート：下書き（未検証の原文）と検証結果
+const weeklyAll = load('notes/weekly/index.json', []).sort((x, y) => y.date.localeCompare(x.date));
+const back = weeklyAll.filter((w) => w.backfill);   // 過去分（7〜9 月の取り込み）は 1 行にまとめる
+const weekly = [...weeklyAll.filter((w) => !w.backfill), ...(back.length ? [{ date: `${back[back.length - 1].date}〜${back[0].date}`, backfillGroup: true,
+  verified: back.every((w) => w.verified) ? back[0].verified : null, verifiedAt: back.every((w) => w.verified) ? back.map((w) => w.verifiedAt).sort().at(-1) : null,
+  summary: `過去分 ${back.length} 本の取り込み（${back.map((w) => w.date.slice(5).replace('-', '/')).join('・')}）` }] : [])];   // 週次レポート：下書き（未検証の原文）と検証結果
 
 let md = `# LP 進行表（${ymd}）\n\n`;
 md += `OK 待ち **${pending.length}**／候補 **${queue.length}**／更新待ち **${waiting.length}**／完了 **${done.length}**\n\n`;
@@ -117,7 +120,7 @@ for (const p of pending) {
   if (p.note) md += `  - メモ：${p.note}\n`;
 }
 md += `\n## ✨ 今週の NEW と追加情報\n\n`;
-md += latest ? `正は週次レポート ${latest.date}（既報 ${knownN} 件は省略）。レポートに無い LP 側の更新は ${cutoff} 以降のものを足す\n\n` : `週次レポートの取り込みがまだ無いので、LP 側の記録（${cutoff} 以降）だけ\n\n`;
+md += latest ? `週次レポート ${latest.date} の区分（既報 ${knownN} 件は省略）\n\n` : `週次レポートの取り込みがまだありません\n\n`;
 if (!recent.length) md += `ありません。\n\n`;
 for (const r of recent) md += `- ${mdMark(r.f)}**${r.name}**｜いまの場所：${r.where}｜${r.f.note}｜${r.f.src === 'report' ? '週次レポート' : 'LP'} ${r.f.date}\n`;
 md += `\n## 📰 週次レポート\n\n`;
@@ -157,8 +160,8 @@ const rowsWait = waiting.map((m) => `<tr><td><b>${esc(m.name)}</b>${fchip(m.fres
 const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}${fchip(m.fresh)}<div class="sub">${esc(m.maker)}</div>${fnote(m.fresh)}</td><td class="num">${esc(m.rel)}</td><td>${ceilCell(m)}</td><td class="sub">${esc(m.note || '')}</td><td>${link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
 const rowsRecent = recent.map((r) => `<tr><td>${fchip(r.f).trim()}</td><td><b>${esc(r.name)}</b></td><td><a href="#${r.anchor}">${esc(r.where)}</a></td><td class="sub">${esc(r.f.note)}</td><td class="num">${r.f.src === 'report' ? '週次レポート' : 'LP'}<div class="sub">${esc(r.f.date)}</div></td></tr>`).join('');
 const wfile = (f) => 'file://' + process.cwd() + '/notes/weekly/' + f;
-const rowsWeekly = weekly.map((w) => `<tr data-week="${esc(w.date)}"><td class="num"><b>${esc(w.date)}</b></td><td>${w.verified ? `<span class="chip okc">検証済み ${esc(w.verifiedAt)}</span>` : '<span class="chip ceil">未検証</span>'} <span class="chip unread" hidden>未読</span></td><td>${w.counts ? `<span class="chip new">NEW ${w.counts.new}</span><span class="chip upd">追加情報 ${w.counts.update}</span><span class="chip">既報 ${w.counts.known}</span><div class="sub">${esc(w.summary || '')}</div>` : esc(w.summary || '')}</td><td>${w.verified ? `<a class="wk" href="${esc(wfile(w.verified))}" target="_blank">検証結果</a>` : '<span class="mute">—</span>'}${w.draft ? ` · <a class="wk" href="${esc(wfile(w.draft))}" target="_blank">下書きの要約</a>` : ''}${w.sessionUrl ? ` · <a class="wk" href="${esc(w.sessionUrl)}" target="_blank" rel="noopener">原文（claude.ai）</a>` : ''}</td></tr>`).join('');
-const section = (id, eyebrow, title, hint, head, rows, empty) => `<section id="${id}" class="block"><div class="block-head"><p class="eyebrow">${eyebrow}</p><h2>${title}</h2><p class="hint">${hint}</p></div>${rows ? `<div class="card scroll"><table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>` : `<div class="card empty">${empty}</div>`}</section>`;
+const rowsWeekly = weekly.map((w) => `<tr data-week="${esc(w.date)}"><td class="num"><b>${esc(w.backfillGroup ? '過去分' : w.date)}</b>${w.backfillGroup ? `<div class="sub">${esc(w.date)}</div>` : ''}</td><td>${w.verified ? `<span class="chip okc">検証済み ${esc(w.verifiedAt)}</span>` : '<span class="chip ceil">未検証</span>'} <span class="chip unread" hidden>未読</span></td><td>${w.counts ? `<span class="chip new">NEW ${w.counts.new}</span><span class="chip upd">追加情報 ${w.counts.update}</span><span class="chip">既報 ${w.counts.known}</span><div class="sub">${esc(w.summary || '')}</div>` : esc(w.summary || '')}</td><td>${w.verified ? `<a class="wk" href="${esc(wfile(w.verified))}" target="_blank">検証結果</a>` : '<span class="mute">—</span>'}${w.draft ? ` · <a class="wk" href="${esc(wfile(w.draft))}" target="_blank">下書きの要約</a>` : ''}${w.sessionUrl ? ` · <a class="wk" href="${esc(w.sessionUrl)}" target="_blank" rel="noopener">原文（claude.ai）</a>` : ''}</td></tr>`).join('');
+const section = (id, eyebrow, title, hint, head, rows, empty, fold = 0) => `<section id="${id}" class="block"><div class="block-head"><p class="eyebrow">${eyebrow}</p><h2>${title}</h2><p class="hint">${hint}</p></div>${rows ? `${fold ? `<details class="fold"><summary>${fold} 件を表示</summary>` : ''}<div class="card scroll"><table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>${fold ? '</details>' : ''}` : `<div class="card empty">${empty}</div>`}</section>`;
 // ちびキナナの吹き出し（いちばん先に見てほしいことを 1 つ）
 const say = pending.length ? `OK 待ちが <b>${pending.length} 件</b>あるよ！<br>出典を見て OK してね`
   : recent.length ? `${latest ? '今週のレポートは' : `この ${FRESH_DAYS} 日で`}<br>NEW <b>${nNew}</b> 件・追加情報 <b>${nUpd}</b> 件！`
@@ -199,6 +202,7 @@ code{background:var(--draft);color:var(--draftI);padding:1px 6px;border-radius:4
 .chip.new{background:var(--new);color:var(--newI);font-weight:850;letter-spacing:.08em}.chip.upd{background:var(--upd);color:var(--updI);box-shadow:inset 0 0 0 1px var(--updB)}
 .chip.okc{background:transparent;box-shadow:inset 0 0 0 1px var(--ok);color:var(--ok)}.chip.unread{background:var(--unread);color:var(--unreadI)}[hidden]{display:none!important}
 button.ok{font:inherit;font-size:13px;font-weight:750;border:0;background:var(--ink);color:var(--paper);border-radius:6px;padding:7px 14px;cursor:pointer;transition:transform .15s}button.ok:hover{transform:translateY(-2px)}button.ok.copied{background:var(--ok);color:#fff}
+.fold>summary{cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:750;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 16px;margin-bottom:12px;list-style:none}.fold>summary::-webkit-details-marker{display:none}.fold>summary::before{content:"＋";color:var(--orange);font-weight:900}.fold[open]>summary::before{content:"−"}.fold>summary:hover{border-color:var(--orange)}
 footer{border-top:1px solid var(--line)}footer .wrap{padding:26px 16px 40px;color:var(--muted);font-size:12.5px;line-height:1.9}footer .sig{font-size:11px;font-weight:750;letter-spacing:.06em;color:var(--ink);margin-bottom:8px}footer .sig b{color:var(--orange)}
 @media (max-width:860px){.counts{grid-template-columns:repeat(2,minmax(0,1fr))}.stage .wrap{grid-template-columns:minmax(0,1fr);min-height:0}.stage-label{display:none}
 .kina{width:100%;display:flex;align-items:flex-end;justify-content:flex-end;gap:16px;margin-top:8px}.kina img{width:150px;margin:0;flex:none}.bubble{position:relative;right:auto;top:auto;width:auto;max-width:340px;flex:0 1 auto;margin:0 0 72px}.bubble::after{top:auto;bottom:24px}}
@@ -214,11 +218,11 @@ footer{border-top:1px solid var(--line)}footer .wrap{padding:26px 16px 40px;colo
 </div></div></div>
 <main class="wrap">
 ${section('ok', '<b>OK</b>WAITING FOR YOU', 'OK 待ち', '出典を開いて確かめ、左のボタンを押すと「A1 OK」がコピーされます。それを Claude に貼れば、その場で反映して公開します。', ['番号', '種類', '内容', '確認先'], rowsPending, 'いまはありません。')}
-${section('recent', "<b>THIS WEEK</b>WHAT'S NEW", '今週の NEW と追加情報', latest ? `正は<b>週次レポート ${esc(latest.date)}</b> の区分です（既報 ${knownN} 件は省略）。<b>NEW</b>＝LP にまだ無い機種／<b>追加情報</b>＝前からある機種に情報が増えた。レポートに無い LP 側の更新は ${cutoff} 以降のものを足しています。下の各表の機種名にも同じ印が付きます。` : `週次レポートの取り込みがまだ無いので、LP 側の記録（${cutoff} 以降）だけを出しています。`, ['種類', '機種', 'いまの場所', '内容', '出どころ'], rowsRecent, '今週の動きはありません。')}
+${section('recent', "<b>THIS WEEK</b>WHAT'S NEW", '今週の NEW と追加情報', latest ? `<b>週次レポート ${esc(latest.date)}</b> の区分です（既報 ${knownN} 件は省略）。<b>NEW</b>＝LP にまだ無い機種／<b>追加情報</b>＝前からある機種に情報が増えた。LP 側で作ったページは「OK 待ち」に出ます。` : `週次レポートの取り込みがまだありません。`, ['種類', '機種', 'いまの場所', '内容', '出どころ'], rowsRecent, '今週の動きはありません。')}
 ${section('weekly', '<b>MON</b>WEEKLY REPORT', '週次レポート', '月曜に届く下書きと、その検証結果。リンクを開くと「未読」が消えます（このブラウザだけの記録）。', ['週', '状態', '要点', '開く'], rowsWeekly, 'まだありません。')}
 ${section('queue', '<b>01</b>CANDIDATES', '候補（まだ LP にページがない）', '検定通過・メーカー公開・導入済みで未掲載の機種。メーカー公式の出典が取れたら「OK 待ち」に上がります。', ['機種', '段階', '導入', '次にやること', '公式'], rowsQueue, 'いまはありません。')}
-${section('wait', '<b>02</b>IN PROGRESS', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。', ['機種', '導入', '待っているもの', '天井と確認先', 'リンク'], rowsWait, 'ありません。')}
-${section('done', '<b>03</b>COMPLETE', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', '天井と確認先', 'メモ', 'リンク'], rowsDone, 'ありません。')}
+${section('wait', '<b>02</b>IN PROGRESS', 'LP 作成済み・更新待ち', '情報がまだ増える機種。色つきのラベルが「何を待っているか」です。OK 待ちの下書きはここには出しません。', ['機種', '導入', '待っているもの', '天井と確認先', 'リンク'], rowsWait, 'ありません。')}
+${section('done', '<b>03</b>COMPLETE', '完了', '情報が出そろった機種。以後は見張りだけ続けます（公式ページに変化があれば OK 待ちに戻ります）。', ['機種', '導入', '天井と確認先', 'メモ', 'リンク'], rowsDone, 'ありません。', done.length)}
 </main>
 <footer><div class="wrap"><p class="sig"><b>SLOLOG</b>powered by 回胴キナナ</p>完了の条件：型式名あり ＋ 天井が決着（あり／仕様上なし）＋ 公表値が決着（掲載済み／導入から 60 日たっても未公表）＋ 導入済み。<br>このページは <code>node scripts/lp-board.mjs</code> が作り直します（手で編集しない）。同じ内容の md は notes/LP_BOARD.md。</div></footer>
 <script>(function(){var K='lpboard-read';var read={};try{read=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}var msg=document.getElementById('unreadMsg');function sync(){if(msg)msg.hidden=!document.querySelector('tr[data-week] .unread:not([hidden])')}document.querySelectorAll('tr[data-week]').forEach(function(tr){var d=tr.dataset.week;var u=tr.querySelector('.unread');if(u&&!read[d])u.hidden=false;tr.querySelectorAll('a.wk').forEach(function(a){['click','auxclick'].forEach(function(ev){a.addEventListener(ev,mark)});function mark(){read[d]=1;try{localStorage.setItem(K,JSON.stringify(read))}catch(e){}if(u)u.hidden=true;sync()}})});sync()})();document.querySelectorAll('button.ok').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){}const t=b.textContent;b.textContent='コピーした';b.classList.add('copied');setTimeout(()=>{b.textContent=t;b.classList.remove('copied')},1200)}));</script></body></html>`;
