@@ -7,6 +7,8 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { norm } from './lib-names.mjs';
+// パチンコ機（型式名・機種名の頭が e／P／PA／CR）は扱わない
+const isPachinko = (n) => /^(e|P|PA|CR)[^a-zA-Z]/.test(String(n ?? '').normalize('NFKC').trim()) || /パチンコ機/.test(String(n ?? ''));
 
 const args = process.argv.slice(2);
 const file = args.find((a) => !a.startsWith('--') && !/^\d{4}-\d{2}-\d{2}$/.test(a) && !/^https?:/.test(a));
@@ -30,7 +32,7 @@ for (const raw of text.split('\n')) {
   const col = head ? (head.includes('機種名') ? head.indexOf('機種名') : head.indexOf('型式名')) : -1;   // 検定通過の表は型式名の列
   if (col < 0) continue;
   const kind = kindOf(cells[0]); const name = cells[col];
-  if (!kind || !name || name === '—') continue;
+  if (!kind || !name || name === '—' || isPachinko(name)) continue;
   const extra = head.indexOf('増えた情報');   // 新しい形は「増えた情報」の列に中身が入る
   const note = ((cells[0].split(/[：:]/).slice(1).join('：') || '').trim()) || (extra >= 0 ? cells[extra] : '');
   const key = norm(name);
@@ -45,7 +47,7 @@ for (const m of text.matchAll(/^＝\s*既報[：:]\s*(.+)$/gm)) {
 // 表が読めなかったときは JSON の kubun を使う
 if (!items.size) {
   const json = text.match(/```json\s*([\s\S]*?)```/)?.[1];
-  try { const d = JSON.parse(json); for (const m of [...(d.machines ?? []), ...(d.certified ?? [])]) if (m.kubun && m.name) items.set(norm(m.name), { kind: m.kubun, name: m.name, note: m.update_note || '', section: m.found_date !== undefined ? '検定通過' : '導入予定・新台' }); } catch {}
+  try { const d = JSON.parse(json); for (const m of [...(d.machines ?? []), ...(d.certified ?? [])]) if (m.kubun && m.name && !isPachinko(m.name)) items.set(norm(m.name), { kind: m.kubun, name: m.name, note: m.update_note || '', section: m.found_date !== undefined ? '検定通過' : '導入予定・新台' }); } catch {}
 }
 // ローカル補正：候補にもう積んである機種は「候補の続報」
 const queue = existsSync('notes/lp-queue.json') ? JSON.parse(readFileSync('notes/lp-queue.json', 'utf8')) : [];

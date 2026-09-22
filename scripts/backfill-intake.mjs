@@ -7,6 +7,8 @@
 // 検証は全部そろってから機種ごとに 1 回（同じ機種が何週も出てくるため）。
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { norm } from './lib-names.mjs';
+// パチンコ機（型式名・機種名の頭が e／P／PA／CR）は扱わない
+const isPachinko = (n) => /^(e|P|PA|CR)[^a-zA-Z]/.test(String(n ?? '').normalize('NFKC').trim()) || /パチンコ機/.test(String(n ?? ''));
 
 const args = process.argv.slice(2);
 const file = args.find((a) => !a.startsWith('--') && !/^\d{4}-\d{2}-\d{2}$/.test(a));
@@ -38,7 +40,7 @@ try { const d = JSON.parse(json);
 
 const seen = new Set(); const items = []; const added = []; const skipped = [];
 for (const r of rows) {
-  const k = norm(r.name); if (!r.name || seen.has(k)) continue; seen.add(k);
+  const k = norm(r.name); if (!r.name || seen.has(k) || isPachinko(r.name)) continue; seen.add(k);
   const [kind, ref] = find(r.name);
   items.push({ kind, name: r.name, note: kind === 'known' ? `LP 掲載済み（${ref}）` : kind === 'update' ? `候補にあり（${ref}）` : r.cert ? '検定通過' : '', section: r.cert ? '検定通過' : '導入予定・新台', conf: r.conf });
   if (kind !== 'new') continue;
