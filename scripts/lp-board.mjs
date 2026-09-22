@@ -114,12 +114,12 @@ for (const p of pending) {
   if (p.crosscheck) md += `  - 照合：${p.crosscheck}\n`;
   if (p.note) md += `  - メモ：${p.note}\n`;
 }
+md += `\n## 📰 週次レポート\n\n`;
+for (const w of weekly) md += `- ${w.date}｜${w.verified ? '検証済み（' + w.verifiedAt + '）' : '未検証'}｜${w.summary || ''}${w.verified ? '｜weekly/' + w.verified : ''}${w.sessionUrl ? '｜レポート ' + w.sessionUrl : w.draft ? '｜レポート weekly/' + w.draft : ''}\n`;
 md += `\n## ✨ 今週の NEW と追加情報\n\n`;
 md += latest ? `週次レポート ${latest.date} の区分（既報 ${knownN} 件は省略）\n\n` : `週次レポートの取り込みがまだありません\n\n`;
 if (!recent.length) md += `ありません。\n\n`;
 for (const r of recent) md += `- ${mdMark(r.f)}**${r.name}**｜いまの場所：${r.where}｜${r.f.note}｜${r.f.src === 'report' ? '週次レポート' : 'LP'} ${r.f.date}\n`;
-md += `\n## 📰 週次レポート\n\n`;
-for (const w of weekly) md += `- ${w.date}｜${w.verified ? '検証済み（' + w.verifiedAt + '）' : '未検証'}｜${w.summary || ''}${w.verified ? '｜weekly/' + w.verified : ''}${w.sessionUrl ? '｜レポート ' + w.sessionUrl : w.draft ? '｜レポート weekly/' + w.draft : ''}\n`;
 md += `\n## 🔵 候補\n\n`;
 if (!queue.length) md += `いまはありません。\n\n`;
 const order = { 'メーカー公開': 0, '導入済み・未掲載': 1, '検定通過': 2 };
@@ -154,7 +154,9 @@ const rowsPending = pending.map((p) => `<tr><td><button class="ok" data-copy="${
 const rowsQueue = [...queue].sort((a, b) => (order[a.stage] ?? 9) - (order[b.stage] ?? 9)).map((q) => `<tr><td><b>${esc(q.name)}</b>${fchip(qFresh.get(q))}<div class="sub">${esc(q.maker || 'メーカー不明')}</div></td><td><span class="chip etc">${esc(q.stage)}</span></td><td class="num">${esc(q.release || '—')}${fnote(qFresh.get(q))}</td><td>${esc(q.next)}${q.note ? `<div class="sub">${esc(q.note)}</div>` : ''}</td><td>${link(q.officialUrl, '公式')}</td></tr>`).join('');
 const rowsWait = waiting.map((m) => `<tr><td><b>${esc(m.name)}</b>${fchip(m.fresh)}<div class="sub">${esc(m.maker)}</div>${fnote(m.fresh)}</td><td class="num">${esc(m.rel || '未定')}</td><td>${m.wait.map(chip).join(' ')}${factLinks(m.factRefs) ? `<div class="sub">確認元：${factLinks(m.factRefs)}</div>` : ''}</td><td>${m.draft ? '<span class="mute">非公開</span>' : link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
 const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}${fchip(m.fresh)}<div class="sub">${esc(m.maker)}</div>${fnote(m.fresh)}</td><td class="num">${esc(m.rel)}</td><td class="sub">${esc(m.note || '')}${m.note && factLinks(m.factRefs) ? '<br>' : ''}${factLinks(m.factRefs)}</td><td>${link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}</td></tr>`).join('');
-const rowsRecent = recent.map((r) => `<tr><td>${fchip(r.f).trim()}</td><td><b>${esc(r.name)}</b></td><td><a href="#${r.anchor}">${esc(r.where)}</a></td><td class="sub">${esc(r.f.note)}</td><td class="num">${r.f.src === 'report' ? '週次レポート' : 'LP'}<div class="sub">${esc(r.f.date)}</div></td></tr>`).join('');
+const lpOf = (name) => { const k = norm(name); const m = machines.find((x) => norm(x.name) === k && !x.draft); return m ? SITE + m.slug + '/' : ''; };
+const reportUrl = latest ? (latest.sessionUrl || (latest.draft ? 'file://' + process.cwd() + '/notes/weekly/' + latest.draft : '')) : '';
+const rowsRecent = recent.map((r) => { const lp = lpOf(r.name); return `<tr><td>${fchip(r.f).trim()}</td><td>${lp ? `<a href="${esc(lp)}" target="_blank" rel="noopener"><b>${esc(r.name)}</b></a>` : `<b>${esc(r.name)}</b>`}</td><td><a href="#${r.anchor}">${esc(r.where)}</a></td><td class="sub">${esc(r.f.note)}</td><td class="num">${r.f.src === 'report' && reportUrl ? `<a href="${esc(reportUrl)}" target="_blank" rel="noopener">週次レポート</a>` : r.f.src === 'report' ? '週次レポート' : 'LP'}<div class="sub">${esc(r.f.date)}</div></td></tr>`; }).join('');
 const wfile = (f) => 'file://' + process.cwd() + '/notes/weekly/' + f;
 const rowsWeekly = weekly.map((w) => `<tr data-week="${esc(w.date)}"><td class="num"><b>${esc(w.backfillGroup ? '過去分' : w.date)}</b>${w.backfillGroup ? `<div class="sub">${esc(w.date)}</div>` : ''}</td><td>${w.verified ? `<span class="chip okc">検証済み ${esc(w.verifiedAt)}</span>` : '<span class="chip ceil">未検証</span>'} <span class="chip unread" hidden>未読</span></td><td>${w.counts ? `<span class="chip new">NEW ${w.counts.new}</span><span class="chip upd">追加情報 ${w.counts.update}</span><span class="chip">既報 ${w.counts.known}</span><div class="sub">${esc(w.summary || '')}</div>` : esc(w.summary || '')}</td><td>${[w.verified ? `<a class="wk" href="${esc(wfile(w.verified))}" target="_blank">検証結果</a>` : '', w.sessionUrl ? `<a class="wk" href="${esc(w.sessionUrl)}" target="_blank" rel="noopener">レポート</a>` : w.draft ? `<a class="wk" href="${esc(wfile(w.draft))}" target="_blank">レポート</a>` : ''].filter(Boolean).join(' · ') || '<span class="mute">—</span>'}</td></tr>`).join('');
 const section = (id, eyebrow, title, hint, head, rows, empty, fold = 0) => `<section id="${id}" class="block"><div class="block-head"><p class="eyebrow">${eyebrow}</p><h2>${title}</h2><p class="hint">${hint}</p></div>${rows ? `${fold ? `<details class="fold"><summary>${fold} 件を表示</summary>` : ''}<div class="card scroll"><table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>${fold ? '</details>' : ''}` : `<div class="card empty">${empty}</div>`}</section>`;
@@ -214,8 +216,8 @@ footer{border-top:1px solid var(--line)}footer .wrap{padding:26px 16px 40px;colo
 </div></div></div>
 <main class="wrap">
 ${section('ok', '<b>OK</b>WAITING FOR YOU', 'OK 待ち', '出典を確認 → ボタンで「A1 OK」をコピー → Claude に貼ると公開。', ['番号', '種類', '内容', '確認先'], rowsPending, 'なし。')}
-${section('recent', "<b>THIS WEEK</b>WHAT'S NEW", '今週の NEW と追加情報', latest ? `週次レポート ${esc(latest.date)} より（既報 ${knownN} 件は省略）。<b>NEW</b>＝LP 未掲載／<b>追加情報</b>＝既存機種の続報。` : `週次レポートの取り込みがまだありません。`, ['種類', '機種', '状態', '内容', '出所'], rowsRecent, '今週の動きなし。')}
 ${section('weekly', '<b>MON</b>WEEKLY REPORT', '週次レポート', '月曜のレポートと検証結果。開くと「未読」が消える。', ['週', '状態', '要点', '開く'], rowsWeekly, 'まだありません。')}
+${section('recent', "<b>THIS WEEK</b>WHAT'S NEW", '今週の NEW と追加情報', latest ? `週次レポート ${esc(latest.date)} より（既報 ${knownN} 件は省略）。<b>NEW</b>＝LP 未掲載／<b>追加情報</b>＝既存機種の続報。` : `週次レポートの取り込みがまだありません。`, ['種類', '機種', '状態', '内容', '出所'], rowsRecent, '今週の動きなし。')}
 ${section('queue', '<b>01</b>CANDIDATES', '候補', 'LP 未掲載の機種。公式の出典が取れたら OK 待ちへ。', ['機種', '段階', '導入', '次の作業', '公式'], rowsQueue, 'なし。')}
 ${section('wait', '<b>02</b>IN PROGRESS', '更新待ち', '情報待ちの機種。ラベルが待っているもの。', ['機種', '導入', '待ち', 'リンク'], rowsWait, 'なし。')}
 ${section('done', '<b>03</b>COMPLETE', '完了', '情報が出そろった機種。公式ページの見張りだけ続ける。', ['機種', '導入', 'メモ', 'リンク'], rowsDone, 'なし。', done.length)}
