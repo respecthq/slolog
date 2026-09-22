@@ -95,9 +95,7 @@ const knownN = latest?.counts?.known ?? 0;
 const mdMark = (f) => (f ? (f.kind === 'new' ? '🆕 NEW｜' : '➕ 追加情報｜') : '');
 const weeklyAll = load('notes/weekly/index.json', []).sort((x, y) => y.date.localeCompare(x.date));
 const back = weeklyAll.filter((w) => w.backfill);   // 過去分（7〜9 月の取り込み）は 1 行にまとめる
-const weekly = [...weeklyAll.filter((w) => !w.backfill), ...(back.length ? [{ date: `${back[back.length - 1].date}〜${back[0].date}`, backfillGroup: true,
-  verified: back.every((w) => w.verified) ? back[0].verified : null, verifiedAt: back.every((w) => w.verified) ? back.map((w) => w.verifiedAt).sort().at(-1) : null,
-  summary: `過去分 ${back.length} 本の取り込み（${back.map((w) => w.date.slice(5).replace('-', '/')).join('・')}）` }] : [])];   // 週次レポート：下書き（未検証の原文）と検証結果
+const weekly = weeklyAll.filter((w) => !w.backfill);   // 過去分（7〜9 月の取り込み）は検証済みなので出さない。記録は notes/weekly/backfill/   // 週次レポート：下書き（未検証の原文）と検証結果
 
 let md = `# LP 進行表（${ymd}）\n\n`;
 md += `OK 待ち **${pending.length}**／候補 **${queue.length}**／更新待ち **${waiting.length}**／完了 **${done.length}**\n\n`;
