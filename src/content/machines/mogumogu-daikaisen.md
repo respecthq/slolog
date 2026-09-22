@@ -9,6 +9,7 @@ koyaku: ''
 type: 'AT'
 gen: 'スマスロ'
 modelName: 'Lモグモグ風林火山 大海戦の巻ZB'
+modelNameSource: https://www.p-world.co.jp/machine/database/10523
 source: https://www.net-fun.co.jp/mogdai/
 newsSource: https://www.yugitsushin.jp/news/7%e5%b9%b4%e3%81%ae%e5%88%bb%e3%82%92%e7%b5%8c%e3%81%a6%e3%80%81%e3%81%84%e3%81%96%e5%a4%a7%e6%b5%b7%e5%8e%9f%e3%81%b8%e5%87%ba%e9%99%a3%ef%bc%81%e3%80%8c%e3%83%a2%e3%82%b0%e3%83%a2%e3%82%b0%e9%a2%a8/
 fetched: 2026-09-23
