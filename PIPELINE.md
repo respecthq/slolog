@@ -148,7 +148,8 @@ node scripts/watch-sources.mjs --all   # 全機種の現在の状態
 
 | 段 | 中身 | 元データ |
 |---|---|---|
-| 🟠 OK 待ち | 出典を見て OK を出せば、すぐ反映できるもの（🆕 新しいページ／✏️ 更新） | `notes/lp-proposals.json` |
+| 🟠 OK 待ち | 出典を見て OK を出せば、すぐ反映できるもの（NEW＝新しいページ／追加情報＝前からある機種の更新） | `notes/lp-proposals.json` |
+| ✨ この 7 日の動き | 直近 7 日の NEW と追加情報の一覧。各表の機種名にも同じ印が付く | 下の「NEW と追加情報」 |
 | 🔵 候補 | まだページがない機種（検定通過／メーカー公開／導入済み・未掲載）と、次にやること | `notes/lp-queue.json` |
 | 🟡 更新待ち | ページはあるが、情報がまだ増える（導入前／公表値がまだ／天井がまだ／下書き） | 機種 md から自動判定 |
 | 🟢 完了 | 情報が出そろった。以後は見張りだけ | 同上 |
@@ -157,6 +158,11 @@ node scripts/watch-sources.mjs --all   # 全機種の現在の状態
 - **提案の作り方**（Claude）：新規は機種 md を `draft: true` で作り、`lp-proposals.json` に `{id:"A1", kind:"new", slug, name, summary, source}` を足す。更新は `{id, kind:"update", slug, name, summary, changes:{ceiling:…, verified:{…}}, source, crosscheck, updateNote}`。**必ず出典 URL を付ける**
 - **OK が出たら**：`node scripts/lp-apply.mjs A1 A3`（全部なら `all`）→ `npm run build` → `node scripts/crosscheck.mjs <slug>` → `node scripts/verify-editorial.mjs dist` → push → `node scripts/lp-board.mjs`
 - 候補がページになったら `lp-queue.json` から消す。`notes/` は非公開
+- **NEW と追加情報**（2026-09-23〜）：ユーザーが「完全に新しい情報か、前からある機種の続報か」を見分けるための印。記録を付け忘れると印が出ないので必ず書く
+  - 機種ページを新しく作ったら frontmatter の `added: YYYY-MM-DD`（LP に載せた日）→ NEW
+  - 前からある機種に情報を足したら `updated: YYYY-MM-DD` と `updateNote`（例「天井・ゾーンを追加」）→ 追加情報。`lp-apply.mjs` の update は自動で付く。手で直したときも付ける
+  - 候補（`lp-queue.json`）は新しく積んだら `foundAt`、あとで情報が増えたら `updatedAt` と `updateNote`
+  - 保険：`updated` を付け忘れても、7 日前の版（git）と中身の項目（天井・導入日・型式名・公表値・出典・公開など）を比べて変わっていれば「追加情報（更新メモなし）」と出る。見張り先 `watch` などの裏方の項目は数えない
 
 ## 型式名（modelName）の取り方
 
