@@ -16,7 +16,7 @@ source: https://www.enterrise.co.jp/slot/mhrsb/
 newsSource: https://web-greenbelt.jp/post-117801/
 fetched: 2026-09-23
 added: 2026-09-23
-draft: true
+draft: false
 watchKeyword: モンスターハンターライズ
 ---
 

@@ -6,7 +6,7 @@ brand: 'オリンピアエステート'
 ceiling: ''
 junzo: ''
 zone: ''
-released: 2026-10
+released: '2026-10-05'
 koyaku: ''
 type: ''
 gen: 'スマスロ'
@@ -17,11 +17,14 @@ source: https://www.heiwanet.co.jp/products/pachislot/ltt1/
 fetched: 2026-09-21
 added: 2026-09-21
 draft: false
+newsSource: 'https://web-greenbelt.jp/post-116545/'
+updated: '2026-09-23'
+updateNote: '導入日が確定（10/5）'
 ---
 
 ## メーカーの発表
 
 - 発表：平和（公式サイトの製品ページ）
-- 導入開始：2026年10月（平和の案内による）
+- 導入開始：2026年10月5日
 
 権利表記：©2023 鴉ぴえろ・きさらぎゆり／KADOKAWA／転天製作委員会

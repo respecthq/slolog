@@ -17,7 +17,7 @@ specSource: https://www.heiwanet.co.jp/assets/images/products/guide/ssb1.pdf
 newsSource: https://web-greenbelt.jp/post-115158/
 fetched: 2026-09-23
 added: 2026-09-23
-draft: true
+draft: false
 watchKeyword: 青春ブタ野郎
 ---
 
