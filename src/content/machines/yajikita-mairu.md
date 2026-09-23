@@ -16,7 +16,7 @@ source: https://www.universal-777.com/product/slot/yajikita_mairu/
 newsSource: https://www.yugitsushin.jp/news/%e3%82%b9%e3%83%9e%e3%82%b9%e3%83%ad%e3%81%a7%e5%a7%8b%e3%81%be%e3%82%8b%e6%9c%80%e9%ab%98%e3%81%ae%e7%a5%ad%ef%bc%81%ef%bc%81%e3%80%8c%e3%82%b9%e3%83%9e%e3%82%b9%e3%83%ad-%e3%82%84%e3%81%98%e3%81%8d/
 fetched: 2026-09-23
 added: 2026-09-23
-draft: true
+draft: false
 watchKeyword: やじきた
 ---
 
