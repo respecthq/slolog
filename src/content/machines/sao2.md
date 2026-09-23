@@ -1,6 +1,7 @@
 ---
 name: スロット ソードアート・オンラインⅡ
 maker: パオン・ディーピー（販売：大都技研）
+brand: 'パオン・ディーピー'
 ceiling: ''
 junzo: 約3.6枚/G（Bullet of Bullets・初期150枚+α／差枚数管理型AT）
 zone: ''

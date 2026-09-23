@@ -1,6 +1,7 @@
 ---
 name: パチスロ 戦国コレクション6
 maker: コナミアミューズメント
+brand: 'コナミアミューズメント'
 ceiling: ''
 junzo: ''
 zone: ''

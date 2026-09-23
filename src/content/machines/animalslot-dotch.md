@@ -1,6 +1,7 @@
 ---
 name: アニマルスロット ドッチ
 maker: 北電子
+brand: '北電子'
 ceiling: ''
 junzo: ''
 zone: ''

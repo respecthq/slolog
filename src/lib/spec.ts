@@ -34,7 +34,7 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
     v: 1,
     id: entry.id,
     name: d.name,
-    maker: d.maker,
+    maker: d.brand || d.maker, // アプリのメーカー欄は業界での表記にそろえる（P-WORLD・ぱちタウンと同じ）
     ceiling: '',
     junzo: d.junzo,
     zone: '',

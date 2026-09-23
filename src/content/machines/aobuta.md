@@ -1,6 +1,7 @@
 ---
 name: L青春ブタ野郎はバニーガール先輩の夢を見ない
 maker: オリンピア（販売：平和）
+brand: 'オリンピア'
 ceiling: ''
 junzo: ''
 zone: ''

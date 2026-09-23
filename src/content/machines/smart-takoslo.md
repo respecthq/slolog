@@ -1,6 +1,7 @@
 ---
 name: スマスロ タコスロ
 maker: ユニバーサルブロス
+brand: 'ユニバーサルブロス'
 ceiling: ''
 junzo: ''
 zone: ''

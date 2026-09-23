@@ -106,6 +106,7 @@ const machines = defineCollection({
     source: httpsUrl('出典URL'), // 出典URL（メーカー公式/ニュース）
     fetched: dateish.default(''), // 取得日 YYYY-MM-DD
     bonusPayout: z.coerce.string().default(''), // ボーナスの終了条件・獲得枚数（メーカー公表。例 BIG 266枚超の払い出しで終了）
+    brand: z.coerce.string().default(''), // 業界での表記＝P-WORLD・DMMぱちタウンの「メーカー」欄（販売元のことも製造元のこともある）。一覧・ページ見出し・アプリのメーカー欄に使う
     specSource: httpsUrl('スペックの出典URL'), // 設定別スペックが載っているメーカーのページ（source と別のとき。ページの出典に並べる）
     newsSource: httpsUrl('業界紙URL'), // 導入日・製造元・型式名を確かめた業界紙の記事（ページの出典に並べる。アプリには出さない）
     // 更新履歴（ホームの新着ブロック用。一覧の並び順は導入日のままにする）

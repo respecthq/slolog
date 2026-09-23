@@ -1,6 +1,7 @@
 ---
 name: スマスロゼーガペインETR
 maker: 山佐ネクスト
+brand: '山佐ネクスト'
 ceiling: ''
 junzo: 'ボーナス 約7.0枚/G（全3種共通）／AT 約0.7枚/G／上位AT 約7.0枚/G'
 zone: ''

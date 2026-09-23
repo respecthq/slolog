@@ -1,6 +1,7 @@
 ---
 name: スマスロ とある魔術の禁書目録2
 maker: 藤商事
+brand: '藤商事'
 ceiling: ''
 junzo: '約4.0枚/G（AT「幻想殺しRUSH」）'
 zone: ''

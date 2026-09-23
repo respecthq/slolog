@@ -1,6 +1,7 @@
 ---
 name: スマスロ バジリスク～甲賀忍法帖～Ⅳ
 maker: アクロス
+brand: 'アクロス'
 ceiling: ''
 junzo: ''
 zone: ''

@@ -1,6 +1,7 @@
 ---
 name: 真打 吉宗
 maker: 大都技研
+brand: '大都技研'
 ceiling: ''
 junzo: 約2.7枚/G（勧善懲悪RUSH）／真BIG BONUS 約9.0枚/G
 zone: ''

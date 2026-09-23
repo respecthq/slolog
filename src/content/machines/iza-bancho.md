@@ -1,6 +1,7 @@
 ---
 name: いざ！番長
 maker: サボハニ
+brand: 'サボハニ'
 ceiling: ''
 junzo: 約2.8枚/G（頂ZBASH）／上位AT 約5.0枚/G
 zone: ''

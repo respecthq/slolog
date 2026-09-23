@@ -1,6 +1,7 @@
 ---
 name: スマスロケロット5BT
 maker: 山佐ネクスト
+brand: '山佐ネクスト'
 ceiling: ''
 junzo: ''
 zone: ''

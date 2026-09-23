@@ -1,6 +1,7 @@
 ---
 name: スマスロ ミリオンゴッド-神々の軌跡-
 maker: ミズホ
+brand: 'ミズホ'
 ceiling: ''
 junzo: ''
 zone: ''

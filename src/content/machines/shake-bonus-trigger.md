@@ -1,6 +1,7 @@
 ---
 name: SHAKE BONUS TRIGGER
 maker: 大都技研
+brand: '大都技研'
 ceiling: ''
 junzo: ''
 zone: ''
