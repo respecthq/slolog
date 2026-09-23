@@ -8,7 +8,6 @@ released: 2026-08-03
 koyaku: ''
 type: 'AT'
 gen: 'スマスロ'
-complete: true
 bonusPayout: 'フィニッシュブロー 平均273枚／フィニッシュコンボ 平均521枚'
 modelName: 'Lストリートファイター6SB'
 modelNameSource: https://www.p-world.co.jp/machine/database/10531
@@ -34,5 +33,4 @@ watchKeyword: ストリートファイター6
 
 - タイプ：AT
 - ボーナス：フィニッシュブロー 平均273枚、フィニッシュコンボ 平均521枚
-- コンプリート機能搭載（メーカー公表）
 - 設定別の確率・出玉率：メーカーの公表なし（2026年9月23日時点）

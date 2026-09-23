@@ -9,7 +9,6 @@ released: 2026-07-06
 koyaku: ''
 type: ''
 gen: 'スマスロ'
-complete: true
 modelName: 'L戦国コレクション6KS'
 modelNameSource: https://www.p-world.co.jp/machine/database/10471
 source: https://www.konami.com/amusement/psm/slot/sengokucollection6/
@@ -39,4 +38,3 @@ watchKeyword: 戦国コレクション6
 | 5 | 1/268.5 | 110.1% |
 | 6 | 1/252.2 | 114.9% |
 
-- コンプリート機能搭載（メーカー公表）

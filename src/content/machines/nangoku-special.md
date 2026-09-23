@@ -8,7 +8,6 @@ released: 2026-07-06
 koyaku: ''
 type: ''
 gen: 'スマスロ'
-complete: true
 bonusPayout: 'BIG 210枚以上の獲得／REG 80枚以上の獲得（どちらも後にバタフライゾーン）'
 modelName: 'L南国育ちSPM1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10488
@@ -44,5 +43,4 @@ watchKeyword: 南国育ち
 
 - 純増：飛翔モード中 3.0枚／超飛翔モード中 6.0枚
 - ボーナス：BIG 210枚以上の獲得、REG 80枚以上の獲得（どちらも後にバタフライゾーン）
-- コンプリート機能搭載
 - 出玉率：メーカーの公表なし（2026年9月23日時点）

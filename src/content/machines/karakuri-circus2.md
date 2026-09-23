@@ -8,7 +8,6 @@ released: 2026-07-06
 koyaku: ''
 type: 'AT'
 gen: 'スマスロ'
-complete: true
 modelName: 'Lからくりサーカス2jG'
 modelNameSource: https://www.p-world.co.jp/machine/database/10485
 source: https://www.sankyo-fever.jp/products/machine_list/swl/
@@ -39,5 +38,4 @@ SANKYO の機種サイトに載っている値です。
 | 5 | 1/327 | 1/430 |
 | 6 | 1/318 | 1/410 |
 
-- コンプリート機能搭載（メーカー公表）
 - 出玉率：メーカーの公表なし（2026年9月23日時点）

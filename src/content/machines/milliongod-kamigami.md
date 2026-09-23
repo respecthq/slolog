@@ -6,12 +6,9 @@ junzo: ''
 zone: ''
 released: '2026-04'
 koyaku: ''
-complete: true
 source: 'https://www.universal-777.com/product/slot/milliongod_kiseki/'
 fetched: '2026-09-21'
 added: 2026-07-11
-updated: 2026-09-23
-updateNote: コンプリート機能搭載を追加（メーカー公式）
 draft: false
 type: AT
 gen: 'スマスロ'
@@ -25,6 +22,5 @@ kenteiNo: '530692'
 
 - 高純増の AT「GG」を軸にした、シンプルなゲーム性です
 - 上乗せが連鎖する「Z-GAME」と、強化された「SGG」を搭載しています
-- コンプリート機能搭載機です。1日に払い出せる上限に達すると遊技が終了し、その前に遊技機から知らせがあります
 
 純増などの数値はメーカー公式ページに記載がないため載せていません。

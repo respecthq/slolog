@@ -8,7 +8,6 @@ released: 2026-07-06
 koyaku: ''
 type: 'AT'
 gen: 'スマスロ'
-complete: true
 modelName: 'LパチスロULTRAMAN最終決戦ME'
 modelNameSource: https://www.p-world.co.jp/machine/database/10514
 source: https://www.ps-ok.jp/heros_ultraman_final/
@@ -39,5 +38,4 @@ watchKeyword: ULTRAMAN
 | 5 | 1/256.6 | 1/423.1 |
 | 6 | 1/256.2 | 1/422.4 |
 
-- コンプリート機能搭載（メーカー公表）
 - 出玉率：メーカーの公表なし（2026年9月23日時点）
