@@ -16,7 +16,7 @@ specSource: https://yamasa-next.co.jp/slot/zgmhm3/
 newsSource: https://www.yugitsushin.jp/news/%e6%ac%a1%e4%b8%96%e4%bb%a3%e3%82%bc%e3%83%bc%e3%82%ac%e3%82%b7%e3%82%b9%e3%83%86%e3%83%a0%e8%b5%b7%e5%8b%95%ef%bc%81%e3%80%8c%e3%82%b9%e3%83%9e%e3%82%b9%e3%83%ad%e3%82%bc%e3%83%bc%e3%82%ac%e3%83%9a/
 fetched: 2026-09-23
 added: 2026-09-23
-draft: true
+draft: false
 watchKeyword: ゼーガペイン
 ---
 

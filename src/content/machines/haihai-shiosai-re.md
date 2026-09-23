@@ -13,7 +13,7 @@ specSource: https://www.slot-pioneer.co.jp/product/haihaisiosai_re/images/pop_pd
 newsSource: https://web-greenbelt.jp/post-117079/
 fetched: 2026-09-23
 added: 2026-09-23
-draft: true
+draft: false
 watchKeyword: ハイハイシオサイ
 ---
 
