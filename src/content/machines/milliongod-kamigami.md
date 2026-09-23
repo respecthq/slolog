@@ -12,7 +12,6 @@ added: 2026-07-11
 draft: false
 type: AT
 gen: 'スマスロ'
-cabinet: 'ランドマークS'
 modelName: 'L／ミリオンゴッド／CX'
 modelNameSource: 'https://www.p-world.co.jp/machine/database/10424'
 kenteiNo: '530692'

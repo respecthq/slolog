@@ -11,7 +11,6 @@ gen: 'スマスロ'
 modelName: 'L／バジリスクIV XB'
 modelNameSource: https://www.p-world.co.jp/machine/database/10568
 kenteiNo: '6S0736'
-cabinet: ランドマークS
 source: https://www.universal-777.com/product/slot/basilisk4/
 fetched: 2026-09-21
 added: 2026-09-21

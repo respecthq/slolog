@@ -18,7 +18,6 @@ export type MachineSpec = {
   koyaku?: string;
   gen?: string;     // 号機区分（アプリの号機チップ）
   machineType?: string; // 実機のタイプ（ノーマル／AT など）。契約識別子 type とは別の項目（監査 F11）
-  cabinet?: string; // 筐体
   modelName?: string; // 型式名（検定上の正式名）
   bonus?: string;   // ボーナス合成確率（メーカー公表）
   payout?: string;  // 出玉率＝機械割（メーカー公表）
@@ -43,14 +42,12 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   if (d.koyaku) spec.koyaku = d.koyaku;
   if (d.gen) spec.gen = d.gen;
   if (d.type) spec.machineType = d.type;
-  if (d.cabinet) spec.cabinet = d.cabinet;
   if (d.modelName) spec.modelName = d.modelName;
   if (d.bonus) spec.bonus = d.bonus;
   if (d.payout) spec.payout = d.payout;
   // 現行アプリは bonus/payout を直接は読まないので、memo に畳んで機種メモへ出す。
   const notes = [
     d.type ? `タイプ ${d.type}` : '',
-    d.cabinet ? `筐体 ${d.cabinet}` : '',
     d.bonus ? `ボーナス合成 ${d.bonus}` : '',
     d.payout ? `出玉率 ${d.payout}` : '',
     d.bonusPayout ? `ボーナス ${d.bonusPayout}` : '',

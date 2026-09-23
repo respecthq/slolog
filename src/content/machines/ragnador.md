@@ -6,7 +6,6 @@ released: 2026-11-02
 koyaku: ''
 type: AT
 gen: 'スマスロ'
-cabinet: WIZARD
 modelName: 'LラグナドールZI'
 modelNameSource: https://www.p-world.co.jp/machine/database/10546
 source: https://www.universal-777.com/product/slot/ragnador/

@@ -32,7 +32,7 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
     <div class="detail-layout">
       <div class="detail-main">
         <section class="spec-section"><div class="section-label"><span>01 / BASIC INFORMATION</span><h2>基本情報</h2></div>
-          <SpecRows items={[['メーカー',d.maker],['導入時期',d.fictional?'架空機のため実機導入なし':fmt(d.released)],['型式名',d.modelName],['タイプ',d.type],['分類',d.gen],['筐体',d.cabinet]]} />
+          <SpecRows items={[['メーカー',d.maker],['導入時期',d.fictional?'架空機のため実機導入なし':fmt(d.released)],['型式名',d.modelName],['タイプ',d.type],['分類',d.gen]]} />
           <h3>基本スペック</h3>{specs.some(([,v])=>v)?<SpecRows items={specs}/>:<p class="muted">公表値の記載はありません。</p>}
           <div class="source-note">{d.fictional?'出典：Re:Spect（自社シミュレーター）':<>{sources.map(([u,label],i)=><span class="source-link">出典{sources.length>1?circled[i]:''}：<a href={u} target="_blank" rel="noopener noreferrer">{label} <Icon name="external-link" /></a></span>)}{d.fetched&&<span>取得日：{fmt(d.fetched)}</span>}</>}</div>
         </section>
