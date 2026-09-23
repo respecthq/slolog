@@ -19,8 +19,6 @@ const specs=[['純増',d.junzo],['ボーナス',d.bonusPayout],['ボーナス合
 const paper=(u:string)=>/yugitsushin/.test(u)?'遊技通信':/greenbelt/.test(u)?'グリーンべると':/amusement-japan|yugi-nippon/.test(u)?'遊技日本':/prtimes/.test(u)?'PR TIMES':'業界紙';
 const sources=[[d.source,'メーカー公式'],[d.specSource,'スペック（メーカー公式）'],[d.newsSource,d.newsSource?`業界紙「${paper(d.newsSource)}」`:'']].filter(([u])=>u) as [string,string][];
 const circled='①②③④';
-// 製造元＝maker から「（販売：…）」を外したもの。メーカー欄（業界での表記）と違うときだけ「製造」の行に出す
-const maker0=(d.maker||'').replace(/[（(]\s*販売\s*[：:][^)）]*[)）]/g,'').trim();
 const ceiling=[['天井',d.ceiling],['天井恩恵',d.ceilingBonus],['ゾーン',d.zone],['設定変更時',d.resetBehavior]];
 import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
 ---
@@ -28,13 +26,13 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
   <div class="page-wrap">
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">{d.name}</span></nav>
     <div class:list={['detail-heading',{'has-image':!!d.image}]}>
-      <div><p class="eyebrow">MACHINE GUIDE / {d.brand||d.maker}</p><h1>{d.name}</h1><div class="detail-meta"><span>{d.fictional?'架空機 / サンプル':`${fmt(d.released)} 導入`}</span>{d.type&&<span>{d.type}</span>}</div>{d.fictional?<p>Re:Spectのオリジナル機です。実在するホールには設置されていません。掲載値は自社シミュレーターの実装・実測に基づきます。</p>:d.added&&<p class="detail-dates">掲載 <time datetime={d.added}>{fmt(d.added)}</time>{d.updated&&d.updated>d.added&&<> ／ 更新 <time datetime={d.updated}>{fmt(d.updated)}</time></>}</p>}</div>
+      <div><p class="eyebrow">MACHINE GUIDE / {d.maker}</p><h1>{d.name}</h1><div class="detail-meta"><span>{d.fictional?'架空機 / サンプル':`${fmt(d.released)} 導入`}</span>{d.type&&<span>{d.type}</span>}</div>{d.fictional?<p>Re:Spectのオリジナル機です。実在するホールには設置されていません。掲載値は自社シミュレーターの実装・実測に基づきます。</p>:d.added&&<p class="detail-dates">掲載 <time datetime={d.added}>{fmt(d.added)}</time>{d.updated&&d.updated>d.added&&<> ／ 更新 <time datetime={d.updated}>{fmt(d.updated)}</time></>}</p>}</div>
       {d.image&&<figure><img src={url(d.image.src)} alt={d.image.alt} width="230" height="380" /><figcaption>{d.image.credit}</figcaption></figure>}
     </div>
     <div class="detail-layout">
       <div class="detail-main">
         <section class="spec-section"><div class="section-label"><span>01 / BASIC INFORMATION</span><h2>基本情報</h2></div>
-          <SpecRows items={[['メーカー',d.brand||d.maker],['製造',maker0&&maker0!==(d.brand||d.maker)?maker0:''],['導入時期',d.fictional?'架空機のため実機導入なし':fmt(d.released)],['型式名',d.modelName],['タイプ',d.type],['分類',d.gen],['筐体',d.cabinet]]} />
+          <SpecRows items={[['メーカー',d.maker],['導入時期',d.fictional?'架空機のため実機導入なし':fmt(d.released)],['型式名',d.modelName],['タイプ',d.type],['分類',d.gen],['筐体',d.cabinet]]} />
           <h3>基本スペック</h3>{specs.some(([,v])=>v)?<SpecRows items={specs}/>:<p class="muted">公表値の記載はありません。</p>}
           <div class="source-note">{d.fictional?'出典：Re:Spect（自社シミュレーター）':<>{sources.map(([u,label],i)=><span class="source-link">出典{sources.length>1?circled[i]:''}：<a href={u} target="_blank" rel="noopener noreferrer">{label} <Icon name="external-link" /></a></span>)}{d.fetched&&<span>取得日：{fmt(d.fetched)}</span>}</>}</div>
         </section>

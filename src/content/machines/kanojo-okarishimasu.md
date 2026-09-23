@@ -1,8 +1,6 @@
 ---
 name: Lパチスロ 彼女、お借りします
-maker: 'ビスティ'
-seller: 'SANKYO'
-brand: 'SANKYO'
+maker: 'SANKYO'
 ceiling: ''
 junzo: ''
 zone: ''

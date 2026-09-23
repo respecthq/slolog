@@ -1,7 +1,6 @@
 ---
 name: スロット Re:ゼロから始める異世界生活 season2
-maker: パオン・ディーピー
-brand: 'パオン・ディーピー'
+maker: 'パオン・ディーピー'
 ceiling: ''
 junzo: 約9.0枚/G（殲滅RUSH・超強欲RUSH）
 zone: ''

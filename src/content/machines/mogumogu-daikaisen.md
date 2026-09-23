@@ -1,8 +1,6 @@
 ---
 name: モグモグ風林火山 大海戦の巻
-maker: 'オーゼキ'
-seller: 'ネット'
-brand: 'ネット'
+maker: 'ネット'
 ceiling: ''
 junzo: '約3.1枚/G（AT「提督決戦RUSH」）／上位AT 約7.4枚/G'
 zone: ''

@@ -70,7 +70,7 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
     }
   }
   const factRefs = { pworld: one('modelNameSource'), news: one('newsSource'), cross: one('crosscheckUrl') };
-  machines.push({ slug, fresh, factRefs, name: one('name'), maker: one('brand') || one('maker'), rel, source: one('source'), draft: flag('draft'), wait, refs, ceiling: one('ceiling'), noCeiling: flag('noCeiling'),
+  machines.push({ slug, fresh, factRefs, name: one('name'), maker: one('maker'), rel, source: one('source'), draft: flag('draft'), wait, refs, ceiling: one('ceiling'), noCeiling: flag('noCeiling'),
     note: !hasSpec && specSettled && !flag('specNone') ? '公表値なし（導入60日超）' : '' });
 }
 const byRel = (a, b) => (b.rel || '').localeCompare(a.rel || '');

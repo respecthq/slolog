@@ -1,8 +1,6 @@
 ---
 name: スマスロ モンスターハンターライズ：サンブレイク
 maker: 'アデリオン'
-seller: 'フィールズ'
-brand: 'アデリオン'
 ceiling: ''
 junzo: ''
 zone: ''

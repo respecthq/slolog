@@ -1,7 +1,6 @@
 ---
 name: スマスロパリピ孔明
-maker: 山佐ネクスト
-brand: '山佐'
+maker: '山佐'
 ceiling: ''
 junzo: ''
 zone: ''

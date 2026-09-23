@@ -1,7 +1,6 @@
 ---
 name: Ｌ海人（ウミンチュ）
-maker: 岡崎産業
-brand: '岡崎産業'
+maker: '岡崎産業'
 ceiling: ''
 junzo: ''
 zone: ''

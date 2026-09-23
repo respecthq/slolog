@@ -1,7 +1,6 @@
 ---
 name: ファンキージャグラー2
-maker: 北電子
-brand: '北電子'
+maker: '北電子'
 ceiling: ''
 junzo: ''
 zone: ''

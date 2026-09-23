@@ -1,7 +1,6 @@
 ---
 name: 吉宗
-maker: サボハニ
-brand: 'サボハニ'
+maker: 'サボハニ'
 ceiling: ''
 junzo: 約7.11枚/G（ボーナス・BB 711枚／RB 72枚）
 zone: ''

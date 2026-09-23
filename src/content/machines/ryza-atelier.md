@@ -1,7 +1,6 @@
 ---
 name: パチスロ ライザのアトリエ ～常闇の女王と秘密の隠れ家～
-maker: 北電子
-brand: '北電子'
+maker: '北電子'
 ceiling: ''
 junzo: ''
 zone: ''

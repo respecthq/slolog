@@ -1,8 +1,6 @@
 ---
 name: スマスロ 獣王
-maker: 'タイヨーエレック'
-seller: 'サミー'
-brand: 'サミー'
+maker: 'サミー'
 ceiling: ''
 junzo: ''
 zone: ''

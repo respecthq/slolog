@@ -1,8 +1,6 @@
 ---
 name: L邪神ちゃんドロップキック
 maker: 'サンスリー'
-seller: '三洋販売'
-brand: 'サンスリー'
 ceiling: ''
 junzo: ''
 zone: ''

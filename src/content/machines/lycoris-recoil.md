@@ -1,8 +1,6 @@
 ---
 name: スマスロ リコリス・リコイル
-maker: '銀座'
-seller: 'サミー'
-brand: 'サミー'
+maker: 'サミー'
 ceiling: ''
 junzo: '約8.4枚/G'
 zone: ''

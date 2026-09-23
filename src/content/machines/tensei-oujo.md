@@ -1,8 +1,6 @@
 ---
 name: L転生王女と天才令嬢の魔法革命
 maker: 'オリンピアエステート'
-seller: '平和'
-brand: 'オリンピアエステート'
 ceiling: ''
 junzo: ''
 zone: ''

@@ -1,8 +1,6 @@
 ---
 name: スマスロ 快盗天使ツインエンジェル2
-maker: 'ロデオ'
-seller: 'サミー'
-brand: 'サミー'
+maker: 'サミー'
 ceiling: ''
 junzo: ''
 zone: ''

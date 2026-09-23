@@ -1,7 +1,6 @@
 ---
 name: クレアの秘宝伝 ～はじまりの扉と太陽の石～ ボーナストリガーver.
-maker: 大都技研
-brand: '大都技研'
+maker: '大都技研'
 ceiling: ''
 junzo: ''
 zone: ''

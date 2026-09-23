@@ -1,8 +1,6 @@
 ---
 name: L聖闘士星矢 黄金十二宮
 maker: 'サンスリー'
-seller: '三洋販売'
-brand: 'サンスリー'
 ceiling: ''
 junzo: '約4.0枚/G（AT「Battle of ZODIAC」）／上位AT「千日戦争」 約6.6枚/G'
 zone: ''

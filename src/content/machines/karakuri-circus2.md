@@ -1,8 +1,6 @@
 ---
 name: Lパチスロ からくりサーカス2
-maker: 'ジェイビー'
-seller: 'SANKYO'
-brand: 'SANKYO'
+maker: 'SANKYO'
 ceiling: ''
 junzo: '約2.8枚/G（AT）／上位AT 約8.0枚/G'
 zone: ''

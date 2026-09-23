@@ -1,8 +1,6 @@
 ---
 name: スマスロ秘宝伝
 maker: 'パオン・ディーピー'
-seller: '大都技研'
-brand: 'パオン・ディーピー'
 ceiling: ''
 junzo: ''
 zone: ''
