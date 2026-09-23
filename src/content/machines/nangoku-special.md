@@ -1,6 +1,7 @@
 ---
 name: L南国育ち SPECIAL
-maker: アムテックス（販売：平和）
+maker: 'アムテックス'
+seller: '平和'
 brand: 'アムテックス'
 ceiling: ''
 junzo: '3.0枚/G（飛翔モード）／超飛翔モード 6.0枚/G'

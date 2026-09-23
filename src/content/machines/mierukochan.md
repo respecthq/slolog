@@ -1,6 +1,7 @@
 ---
 name: パチスロ見える子ちゃん
-maker: ピーセカンド（販売：パイオニア）
+maker: 'ピーセカンド'
+seller: 'パイオニア'
 brand: 'パイオニア'
 ceiling: ''
 junzo: ''

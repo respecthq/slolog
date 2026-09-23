@@ -1,6 +1,7 @@
 ---
 name: スマスロ リコリス・リコイル
-maker: 銀座（販売：サミー）
+maker: '銀座'
+seller: 'サミー'
 brand: 'サミー'
 ceiling: ''
 junzo: ''

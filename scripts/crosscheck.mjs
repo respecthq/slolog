@@ -76,7 +76,7 @@ for (const f of files) {
     // 「製造元（販売：販売元）」の形は、相手が販売元だけを載せていることが多い（例：銀座（販売：サミー））。
     // 製造元・販売元のどちらかが相手側にあれば一致とみなす
     const mine = flat(d.maker);
-    const seller = flat((String(d.maker).match(/[（(]\s*販売\s*[：:]\s*([^)）]+)[)）]/) || [])[1] || '');
+    const seller = flat(d.seller || (String(d.maker).match(/[（(]\s*販売\s*[：:]\s*([^)）]+)[)）]/) || [])[1] || '');
     const found = (mine && flatHay.includes(mine)) || (seller && flatHay.includes(seller));
     if (mine && !found) notes.push(`メーカー「${d.maker}」が相手側に見当たらない`);
   }

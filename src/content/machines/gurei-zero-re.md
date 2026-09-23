@@ -1,6 +1,7 @@
 ---
 name: Lパチスロ 喰霊-零-Re
-maker: オーイズミラボ（販売：オーイズミ）
+maker: 'オーイズミラボ'
+seller: 'オーイズミ'
 brand: 'オーイズミ'
 ceiling: ''
 junzo: '約1.0枚/G（ART「喰霊CHANCE」）'
