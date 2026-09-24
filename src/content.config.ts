@@ -104,6 +104,7 @@ const machines = defineCollection({
     // 出典・トレーサビリティ（メーカー公表事実の裏取り。出典明示にもなる）
     source: httpsUrl('出典URL'), // 出典URL（メーカー公式/ニュース）
     fetched: dateish.default(''), // 取得日 YYYY-MM-DD
+    specNote: z.coerce.string().default(''), // スペックの注記（メーカー指定の文言。例 北電子＝「※独自調査値」）。基本スペックの下と表の下に出す
     bonusPayout: z.coerce.string().default(''), // ボーナスの終了条件・獲得枚数（メーカー公表。例 BIG 266枚超の払い出しで終了）
     specSource: httpsUrl('スペックの出典URL'), // 設定別スペックが載っているメーカーのページ（source と別のとき。ページの出典に並べる）
     newsSource: httpsUrl('業界紙URL'), // 導入日・製造元・型式名を確かめた業界紙の記事（ページの出典に並べる。アプリには出さない）

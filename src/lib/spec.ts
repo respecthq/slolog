@@ -50,6 +50,7 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
     d.type ? `タイプ ${d.type}` : '',
     d.bonus ? `ボーナス合成 ${d.bonus}` : '',
     d.payout ? `出玉率 ${d.payout}` : '',
+    (d.bonus || d.payout) && d.specNote ? d.specNote : '',
     d.bonusPayout ? `ボーナス ${d.bonusPayout}` : '',
   ].filter(Boolean);
   if (notes.length) spec.memo = notes.join(' ／ ');

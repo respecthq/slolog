@@ -66,7 +66,7 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.md') && !f.starts
   let newFm = setField(fm, 'bonus', spec.bonus);
   newFm = setField(newFm, 'payout', spec.payout);
 
-  const section = `${MARK_BEGIN}\n\n## 設定別スペック\n\n${table(spec)}\n\n${MARK_END}`;
+  const section = `${MARK_BEGIN}\n\n## 設定別スペック\n\n${table(spec)}\n\n※独自調査値\n\n${MARK_END}`;
   const newBody = body.includes(MARK_BEGIN)
     ? body.replace(new RegExp(`${MARK_BEGIN}[\\s\\S]*?${MARK_END}`), section)
     : `${body.trimEnd()}\n\n${section}\n`;

@@ -18,3 +18,4 @@ modelNameSource: https://www.p-world.co.jp/machine/database/10427
 kenteiNo: '530564'
 ---
 
+権利表記：©KITA DENSHI
