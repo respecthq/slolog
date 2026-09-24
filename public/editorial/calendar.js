@@ -136,9 +136,16 @@
       target?.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'nearest'});
     }
   });
+  // メーカーの絞り込み：選んでいる文字の長さに合わせて幅を決め、下向き矢印との間を詰める（Safari は field-sizing 非対応のため）
+  const sizeMaker = () => {
+    const sel = $('#maker'), cs = getComputedStyle(sel), ctx = document.createElement('canvas').getContext('2d');
+    ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    sel.style.width = `${Math.ceil(ctx.measureText(sel.options[sel.selectedIndex].text).width) + 26}px`;
+  };
   $('#search').addEventListener('input', render);
-  $('#maker').addEventListener('change', render);
-  const clear = () => { $('#search').value = ''; $('#maker').value = ''; render(); $('#search').focus(); };
+  $('#maker').addEventListener('change', () => { sizeMaker(); render(); });
+  sizeMaker();
+  const clear = () => { $('#search').value = ''; $('#maker').value = ''; sizeMaker(); render(); $('#search').focus(); };
   $('#clear-search').addEventListener('click', clear);
   $('#reset-filters').addEventListener('click', clear);
   $('#today').addEventListener('click', () => navigate(currentMonth));

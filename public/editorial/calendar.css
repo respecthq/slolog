@@ -8,3 +8,7 @@
 @media(max-width:760px){.cal2 .shell{padding:0 22px}}
 .cal2{background:transparent}
 .cal2 .source-note{display:block;margin:28px 0 0;padding:0;background:none;font-size:12px;line-height:1.8;color:var(--muted)}.cal2 .source-note img{display:none}
+/* 機種リンクの矢印は、ほかのページと同じ「›」だけ（丸枠なし） */
+.cal2 .machine-arrow,.cal2 .machine-arrow[class]{width:auto;height:auto;border:0;border-radius:0;margin-right:0}.cal2 .machine-arrow img{width:18px;height:18px}
+/* メーカーの絞り込み：文字の長さに合わせて、下向き矢印との間を詰める */
+.cal2 .maker-filter select,.cal2 .maker-filter select[id]{width:auto;field-sizing:content;min-width:0;padding-right:4px}
