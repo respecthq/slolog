@@ -1,65 +1,63 @@
 ---
-// 新台カレンダー（テスト版・ヘッダー未掲載）。X の固定ポストから月ごとに飛べるよう、月に #YYYY-MM のアンカーを付ける
+// 新台カレンダー。デザインは Astra の mockups/calendar-v1。データはビルド時に機種ファイルから作って埋め込む
+// X の固定ポストから月へ直接飛べるよう、#mYYYY-MM のリンクで月を開く
 import Editorial from '../layouts/Editorial.astro';
-import Icon from '../components/editorial/Icon.astro';
-import {getCollection, type CollectionEntry} from 'astro:content';
+import {getCollection} from 'astro:content';
 import {url} from '../lib/url';
+import {APP_STORE_URL_JP} from '../lib/store';
 
-type M = CollectionEntry<'machines'>;
-const all = (await getCollection('machines', ({data}) => !data.draft && !data.fictional));
-const jst = new Date(Date.now() + 9 * 3600e3);
-const thisMonth = jst.toISOString().slice(0, 7);
-
-// 月 → 日（'' は「日付未定」）→ 機種
-const months = new Map<string, Map<string, M[]>>();
-for (const m of all) {
-  const r = m.data.released ?? '';
-  if (!/^\d{4}-\d{2}/.test(r)) continue;
-  const ym = r.slice(0, 7), day = r.length >= 10 ? r : '';
-  if (!months.has(ym)) months.set(ym, new Map());
-  const g = months.get(ym)!;
-  if (!g.has(day)) g.set(day, []);
-  g.get(day)!.push(m);
-}
-const sortDays = (g: Map<string, M[]>) => [...g].sort(([a], [b]) => (a || '9999').localeCompare(b || '9999'))
-  .map(([d, items]) => [d, items.toSorted((x, y) => x.data.name.localeCompare(y.data.name, 'ja'))] as const);
-const keys = [...months.keys()].sort();
-const upcoming = keys.filter((k) => k >= thisMonth);
-const past = keys.filter((k) => k < thisMonth).reverse();
-const count = (k: string) => [...months.get(k)!.values()].reduce((n, a) => n + a.length, 0);
-const monthLabel = (k: string) => `${Number(k.slice(0, 4))}年${Number(k.slice(5))}月`;
-const dayLabel = (d: string) => {
-  if (!d) return '日付未定';
-  const w = '日月火水木金土'[new Date(d + 'T00:00:00Z').getUTCDay()];
-  return `${Number(d.slice(5, 7))}/${Number(d.slice(8))}（${w}）`;
-};
-const facts = (m: M) => [m.data.type, m.data.payout && `出玉率 ${m.data.payout}${m.data.specNote ? `（${m.data.specNote.replace(/^※/, '')}）` : ''}`].filter(Boolean).join('・');
+const machines = (await getCollection('machines', ({data}) => !data.draft && !data.fictional))
+  .filter((m) => /^\d{4}-\d{2}(?:-\d{2})?$/.test(m.data.released ?? ''))
+  .map((m) => ({id: m.id, name: m.data.name, maker: m.data.maker || '', released: m.data.released, gen: m.data.gen || '',
+    machineType: m.data.type || '', payout: m.data.payout || '', specNote: m.data.payout ? (m.data.specNote || '') : ''}))
+  .sort((a, b) => a.released.localeCompare(b.released) || a.name.localeCompare(b.name, 'ja'));
+const boot = `window.CALENDAR_DATA=${JSON.stringify(machines).replace(/</g, '\\u003c')};window.CALENDAR_BASE=${JSON.stringify(url(''))};`;
 ---
 <Editorial title="新台カレンダー｜スロログ" description="パチスロ新台の導入日カレンダー。メーカー公表の情報だけを、出典つきで掲載しています。">
-  <div class="page-wrap">
-    <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">新台カレンダー</span></nav>
-    <div class="page-title"><p class="eyebrow">RELEASE CALENDAR</p><h1>新台カレンダー</h1><p>パチスロ新台の導入日を月ごとにまとめています。<br />掲載しているのはメーカーが公表した情報だけです。</p></div>
-
-    <nav class="cal-jump" aria-label="月を選ぶ">{upcoming.map((k) => <a href={`#m${k}`}>{monthLabel(k)}<b>{count(k)}</b></a>)}</nav>
-
-    {upcoming.map((k) => <section class="cal-month" id={`m${k}`} aria-labelledby={`h${k}`}>
-      <div class="cal-head"><h2 id={`h${k}`}>{monthLabel(k)}導入</h2><span>{count(k)} 機種{k === thisMonth ? '・今月' : ''}</span></div>
-      <ol class="cal-days">{sortDays(months.get(k)!).map(([d, items]) => <li class="cal-day">
-        <h3>{d ? <time datetime={d}>{dayLabel(d)}</time> : dayLabel(d)}</h3>
-        <ul>{items.map((m) => <li><a href={url(`machines/${m.id}/`)}><span class="cal-maker">{m.data.maker}</span><span class="cal-name">{m.data.name}</span>{facts(m) && <span class="cal-facts">{facts(m)}</span>}<Icon /></a></li>)}</ul>
-      </li>)}</ol>
-    </section>)}
-
-    {past.length > 0 && <details class="cal-past"><summary>これまでの導入（{past.map(monthLabel).join('・')}）</summary>
-      {past.map((k) => <section class="cal-month" id={`m${k}`}>
-        <div class="cal-head"><h2>{monthLabel(k)}導入</h2><span>{count(k)} 機種</span></div>
-        <ol class="cal-days">{sortDays(months.get(k)!).map(([d, items]) => <li class="cal-day">
-          <h3>{dayLabel(d)}</h3>
-          <ul>{items.map((m) => <li><a href={url(`machines/${m.id}/`)}><span class="cal-maker">{m.data.maker}</span><span class="cal-name">{m.data.name}</span><Icon /></a></li>)}</ul>
-        </li>)}</ol>
-      </section>)}
-    </details>}
-
-    <p class="cal-note">導入日はメーカーの発表と業界紙・P-WORLD で確かめた日付です。「日付未定」はメーカーが月までしか公表していない機種です。各機種ページに出典を載せています。</p>
+  <link rel="stylesheet" href={url('editorial/calendar.css')} />
+  <div class="cal2"><div class="shell">
+    <div class="breadcrumb"><a href={url("")}>HOME</a><span>/</span><a href={url("machines/")}>機種情報</a><span>/</span><span>新台カレンダー</span></div>
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow"><span></span>RELEASE CALENDAR</p><h1 id="page-title">次の一台を、見つけよう。</h1><p class="intro-description">パチスロ新台の導入予定を、月ごとにチェック。</p></div>
+      <div class="intro-mark" aria-hidden="true">NEW<br><span>ARRIVALS.</span></div>
+    </section>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="導入月から探す">
+        <div class="sidebar-heading"><h2>導入月から探す</h2><span>INDEX</span></div>
+        <nav id="month-nav" aria-label="導入予定月"></nav>
+        <details id="archive"><summary>過去の導入月</summary><nav id="archive-nav" aria-label="過去の導入月"></nav></details>
+        <a class="app-promo" href={APP_STORE_URL_JP}>
+          <img src={url("editorial/assets/app-icon.webp")} width="40" height="40" alt="スロログ">
+          <strong>記録から、判断へ。</strong><p>気になる機種を登録して、<br>自分だけの立ち回りに。</p><span>スロログをダウンロード<img src={url("editorial/calendar/arrow-up-right.svg")} alt=""></span>
+        </a>
+      </aside>
+      <div class="content">
+        <div class="search-bar">
+          <div class="search-field"><img src={url("editorial/calendar/search.svg")} alt=""><input type="search" id="search" placeholder="機種名・メーカーで検索" aria-label="全導入月の機種名・メーカーを検索"><button id="clear-search" class="icon-button" type="button" aria-label="検索をクリア" title="検索をクリア" hidden><img src={url("editorial/calendar/x.svg")} alt=""></button></div>
+          <label class="maker-filter"><img src={url("editorial/calendar/sliders-horizontal.svg")} alt=""><select id="maker" aria-label="メーカーで絞り込む"><option value="">すべてのメーカー</option></select></label>
+        </div>
+        <div class="month-toolbar">
+          <div class="month-title"><p id="month-year">2027</p><div><h2 id="month-number">01</h2><span id="month-english">JANUARY</span></div></div>
+          <div class="month-actions"><button type="button" class="text-button" id="today">今月</button><div class="month-arrows"><button type="button" id="prev" class="icon-button" aria-label="前の月" title="前の月"><img src={url("editorial/calendar/chevron-left.svg")} alt=""></button><button type="button" id="next" class="icon-button" aria-label="次の月" title="次の月"><img src={url("editorial/calendar/chevron-right.svg")} alt=""></button></div></div>
+        </div>
+        <div class="view-toolbar">
+          <div class="result-summary"><span class="status-dot"></span><span id="result-label" role="status" aria-live="polite"></span></div>
+          <div class="segmented" role="group" aria-label="表示形式"><button type="button" data-view="calendar" aria-pressed="true"><img src={url("editorial/calendar/calendar-days.svg")} alt=""><span>カレンダー</span></button><button type="button" data-view="list" aria-pressed="false"><img src={url("editorial/calendar/list.svg")} alt=""><span>リスト</span></button></div>
+        </div>
+        <div id="calendar-wrap">
+          <div class="weekdays" aria-hidden="true"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+          <div id="calendar" class="calendar-grid" role="group" aria-label="導入日カレンダー"></div>
+          <div class="calendar-key"><span><i></i>導入予定日</span><span>日付は変更される場合があります</span></div>
+        </div>
+        <section class="release-section" aria-labelledby="release-title"><div class="section-heading"><h2 id="release-title">今月の導入ラインナップ</h2><span id="lineup-count"></span></div><div id="releases"></div></section>
+        <div id="empty" class="empty" hidden><img src={url("editorial/calendar/search.svg")} alt=""><h3>該当する機種はありません</h3><p id="empty-description">検索条件を変えて、もう一度お試しください。</p><button type="button" id="reset-filters" class="text-button">絞り込みを解除</button></div>
+        <div class="source-note"><img src={url("editorial/calendar/info.svg")} alt=""><p>メーカーが公表した情報を掲載しています。導入日は業界紙・P-WORLD でも確かめています。「日付未定」はメーカーが導入月までしか公表していない機種です。出玉率に「※独自調査値」とあるものは、メーカーの指定による表記です。詳細と出典は各機種ページをご確認ください。</p></div>
+      </div>
+    </div>
+    <section class="next-months" aria-labelledby="other-title"><div class="section-heading"><h2 id="other-title">ほかの導入月もチェック</h2><span>EXPLORE MORE</span></div><div id="related-months"></div></section>
   </div>
+  <noscript><p class="cal-noscript">カレンダーの操作には JavaScript が必要です。<a href={url('machines/')}>機種一覧を開く</a></p></noscript>
+  </div>
+  <script is:inline set:html={boot}></script>
+  <script is:inline defer src={url('editorial/calendar.js')}></script>
 </Editorial>
