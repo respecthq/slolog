@@ -3,3 +3,7 @@
 .cal2 .spec-note{margin-left:8px;color:var(--muted);font-size:12px}
 /* LP 共通（pages.css・styles.css）と名前がかぶる部分を打ち消す */
 .cal2 .release-group{margin-bottom:0}.cal2 .release-group h3{display:block;border-left:0;padding-left:0;margin:0;font-size:15px;line-height:1.7;gap:0}.cal2 .section-heading h2{margin-top:0}.cal2 .source-note{font-size:inherit;line-height:inherit;margin-top:0}.cal2 summary{padding:0}.cal2 h2{line-height:inherit}
+/* パンくず・タイトルは機種情報ページと同じ部品（.page-wrap / .breadcrumbs / .page-title）。幅もそろえる */
+.cal-top{padding-bottom:0}.cal2 .shell{max-width:1180px;padding:0 30px}.cal2 .workspace{padding-top:32px}
+@media(max-width:760px){.cal2 .shell{padding:0 22px}}
+.cal2{background:transparent}

@@ -15,12 +15,12 @@ const boot = `window.CALENDAR_DATA=${JSON.stringify(machines).replace(/</g, '\\u
 ---
 <Editorial title="新台カレンダー｜スロログ" description="パチスロ新台の導入日カレンダー。メーカー公表の情報だけを、出典つきで掲載しています。">
   <link rel="stylesheet" href={url('editorial/calendar.css')} />
+  <div class="page-wrap cal-top">
+    <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">新台カレンダー</span></nav>
+    <div class="page-title"><p class="eyebrow">RELEASE CALENDAR</p><h1>新台カレンダー</h1><p>パチスロ新台の導入予定を、月ごとにまとめています。<br />メーカーが公表した情報だけを掲載しています。</p></div>
+  </div>
   <div class="cal2"><div class="shell">
-    <div class="breadcrumb"><a href={url("")}>HOME</a><span>/</span><a href={url("machines/")}>機種情報</a><span>/</span><span>新台カレンダー</span></div>
-    <section class="intro" aria-labelledby="page-title">
-      <div><p class="eyebrow"><span></span>RELEASE CALENDAR</p><h1 id="page-title">次の一台を、見つけよう。</h1><p class="intro-description">パチスロ新台の導入予定を、月ごとにチェック。</p></div>
-      <div class="intro-mark" aria-hidden="true">NEW<br><span>ARRIVALS.</span></div>
-    </section>
+
     <div class="workspace">
       <aside class="sidebar" aria-label="導入月から探す">
         <div class="sidebar-heading"><h2>導入月から探す</h2><span>INDEX</span></div>
@@ -51,7 +51,7 @@ const boot = `window.CALENDAR_DATA=${JSON.stringify(machines).replace(/</g, '\\u
         </div>
         <section class="release-section" aria-labelledby="release-title"><div class="section-heading"><h2 id="release-title">今月の導入ラインナップ</h2><span id="lineup-count"></span></div><div id="releases"></div></section>
         <div id="empty" class="empty" hidden><img src={url("editorial/calendar/search.svg")} alt=""><h3>該当する機種はありません</h3><p id="empty-description">検索条件を変えて、もう一度お試しください。</p><button type="button" id="reset-filters" class="text-button">絞り込みを解除</button></div>
-        <div class="source-note"><img src={url("editorial/calendar/info.svg")} alt=""><p>メーカーが公表した情報を掲載しています。導入日は業界紙・P-WORLD でも確かめています。「日付未定」はメーカーが導入月までしか公表していない機種です。出玉率に「※独自調査値」とあるものは、メーカーの指定による表記です。詳細と出典は各機種ページをご確認ください。</p></div>
+        <div class="source-note"><img src={url("editorial/calendar/info.svg")} alt=""><p>メーカーが公表した情報を掲載しています。導入日は、業界紙など複数の情報源で確かめています。「日付未定」はメーカーが導入月までしか公表していない機種です。出玉率に「※独自調査値」とあるものは、メーカーの指定による表記です。詳細と出典は各機種ページをご確認ください。</p></div>
       </div>
     </div>
     <section class="next-months" aria-labelledby="other-title"><div class="section-heading"><h2 id="other-title">ほかの導入月もチェック</h2><span>EXPLORE MORE</span></div><div id="related-months"></div></section>
