@@ -1,0 +1,65 @@
+---
+// 新台カレンダー（テスト版・ヘッダー未掲載）。X の固定ポストから月ごとに飛べるよう、月に #YYYY-MM のアンカーを付ける
+import Editorial from '../layouts/Editorial.astro';
+import Icon from '../components/editorial/Icon.astro';
+import {getCollection, type CollectionEntry} from 'astro:content';
+import {url} from '../lib/url';
+
+type M = CollectionEntry<'machines'>;
+const all = (await getCollection('machines', ({data}) => !data.draft && !data.fictional));
+const jst = new Date(Date.now() + 9 * 3600e3);
+const thisMonth = jst.toISOString().slice(0, 7);
+
+// 月 → 日（'' は「日付未定」）→ 機種
+const months = new Map<string, Map<string, M[]>>();
+for (const m of all) {
+  const r = m.data.released ?? '';
+  if (!/^\d{4}-\d{2}/.test(r)) continue;
+  const ym = r.slice(0, 7), day = r.length >= 10 ? r : '';
+  if (!months.has(ym)) months.set(ym, new Map());
+  const g = months.get(ym)!;
+  if (!g.has(day)) g.set(day, []);
+  g.get(day)!.push(m);
+}
+const sortDays = (g: Map<string, M[]>) => [...g].sort(([a], [b]) => (a || '9999').localeCompare(b || '9999'))
+  .map(([d, items]) => [d, items.toSorted((x, y) => x.data.name.localeCompare(y.data.name, 'ja'))] as const);
+const keys = [...months.keys()].sort();
+const upcoming = keys.filter((k) => k >= thisMonth);
+const past = keys.filter((k) => k < thisMonth).reverse();
+const count = (k: string) => [...months.get(k)!.values()].reduce((n, a) => n + a.length, 0);
+const monthLabel = (k: string) => `${Number(k.slice(0, 4))}年${Number(k.slice(5))}月`;
+const dayLabel = (d: string) => {
+  if (!d) return '日付未定';
+  const w = '日月火水木金土'[new Date(d + 'T00:00:00Z').getUTCDay()];
+  return `${Number(d.slice(5, 7))}/${Number(d.slice(8))}（${w}）`;
+};
+const facts = (m: M) => [m.data.type, m.data.payout && `出玉率 ${m.data.payout}${m.data.specNote ? `（${m.data.specNote.replace(/^※/, '')}）` : ''}`].filter(Boolean).join('・');
+---
+<Editorial title="新台カレンダー｜スロログ" description="パチスロ新台の導入日カレンダー。メーカー公表の情報だけを、出典つきで掲載しています。">
+  <div class="page-wrap">
+    <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">新台カレンダー</span></nav>
+    <div class="page-title"><p class="eyebrow">RELEASE CALENDAR</p><h1>新台カレンダー</h1><p>パチスロ新台の導入日を月ごとにまとめています。<br />掲載しているのはメーカーが公表した情報だけです。</p></div>
+
+    <nav class="cal-jump" aria-label="月を選ぶ">{upcoming.map((k) => <a href={`#m${k}`}>{monthLabel(k)}<b>{count(k)}</b></a>)}</nav>
+
+    {upcoming.map((k) => <section class="cal-month" id={`m${k}`} aria-labelledby={`h${k}`}>
+      <div class="cal-head"><h2 id={`h${k}`}>{monthLabel(k)}導入</h2><span>{count(k)} 機種{k === thisMonth ? '・今月' : ''}</span></div>
+      <ol class="cal-days">{sortDays(months.get(k)!).map(([d, items]) => <li class="cal-day">
+        <h3>{d ? <time datetime={d}>{dayLabel(d)}</time> : dayLabel(d)}</h3>
+        <ul>{items.map((m) => <li><a href={url(`machines/${m.id}/`)}><span class="cal-maker">{m.data.maker}</span><span class="cal-name">{m.data.name}</span>{facts(m) && <span class="cal-facts">{facts(m)}</span>}<Icon /></a></li>)}</ul>
+      </li>)}</ol>
+    </section>)}
+
+    {past.length > 0 && <details class="cal-past"><summary>これまでの導入（{past.map(monthLabel).join('・')}）</summary>
+      {past.map((k) => <section class="cal-month" id={`m${k}`}>
+        <div class="cal-head"><h2>{monthLabel(k)}導入</h2><span>{count(k)} 機種</span></div>
+        <ol class="cal-days">{sortDays(months.get(k)!).map(([d, items]) => <li class="cal-day">
+          <h3>{dayLabel(d)}</h3>
+          <ul>{items.map((m) => <li><a href={url(`machines/${m.id}/`)}><span class="cal-maker">{m.data.maker}</span><span class="cal-name">{m.data.name}</span><Icon /></a></li>)}</ul>
+        </li>)}</ol>
+      </section>)}
+    </details>}
+
+    <p class="cal-note">導入日はメーカーの発表と業界紙・P-WORLD で確かめた日付です。「日付未定」はメーカーが月までしか公表していない機種です。各機種ページに出典を載せています。</p>
+  </div>
+</Editorial>
