@@ -28,7 +28,7 @@ const boot = `window.CALENDAR_DATA=${JSON.stringify(machines).replace(/</g, '\\u
         <details id="archive"><summary>過去の導入月</summary><nav id="archive-nav" aria-label="過去の導入月"></nav></details>
         <a class="app-promo" href={APP_STORE_URL_JP}>
           <img src={url("editorial/assets/app-icon.webp")} width="40" height="40" alt="スロログ">
-          <strong>記録から、判断へ。</strong><p>気になる機種を登録して、<br>自分だけの立ち回りに。</p><span>スロログをダウンロード<img src={url("editorial/calendar/arrow-up-right.svg")} alt=""></span>
+          <strong>記録から、判断へ。</strong><p>気になる機種を登録して、<br>自分だけの立ち回りに。</p><span>スロログをダウンロード<img src={url("editorial/assets/external-link.svg")} alt=""></span>
         </a>
       </aside>
       <div class="content">
@@ -51,7 +51,7 @@ const boot = `window.CALENDAR_DATA=${JSON.stringify(machines).replace(/</g, '\\u
         </div>
         <section class="release-section" aria-labelledby="release-title"><div class="section-heading"><h2 id="release-title">今月の導入ラインナップ</h2><span id="lineup-count"></span></div><div id="releases"></div></section>
         <div id="empty" class="empty" hidden><img src={url("editorial/calendar/search.svg")} alt=""><h3>該当する機種はありません</h3><p id="empty-description">検索条件を変えて、もう一度お試しください。</p><button type="button" id="reset-filters" class="text-button">絞り込みを解除</button></div>
-        <div class="source-note"><img src={url("editorial/calendar/info.svg")} alt=""><p>メーカーが公表した情報を掲載しています。導入日は、業界紙など複数の情報源で確かめています。「日付未定」はメーカーが導入月までしか公表していない機種です。出玉率に「※独自調査値」とあるものは、メーカーの指定による表記です。詳細と出典は各機種ページをご確認ください。</p></div>
+        <p class="source-note">掲載はメーカーが公表した情報だけです。出典は各機種ページに載せています。</p>
       </div>
     </div>
     <section class="next-months" aria-labelledby="other-title"><div class="section-heading"><h2 id="other-title">ほかの導入月もチェック</h2><span>EXPLORE MORE</span></div><div id="related-months"></div></section>

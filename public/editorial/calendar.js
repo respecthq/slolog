@@ -60,7 +60,7 @@
     const monthIndex = value => Number(value.slice(0,4)) * 12 + Number(value.slice(5));
     $('#related-months').innerHTML = months.filter(m => m !== month)
       .sort((a,b) => Math.abs(monthIndex(a) - monthIndex(month)) - Math.abs(monthIndex(b) - monthIndex(month)))
-      .slice(0,3).sort().map(value => `<button type="button" class="related" data-month="${value}" aria-label="${value.replace('-', '年')}月を見る"><span><small>${value.slice(0,4)}</small><strong>${value.slice(5)}<span>月</span></strong></span><span class="related-right">${data.filter(m => m.released.startsWith(value)).length} 機種<img src="${icon('arrow-right')}" alt=""></span></button>`).join('');
+      .slice(0,3).sort().map(value => `<button type="button" class="related" data-month="${value}" aria-label="${value.replace('-', '年')}月を見る"><span><small>${value.slice(0,4)}</small><strong>${value.slice(5)}<span>月</span></strong></span><span class="related-right">${data.filter(m => m.released.startsWith(value)).length} 機種<img src="${BASE}editorial/assets/chevron-right.svg" alt=""></span></button>`).join('');
   }
 
   function renderCalendar(items) {
@@ -90,7 +90,7 @@
       const unknown = date.length === 7;
       const monthLabel = `${searching ? `${date.slice(0,4)} / ` : ''}${Number(date.slice(5,7))}月`;
       const stamp = unknown ? '<strong>日付<br>未定</strong>' : `<strong>${date.slice(8)}</strong><small>${weekdays[new Date(`${date}T12:00:00`).getDay()]}曜日</small>`;
-      return `<div class="release-group" id="date-${date}"><div class="date-stamp${unknown ? ' undated' : ''}"><span class="month-label">${monthLabel}</span>${stamp}</div><div>${machines.map(m => `<a class="machine" href="${machineLink(m)}"><div class="machine-body"><div class="machine-meta"><span>${esc(m.maker)}</span>${[m.gen,m.machineType].filter(Boolean).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div><h3>${esc(m.name)}</h3>${m.payout ? `<p class="machine-stats">出玉率 ${esc(m.payout)}${m.specNote ? `<span class="spec-note">${esc(m.specNote)}</span>` : ''}</p>` : ''}</div><span class="machine-arrow"><img src="${icon('arrow-up-right')}" alt="機種詳細へ"></span></a>`).join('')}</div></div>`;
+      return `<div class="release-group" id="date-${date}"><div class="date-stamp${unknown ? ' undated' : ''}"><span class="month-label">${monthLabel}</span>${stamp}</div><div>${machines.map(m => `<a class="machine" href="${machineLink(m)}"><div class="machine-body"><div class="machine-meta"><span>${esc(m.maker)}</span>${[m.gen,m.machineType].filter(Boolean).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div><h3>${esc(m.name)}</h3>${m.payout ? `<p class="machine-stats">出玉率 ${esc(m.payout)}${m.specNote ? `<span class="spec-note">${esc(m.specNote)}</span>` : ''}</p>` : ''}</div><span class="machine-arrow"><img src="${BASE}editorial/assets/chevron-right.svg" alt="機種詳細へ"></span></a>`).join('')}</div></div>`;
     }).join('');
   }
 
