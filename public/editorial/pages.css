@@ -11,3 +11,5 @@
 
 .detail-dates{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .pager{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:34px}.pager button{font:inherit;font-size:15px;font-variant-numeric:tabular-nums;min-width:44px;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);cursor:pointer}.pager button:hover:not(:disabled){border-color:var(--orange);color:#b94b06}.pager button[aria-current]{background:var(--orange);border-color:var(--orange);color:white;font-weight:700}.pager button:disabled{opacity:.35;cursor:default}.pager button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.import-fallback{border-top:1px solid var(--line);margin-top:22px;padding-top:20px}.import-fallback h3{font-size:14px;font-weight:700}.import-fallback ol{margin:12px 0 0}
+.deeplink-block[hidden]+.import-fallback{border-top:0;margin-top:0;padding-top:0}

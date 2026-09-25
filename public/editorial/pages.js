@@ -47,3 +47,25 @@ copyButton?.addEventListener('click', async () => {
     field.focus(); field.select();
   }
 });
+
+// 「スロログに登録」：iPhone だけ出す（PC・Android ではアプリを開けないのでコピーの手順だけ見せる）。
+// アプリが無いと slolog:// は開かないので、少し待っても画面が残っていたら App Store へ移る
+const openBtn = document.querySelector('#open-in-app');
+if (openBtn) {
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIOS) {
+    document.querySelector('.deeplink-block').hidden = false;
+    document.querySelectorAll('.deeplink-only').forEach((el) => { el.hidden = false; });
+    document.querySelector('#copy-spec')?.classList.remove('primary');
+    openBtn.addEventListener('click', () => {
+      let left = false;
+      const mark = () => { if (document.hidden) left = true; };
+      document.addEventListener('visibilitychange', mark);
+      window.addEventListener('pagehide', () => { left = true; }, { once: true });
+      setTimeout(() => {
+        document.removeEventListener('visibilitychange', mark);
+        if (!left && !document.hidden) location.href = openBtn.dataset.store;
+      }, 1600);
+    });
+  }
+}
