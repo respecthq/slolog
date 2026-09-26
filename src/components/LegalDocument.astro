@@ -6,12 +6,14 @@ import {UPDATED_AT} from '../lib/legal';
 import {url} from '../lib/url';
 const {title,label,description,text}=Astro.props;
 const blocks:string[]=text.trim().split('\n\n');
+// 見出しの「最終更新」は本文の最終更新日から取る（規約とポリシーで更新日が違ってもずれない）
+const updatedAt:string=text.match(/最終更新日：(\d{4}年\d{1,2}月\d{1,2}日)/)?.[1]??UPDATED_AT;
 const headings=blocks.map((b,i)=>({name:b.replace(/^■ /,''),id:`section-${i}`,heading:b.startsWith('■')})).filter(b=>b.heading);
 ---
 <Editorial title={`${title}｜スロログ`} description={description}>
   <div class="page-wrap legal-wrap">
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><span aria-current="page">{title}</span></nav>
-    <div class="page-title"><p class="eyebrow">{label}</p><h1>{title}</h1><p>最終更新：{UPDATED_AT}</p></div>
+    <div class="page-title"><p class="eyebrow">{label}</p><h1>{title}</h1><p>最終更新：{updatedAt}</p></div>
     <div class="document-grid">
       <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次">{headings.map(h=><a href={`#${h.id}`}>{h.name}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={url('support/')}>お問い合わせ <Icon /></a></div></aside>
       <article class="legal-text">{blocks.map((b,i)=>b.startsWith('■')?<h2 id={`section-${i}`}>{b.replace(/^■ /,'')}</h2>:<LegalBlock text={b}/>)}<div class="document-end"><span>スロログ / Re:Spect</span><a href={url('')}>トップに戻る <Icon /></a></div></article>
