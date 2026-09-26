@@ -49,7 +49,8 @@ copyButton?.addEventListener('click', async () => {
 });
 
 // 「スロログに登録」：iPhone だけ出す（PC・Android ではアプリを開けないのでコピーの手順だけ見せる）。
-// アプリが無いと slolog:// は開かないので、少し待っても画面が残っていたら App Store へ移る
+// 自動で App Store へは移らない（「“スロログ”で開きますか？」が出ている間もページは見えているので、
+// 自動で移すと「開く」を押す前に App Store へ飛んでしまう）。少し待っても画面が残っていたら、App Store へのリンクを出すだけにする
 const openBtn = document.querySelector('#open-in-app');
 if (openBtn) {
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -57,15 +58,9 @@ if (openBtn) {
     document.querySelector('.deeplink-block').hidden = false;
     document.querySelectorAll('.deeplink-only').forEach((el) => { el.hidden = false; });
     document.querySelector('#copy-spec')?.classList.remove('primary');
+    const storeHint = document.querySelector('#deeplink-store');
     openBtn.addEventListener('click', () => {
-      let left = false;
-      const mark = () => { if (document.hidden) left = true; };
-      document.addEventListener('visibilitychange', mark);
-      window.addEventListener('pagehide', () => { left = true; }, { once: true });
-      setTimeout(() => {
-        document.removeEventListener('visibilitychange', mark);
-        if (!left && !document.hidden) location.href = openBtn.dataset.store;
-      }, 1600);
+      setTimeout(() => { if (!document.hidden && storeHint) storeHint.hidden = false; }, 2500);
     });
   }
 }
