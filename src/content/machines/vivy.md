@@ -16,6 +16,7 @@ newsSource: https://web-greenbelt.jp/post-118433/
 payout: '97.7%〜112.8%'
 bonus: ''
 fetched: 2026-09-29
+added: 2026-09-29
 draft: false
 watchKeyword: Vivy
 ---
