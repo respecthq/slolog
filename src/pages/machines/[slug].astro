@@ -38,7 +38,7 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
         </section>
         {!d.fictional&&d.ceiling&&<section class="spec-section"><div class="section-label"><span>02 / MAKER ANNOUNCED</span><h2>天井</h2></div>
           <SpecRows items={[['天井',d.ceiling]]}/>
-          <div class="source-note"><span class="source-link">※メーカー発表（出典：<a href={d.ceilingSource} target="_blank" rel="noopener noreferrer">{/greenbelt|yugitsushin|yugi-nippon|amusement-japan|prtimes/.test(d.ceilingSource)?`業界紙「${paper(d.ceilingSource)}」の発表記事`:'メーカー公式'} <Icon name="external-link" /></a>）</span></div>
+          <div class="source-note"><span class="source-link">※メーカー発表（出典：<a href={d.ceilingSource} target="_blank" rel="noopener noreferrer">{/greenbelt|yugitsushin|yugi-nippon|amusement-japan|prtimes/.test(d.ceilingSource)?`業界紙「${paper(d.ceilingSource)}」`:'メーカー公式'} <Icon name="external-link" /></a>）</span></div>
         </section>}
         {d.fictional&&<section class="spec-section"><div class="section-label"><span>02 / OWN SIMULATOR</span><h2>天井・ゾーン</h2></div>
           {ceiling.some(([,v])=>v)?<SpecRows items={ceiling}/>:<p class="muted">掲載していません。</p>}
