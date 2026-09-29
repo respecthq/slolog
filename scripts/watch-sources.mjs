@@ -36,6 +36,8 @@ function targets() {
       slug: f.replace(/\.md$/, ''), name: one('name'),
       urls: all.filter((u) => !isRef(u)),                 // メーカー側（公式）
       refs: all.filter(isRef),                            // 天井の確認に使う 2 媒体（watch に書いた分）
+      pworld: (fm.match(/https:\/\/www\.p-world\.co\.jp\/machine\/database\/\d+/) ?? [])[0] ?? '',   // 3 つ目の確認先（食い違いの決着にも使う）
+      needsCeiling: !one('ceiling') && !/^noCeiling:\s*true/m.test(fm),   // 天井の見張り（2026-09-29 夜 復活）
       needsSpec: !(one('bonus') || one('payout') || one('junzo')) && !/^specNone:\s*true/m.test(fm),
       keyword: one('watchKeyword') || one('name').replace(/^(スマスロ|パチスロ|Lパチスロ|L)\s*/, '').split(/[\s　～~]/)[0],
     });
@@ -109,7 +111,62 @@ if (manual.length) {
   for (const t of manual) console.log(`   ${t.slug}  ${t.name}  ${t.urls.map((u) => `${u.split('/')[2]}${/\.pdf$/i.test(u) ? '（PDF）' : next[u]?.status === 'BLOCKED' ? '（読めない）' : ''}`).join(' ')}`);
 }
 
-// 天井の見張りは 2026-09-23 に廃止（天井・ゾーンは LP で扱わない）。メーカー公式ページの見張りだけ続ける
+// ---- 天井の見張り（2026-09-23 廃止 → 2026-09-29 夜 復活）：確認に使う 2 媒体（777パチガブ・必勝本）を見る ----
+// LP の天井は「メーカー発表（ceilingSource）」か「2 媒体で一致を確かめた記録（ceilingCheck・ページには出さない）」のどちらか。アプリには送らない
+// 対象は「天井が空で、天井なし（noCeiling）でもない」機種だけ。
+//   ・watch に 2 媒体の URL があれば、そのページに天井の記載が出たかを見る
+//   ・無ければ、機種名で 2 媒体を検索して「ページができた」ことを知らせる（URL は人が確かめて watch に足す。同名の旧機種・パチンコ版に注意）
+const REF = {
+  // minId：これより小さい番号のページは旧機種（同名シリーズの昔の台）とみなして候補にしない。年に一度、その年の新台の番号に合わせて上げる
+  gabu: { label: '777パチガブ', host: 'p-gabu.jp', minId: 7000,
+    search: (k) => 'https://p-gabu.jp/guideworks/machine?machine_keyword=' + encodeURIComponent(k),
+    link: /href="(https:\/\/p-gabu\.jp\/guideworks\/machinecontents\/detail\/\d+)"[^>]*>([\s\S]*?)<\/a>/g,
+    isSlot: (t) => !/^(e|P|PA|CR)\s?/.test(t),
+    hasCeiling: (text) => /天井機能[\s\S]{0,300}?\d{2,4}\s*G/.test(text) },
+  hissho: { label: '必勝本', host: 'hisshobon.jp', minId: 4700,
+    search: (k) => 'https://p.hisshobon.jp/search?key=' + encodeURIComponent(k),
+    link: /href="(\/machine\/\d+)\/?"[^>]*>([\s\S]*?)<\/a>/g,
+    isSlot: (t) => /^S/.test(t),
+    hasCeiling: (text) => /天井\s*(?:&amp;|[&＆])\s*設定変更|天井[^。]{0,12}\d{3,4}\s*G/.test(text) },
+};
+const page = async (u) => { try { const r = await fetch(u, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) }); return r.status === 200 ? await r.text() : ''; } catch { return ''; } };
+console.log('\n— 天井の見張り（777パチガブ・必勝本・P-WORLD）—');
+let ceilChanged = 0;
+for (const t of targets().filter((x) => x.needsCeiling)) {
+  const key = 'ceiling:' + t.slug; const old = prev[key] ?? {}; const now = {};
+  const notes = [];
+  for (const [id, site] of Object.entries(REF)) {
+    const url = t.refs.find((u) => u.includes(site.host));
+    if (url) {
+      const has = site.hasCeiling(strip(await page(url)));
+      now[id] = { url, has };
+      if (has && !old[id]?.has) notes.push(`★ ${site.label}に天井の記載が出た  ${url}`);
+    } else {
+      const html = await page(site.search(t.keyword));
+      const found = [...html.matchAll(site.link)].map((m) => [m[1].startsWith('/') ? 'https://p.hisshobon.jp' + m[1] : m[1], strip(m[2])])
+        .filter(([u, title]) => title && title.includes(t.keyword) && site.isSlot(title) && Number(u.match(/(\d+)\/?$/)?.[1] ?? 0) >= site.minId);
+      const uniq = [...new Map(found).entries()].slice(0, 3);
+      now[id] = { url: null, candidates: uniq.map(([u]) => u) };
+      const fresh = uniq.filter(([u]) => !(old[id]?.candidates ?? []).includes(u));
+      for (const [u, title] of fresh) notes.push(`★ ${site.label}にページ候補：${title}  ${u}（確かめて watch に足す）`);
+    }
+    await new Promise((r) => setTimeout(r, 400));
+  }
+  // P-WORLD 機種DB（3 つ目）：「【天井】」の欄が出たら記載ありとみなす
+  if (t.pworld) {
+    const has = /【天井】[\s\S]{0,200}?\d{2,4}\s*G/.test(strip(await page(t.pworld)));
+    now.pworld = { url: t.pworld, has };
+    if (has && !old.pworld?.has) notes.push(`★ P-WORLDに天井の記載が出た  ${t.pworld}`);
+  }
+  const nHas = ['gabu', 'hissho', 'pworld'].filter((k) => now[k]?.has).length;
+  if (nHas >= 2 && (!old.ok2)) notes.push(`★★ ${nHas} か所に天井の記載あり → 数値と条件を照合（食い違いは 3 か所目で多数決・2 か所で一致したものだけ）して、ceilingCheck（URL＋確認日）つきで載せられる`);
+  now.ok2 = nHas >= 2;
+  next[key] = { ...now, checkedAt: new Date().toISOString().slice(0, 10) };
+  const state = `パチガブ:${now.gabu?.url ? (now.gabu.has ? '天井あり' : '天井まだ') : 'ページ未登録'}／必勝本:${now.hissho?.url ? (now.hissho.has ? '天井あり' : '天井まだ') : 'ページ未登録'}／P-WORLD:${now.pworld ? (now.pworld.has ? '天井あり' : '天井まだ') : 'URLなし'}`;
+  if (notes.length) ceilChanged++;
+  if (notes.length || showAll) { console.log(`${notes.length ? '★' : '・'} ${t.slug}  ${t.name}  [${state}]`); for (const n of notes) console.log('   ' + n); }
+}
+console.log(`天井が空の機種 ${targets().filter((x) => x.needsCeiling).length} 件／変化あり ${ceilChanged} 件`);
 
 if (!existsSync('notes')) mkdirSync('notes');
 writeFileSync(SNAP, JSON.stringify(next, null, 1));

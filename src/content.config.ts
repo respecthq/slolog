@@ -71,7 +71,13 @@ const machines = defineCollection({
     name: z.string(), // 機種名（必須）
     maker: z.coerce.string().default(''), // メーカー
     ceiling: z.coerce.string().default(''), // 天井（例：1480G / モード別）※数値でも可。実機は「メーカー発表」のときだけ（ceilingSource 必須）
-    ceilingSource: httpsUrl('天井の出典URL'), // 2026-09-29〜 天井を発表したメーカー公式ページ、またはメーカー発表を報じた業界紙の記事。攻略サイトは不可
+    ceilingSource: httpsUrl('天井の出典URL'), // 2026-09-29〜 天井を発表したメーカー公式ページ、またはメーカー発表を報じた業界紙の記事。攻略サイトは不可（ページに出典として出る）
+    // 2026-09-29 夜〜 メーカー非公表の天井：2 か所の公開情報で一致を確かめた記録（ページには出さない・表記も付けない。北電子だけ「※独自調査値」）
+    ceilingCheck: z.object({
+      urls: z.array(z.string().url()).min(2), // 一致を確かめたページ（別々のサイト 2 か所以上）
+      date: dateish,                          // 確かめた日
+      note: z.coerce.string().default(''),    // 補足（表記の違い・条件の読み替えなど）
+    }).optional(),
     junzo: z.coerce.string().default(''), // 純増（例：7.0枚/G）
     zone: z.coerce.string().default(''), // ゾーン
     // 導入日 YYYY-MM-DD／メーカーが月までしか公表していない場合は YYYY-MM
@@ -93,7 +99,7 @@ const machines = defineCollection({
     // 天井まわり（どのメーカーも非公表。法人2媒体で一致を確認したものだけ載せる）
     ceilingBonus: z.coerce.string().default(''),  // 天井恩恵
     resetBehavior: z.coerce.string().default(''), // 設定変更・電源OFF/ON時の挙動
-    noCeiling: z.boolean().default(false),        // 天井が仕様上存在しない（ノーマルAタイプ等）
+    noCeiling: z.boolean().default(false),        // 天井が仕様上存在しない（ノーマルAタイプ等）。ページには出さない・天井の見張りから外すための内部の印（2026-09-29 夜 復活）
     // 確認元。ceiling/zone/ceilingBonus/resetBehavior に値を入れるなら必須
     verified: z.object({
       by: z.array(z.string().trim().min(1)).min(1), // 表示する確認元（例 ['777パチガブ']）
@@ -123,15 +129,22 @@ const machines = defineCollection({
     // （アプリはサンプルとして同じ機種を内蔵しており、取り込むと二重になる）。
     fictional: z.boolean().default(false),
   }).refine(
-    // 2026-09-29〜 天井は「メーカー発表」だけ載せる：出典（ceilingSource）があり、攻略サイトでないこと
-    (d) => d.fictional || !d.ceiling || (d.ceilingSource.trim() !== '' && !isBlockedSource(d.ceilingSource)),
+    // 2026-09-29 夜〜 実機の天井は ①メーカー発表（ceilingSource・攻略サイト不可）か ②2 か所で一致を確かめた記録（ceilingCheck）のどちらか一方が必須。
+    // アプリへは送らない（spec.ts の ceiling は常に空）。LP は見るための情報、アプリの天井は動く設定なので分ける
+    (d) => {
+      if (d.fictional || !d.ceiling) return !(!d.fictional && (d.ceilingSource || d.ceilingCheck));
+      const maker = d.ceilingSource.trim() !== '' && !isBlockedSource(d.ceilingSource);
+      const hosts = new Set((d.ceilingCheck?.urls ?? []).map((u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } }));
+      const checked = !!d.ceilingCheck && hosts.size >= 2 && String(d.ceilingCheck.date).trim() !== '';
+      return maker !== checked; // どちらか一方だけ
+    },
     {
-      message: '実機の天井はメーカー発表のものだけです。ceilingSource にメーカー公式か業界紙の発表記事の URL を入れてください（攻略サイトは不可）',
-      path: ['ceilingSource'],
+      message: '実機の天井は、ceilingSource（メーカー発表・攻略サイト不可）か ceilingCheck（別々のサイト 2 か所以上の URL と確認日）のどちらか一方を付けてください。天井が空なら両方とも空に',
+      path: ['ceiling'],
     },
   ).refine(
-    // 2026-09-23〜 天井・ゾーンは扱わない（2026-09-29 に天井だけ「メーカー発表なら出典つきで可」に変更。ゾーン・恩恵・設定変更時・天井なし・確認元は今も不可）（メーカー非公表の解析値で、条件の注釈を漏らすとクレームになるため）。実機には入れさせない
-    (d) => d.fictional || !(d.zone || d.ceilingBonus || d.resetBehavior || d.noCeiling || d.verified),
+    // 2026-09-23〜 ゾーン・天井恩恵・設定変更時の単独欄・確認元（verified）は扱わない（条件の注釈を漏らすとクレームになるため）。天井は上の refine で扱う。noCeiling は天井が空のときだけ（内部の印）
+    (d) => d.fictional || !(d.zone || d.ceilingBonus || d.resetBehavior || d.verified || (d.noCeiling && d.ceiling)),
     {
       // メーカー非公表の項目は、確認元と確認日を持たずに配信させない。
       // 詳細は PIPELINE.md「どこから取るか」と SOURCES.md。

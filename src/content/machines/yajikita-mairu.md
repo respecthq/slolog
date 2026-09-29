@@ -1,7 +1,12 @@
 ---
 name: スマスロ やじきた道中記参る！
 maker: 'ユニバーサルブロス'
-ceiling: ''
+ceiling: 'CZ間999まいる／CZ（関所チャレンジ）6連続スルー'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7113/summarize
+    - https://p.hisshobon.jp/machine/4752/1/115788
+  date: 2026-09-29
 junzo: '約2.5枚/G（AT「やじきた祭」）／疑似ボーナス・上位AT 約5.0枚/G'
 zone: ''
 released: 2026-08-03
@@ -16,6 +21,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: やじきた
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

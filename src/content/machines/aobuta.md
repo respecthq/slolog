@@ -1,7 +1,14 @@
 ---
 name: L青春ブタ野郎はバニーガール先輩の夢を見ない
 maker: 'オリンピア'
-ceiling: ''
+ceiling: 'CZ間560G＋α／思春期ポイント1000pt／ボーナス間899G＋α（設定変更後699G＋α）／CZ6連続スルー'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7140
+    - https://p.hisshobon.jp/machine/4792/1/4
+    - https://www.p-world.co.jp/machine/database/10527
+  date: 2026-09-29
+  note: '設定変更後699G＋α・CZ6連続スルーは必勝本とP-WORLDで一致（パチガブは記載なし）'
 junzo: ''
 zone: ''
 released: 2026-09-07
@@ -17,6 +24,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 青春ブタ野郎
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

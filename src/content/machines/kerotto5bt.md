@@ -2,6 +2,7 @@
 name: スマスロケロット5BT
 maker: '山佐ネクスト'
 ceiling: ''
+noCeiling: true
 junzo: ''
 zone: ''
 bonus: '1/139.7〜1/110.3'

@@ -18,6 +18,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: ゼーガペイン
+watch:
+  - https://p.hisshobon.jp/machine/4820
 ---
 
 ## メーカーの発表

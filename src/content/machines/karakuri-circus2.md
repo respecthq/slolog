@@ -1,7 +1,15 @@
 ---
 name: Lパチスロ からくりサーカス2
 maker: 'SANKYO'
-ceiling: ''
+ceiling: '液晶ゲーム数1200G（設定変更後500G）／CZ・AT間 実ゲーム数890G＋α／CZ4連続スルー／AT間 実ゲーム数2500G'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7065/summarize
+    - https://p.hisshobon.jp/machine/4749/1/115759
+    - https://www.p-world.co.jp/machine/database/10485
+    - https://p-town.dmm.com/machines/5019
+  date: 2026-09-29
+  note: '液晶の最大はパチガブ1100G・必勝本1200G で食い違い → P-WORLD 1200G・DMMぱちタウン「1100Gのゾーン（最深1200G）」で 1200G を採用。4スルー・AT間2500G は必勝本とP-WORLDで一致'
 junzo: '約2.8枚/G（AT）／上位AT 約8.0枚/G'
 zone: ''
 released: 2026-07-06
@@ -16,6 +24,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: からくりサーカス2
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

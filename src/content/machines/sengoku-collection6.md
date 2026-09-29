@@ -1,7 +1,12 @@
 ---
 name: パチスロ 戦国コレクション6
 maker: 'コナミアミューズメント'
-ceiling: ''
+ceiling: '最大6周期（設定変更後3周期）／AT間999G＋α'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7081/summarize
+    - https://p.hisshobon.jp/machine/4743/1/115539
+  date: 2026-09-29
 junzo: ''
 zone: ''
 payout: '97.9%〜114.9%'
@@ -18,6 +23,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 戦国コレクション6
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

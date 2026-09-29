@@ -1,7 +1,12 @@
 ---
 name: スマスロ リコリス・リコイル
 maker: 'サミー'
-ceiling: ''
+ceiling: 'ラッシュ間850G（設定変更後・ラッシュ駆け抜け後600G、上位CZ失敗後250G）／ラッシュ・CZ間600G（設定変更後・ラッシュ駆け抜け後250G）'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7125
+    - https://p.hisshobon.jp/machine/4770/1/116066
+  date: 2026-09-29
 junzo: '約8.4枚/G'
 zone: ''
 released: 2026-09-07
@@ -18,8 +23,8 @@ draft: false
 watch:
   - https://www.sammy.co.jp/japanese/product/pachislot/sp_lyc_re/
 payout: '97.9%〜114.6%'
-updated: '2026-09-23'
-updateNote: 'メーカーが設定別スペックを公表'
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

@@ -2,6 +2,7 @@
 name: ミスタージャグラー
 maker: '北電子'
 ceiling: ''
+noCeiling: true
 junzo: ''
 zone: ''
 released: 2024-07

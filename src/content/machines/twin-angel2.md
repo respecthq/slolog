@@ -17,6 +17,8 @@ added: 2026-09-21
 draft: false
 watch:
   - https://www.sammy.co.jp/japanese/product/pachislot/sp_twi_an_p2/
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7208
+  - https://p.hisshobon.jp/machine/4826
 bonus: '1/169.8〜1/140.3'
 payout: '97.9%〜110.8%'
 bonusPayout: 'SPECIAL BIG BONUS 252枚／BIG BONUS 203枚／MIDDLE BONUS 49枚'

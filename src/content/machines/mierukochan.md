@@ -19,6 +19,9 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 見える子ちゃん
+watch:
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7121
+  - https://p.hisshobon.jp/machine/4768
 ---
 
 ## メーカーの発表

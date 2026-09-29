@@ -1,7 +1,12 @@
 ---
 name: 真打 吉宗
 maker: '大都技研'
-ceiling: ''
+ceiling: 'AT間1500G（設定変更後1000G＋α・真BB後700G＋α）／CZ間1000G／最大6周期'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7047
+    - https://p.hisshobon.jp/machine/4715/1/114906
+  date: 2026-09-29
 junzo: 約2.7枚/G（勧善懲悪RUSH）／真BIG BONUS 約9.0枚/G
 zone: ''
 released: 2026-04
@@ -10,13 +15,13 @@ payout: '97.8%〜114.0%'
 source: https://www.daitogiken.com/contents/product/slot/su-yoshimune/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-09-09
-updateNote: 天井・ゾーンを追加
 draft: false
 gen: 'スマスロ'
 modelName: 'L／真打吉宗／A1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10448
 kenteiNo: '530504'
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 

@@ -2,6 +2,7 @@
 name: アイムジャグラーEX
 maker: '北電子'
 ceiling: ''
+noCeiling: true
 junzo: ''
 zone: ''
 released: 2020-12

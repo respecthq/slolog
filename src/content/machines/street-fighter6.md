@@ -1,7 +1,12 @@
 ---
 name: スマスロ ストリートファイター6
 maker: 'レオスター'
-ceiling: ''
+ceiling: '液晶ゲーム数1000G（実ゲーム数で約470G・設定変更後900G）／ファイターズバトル3連敗'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7111/summarize
+    - https://p.hisshobon.jp/machine/4793/1/4
+  date: 2026-09-29
 junzo: '約6.0枚/G（ファイターズバトル・疑似ボーナス）'
 zone: ''
 released: 2026-08-03
@@ -18,6 +23,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: ストリートファイター6
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

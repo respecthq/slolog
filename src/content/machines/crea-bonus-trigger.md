@@ -2,6 +2,7 @@
 name: クレアの秘宝伝 ～はじまりの扉と太陽の石～ ボーナストリガーver.
 maker: '大都技研'
 ceiling: ''
+noCeiling: true
 junzo: ''
 zone: ''
 released: 2025-09

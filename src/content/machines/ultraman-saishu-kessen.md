@@ -1,7 +1,12 @@
 ---
 name: L ULTRAMAN 最終決戦
 maker: 'オッケー.'
-ceiling: ''
+ceiling: 'CZ間700G＋α（設定変更後500G＋α）／AT間1500G＋α（設定変更後1000G）'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7119/summarize
+    - https://p.hisshobon.jp/machine/4771/1/116214
+  date: 2026-09-29
 junzo: '約7.0枚/G（AT「ULTRA RUSH」）'
 zone: ''
 released: 2026-07-06
@@ -16,6 +21,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: ULTRAMAN
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

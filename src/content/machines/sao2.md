@@ -1,7 +1,14 @@
 ---
 name: スロット ソードアート・オンラインⅡ
 maker: 'パオン・ディーピー'
-ceiling: ''
+ceiling: 'AT間1200G／CZ間499G＋α（設定変更後・初回のデス・ガンバトル失敗後256G＋α）／液晶ゲーム数800G'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7095
+    - https://p.hisshobon.jp/machine/4750/1/115724
+    - https://www.p-world.co.jp/machine/database/10483
+  date: 2026-09-29
+  note: '液晶800GはパチガブとP-WORLDで一致'
 junzo: 約3.6枚/G（Bullet of Bullets・初期150枚+α／差枚数管理型AT）
 zone: ''
 released: 2026-06
@@ -10,13 +17,13 @@ payout: '97.6%〜114.9%'
 source: https://www.daitogiken.com/contents/product/slot/sao2/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-09-09
-updateNote: 天井・ゾーンを追加
 draft: false
 gen: 'スマスロ'
 modelName: 'L／ソードアート・オンラインII／PA1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10483
 kenteiNo: '531088'
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 

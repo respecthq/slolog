@@ -1,7 +1,13 @@
 ---
 name: スマスロパリピ孔明
 maker: '山佐'
-ceiling: ''
+ceiling: 'ボーナス間1009G（設定変更後・ST駆け抜け後428G）／最大20周期'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7177
+    - https://www.p-world.co.jp/machine/database/10518
+  date: 2026-09-29
+  note: '必勝本はまだ天井ページなし。パチガブとP-WORLDで一致'
 junzo: ''
 zone: ''
 payout: '97.6%〜113.6%'
@@ -18,6 +24,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: パリピ孔明
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

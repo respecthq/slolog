@@ -2,6 +2,7 @@
 name: スマスロ タコスロ
 maker: 'ユニバーサルブロス'
 ceiling: ''
+noCeiling: true
 junzo: ''
 zone: ''
 released: '2026-09-07'

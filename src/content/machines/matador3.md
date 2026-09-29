@@ -2,6 +2,7 @@
 name: マタドールⅢ
 maker: '北電子'
 ceiling: ''
+noCeiling: true
 junzo: ''
 zone: ''
 released: 2025-08

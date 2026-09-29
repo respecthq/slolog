@@ -1,7 +1,12 @@
 ---
 name: スマスロ とある魔術の禁書目録2
 maker: '藤商事'
-ceiling: ''
+ceiling: '液晶ゲーム数800G＋α（設定変更後200G＋α）／実ゲーム数 AT間1200G（設定変更後777G）'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7076/summarize
+    - https://p.hisshobon.jp/machine/4781/1/116208
+  date: 2026-09-29
 junzo: '約4.0枚/G（AT「幻想殺しRUSH」）'
 zone: ''
 payout: '97.9%〜113.3%'
@@ -18,6 +23,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 禁書目録2
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

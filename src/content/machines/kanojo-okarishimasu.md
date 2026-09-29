@@ -1,7 +1,13 @@
 ---
 name: Lパチスロ 彼女、お借りします
 maker: 'SANKYO'
-ceiling: ''
+ceiling: '通常時1000G＋α（REG後800G＋α・設定変更後600G＋α）／REG6連続'
+ceilingCheck:
+  urls:
+    - https://p.hisshobon.jp/machine/4799/1/4
+    - https://www.p-world.co.jp/machine/database/10543
+  date: 2026-09-29
+  note: 'パチガブはまだ天井の記載なし。必勝本とP-WORLDで一致'
 junzo: ''
 zone: ''
 released: '2026-09-07'
@@ -17,9 +23,9 @@ added: 2026-09-21
 draft: false
 watchKeyword: 彼女、お借りします
 newsSource: 'https://www.yugitsushin.jp/news/%e6%80%9d%e3%81%84%e3%82%84%e3%82%8a%e7%99%ba%e3%80%81%e3%82%a8%e3%82%b9%e3%82%b3%e3%83%bc%e3%83%88%e8%a1%8c%ef%bc%81%e3%80%8cl%e3%83%91%e3%83%81%e3%82%b9%e3%83%ad-%e5%bd%bc%e5%a5%b3%e3%80%81%e3%81%8a/'
-updated: '2026-09-23'
-updateNote: 'メーカーがボーナス初当り・CZ確率を公表'
 specSource: 'https://www.sankyo-fever.jp/products/assets/pdf/szf/szf_mp.pdf'
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

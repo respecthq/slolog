@@ -4,7 +4,7 @@
 //   候補       … notes/lp-queue.json（検定通過／メーカー公開／導入済み・未掲載）
 //   OK 待ち    … notes/lp-proposals.json（新規ページ＝draft の md を用意済み／更新＝入れる値と出典）。反映は scripts/lp-apply.mjs
 //   更新待ち・完了 … src/content/machines/*.md から自動判定
-// 完了の条件（2026-09-23〜 天井・ゾーンは扱わない）： 型式名あり ＋ 公表値が決着（掲載済み or 導入から 60 日たっても公表なし）＋ 導入済み
+// 完了の条件（2026-09-29 夜〜 天井を戻した）： 型式名あり ＋ 天井が決着（あり or 仕様上なし）＋ 公表値が決着（掲載済み or 導入から 60 日たっても公表なし）＋ 導入済み
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -48,11 +48,16 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
   const daysSince = relDate ? Math.floor((today - relDate) / 86400000) : null;
   const hasSpec = !!(one('bonus') || one('payout') || one('junzo'));
   const specSettled = hasSpec || flag('specNone') || (released && daysSince > 60);
+  const ceilSettled = !!one('ceiling') || flag('noCeiling');
   const wait = [];
   if (flag('draft')) wait.push('下書き');
   if (!released) wait.push(`導入前（${rel || '時期未定'}）`);
   if (!one('modelName')) wait.push('型式名待ち');
   if (!specSettled) wait.push(manualWatch.has(slug) ? '公表値待ち（手で確認）' : '公表値待ち');   // 手で確認＝公式ページが PDF だけ／ボット対策で自動では見張れない（watch-sources.mjs が書く）
+  if (!ceilSettled && !flag('fictional')) {   // 天井の見張り（watch-sources.mjs）の記録から、3 か所の状況を出す
+    const c = snap['ceiling:' + slug]; const st = (x) => (x?.url ? (x.has ? '天井あり' : '天井まだ') : 'ページ未登録');
+    wait.push(`天井待ち（パチガブ：${st(c?.gabu)}／必勝本：${st(c?.hissho)}／P-WORLD：${st(c?.pworld)}）`);
+  }
   // 天井の確認先（777パチガブ・必勝本）。verified / crosscheckUrl / watch のどこに書いてあっても拾う
   const refUrls = [...new Set([...fm.matchAll(/https:\/\/[^\s'"]*(?:p-gabu\.jp|hisshobon\.jp)[^\s'"]*/g)].map((x) => x[0]))];
   const refs = { gabu: refUrls.find((u) => u.includes('p-gabu.jp')), hissho: refUrls.find((u) => u.includes('hisshobon.jp')) };
@@ -136,7 +141,7 @@ for (const m of waiting) {
 }
 md += `\n## 🟢 完了\n\n`;
 for (const m of done) md += `- ${mdMark(m.fresh)}${m.name}（${m.maker}）｜${m.rel}${m.note ? '｜' + m.note : ''}\n`;
-md += `\n---\n\n判定の決まり：完了＝型式名あり＋公表値が決着（掲載済み／導入から 60 日たっても未公表）＋導入済み。\n完了した機種も \`watch-sources.mjs\` が見張り続け、公式ページに変化があれば「OK 待ち」に戻します。\n`;
+md += `\n---\n\n判定の決まり：完了＝型式名あり＋天井が決着（あり／仕様上なし）＋公表値が決着（掲載済み／導入から 60 日たっても未公表）＋導入済み。\n完了した機種も \`watch-sources.mjs\` が見張り続け、公式ページに変化があれば「OK 待ち」に戻します。\n`;
 writeFileSync('notes/LP_BOARD.md', md);
 
 // ---- 見る用の表（notes/LP_BOARD.html）。中身は md と同じデータ。ブラウザで開く ----

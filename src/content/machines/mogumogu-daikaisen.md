@@ -1,7 +1,12 @@
 ---
 name: モグモグ風林火山 大海戦の巻
 maker: 'ネット'
-ceiling: ''
+ceiling: 'CZ間699G＋α／最大6周期／CZ7連続スルー（設定変更後は299G＋α・3周期・3連続スルー）'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7149/summarize
+    - https://p.hisshobon.jp/machine/4787/1/4
+  date: 2026-09-29
 junzo: '約3.1枚/G（AT「提督決戦RUSH」）／上位AT 約7.4枚/G'
 zone: ''
 released: 2026-09-07
@@ -16,6 +21,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: モグモグ風林火山
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表

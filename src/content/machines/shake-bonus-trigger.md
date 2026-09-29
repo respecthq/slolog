@@ -2,6 +2,7 @@
 name: SHAKE BONUS TRIGGER
 maker: '大都技研'
 ceiling: ''
+noCeiling: true
 junzo: ''
 zone: ''
 released: 2025-10

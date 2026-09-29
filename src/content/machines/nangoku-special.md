@@ -1,7 +1,14 @@
 ---
 name: L南国育ち SPECIAL
 maker: 'アムテックス'
-ceiling: ''
+ceiling: '通常時799G（設定変更後・飛翔／超飛翔の終了後500G）'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7052/summarize
+    - https://p.hisshobon.jp/machine/4753/1/115773
+    - https://www.p-world.co.jp/machine/database/10488
+  date: 2026-09-29
+  note: 'パチガブのみのスイカ回数天井は省いた。飛翔終了後500Gはパチガブ・P-WORLDで一致'
 junzo: '3.0枚/G（飛翔モード）／超飛翔モード 6.0枚/G'
 zone: ''
 released: 2026-07-06
@@ -18,6 +25,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 南国育ち
+updated: 2026-09-29
+updateNote: 天井を追加
 ---
 
 ## メーカーの発表
