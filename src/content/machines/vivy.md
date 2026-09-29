@@ -1,7 +1,8 @@
 ---
 name: スロット Vivy -Fluorite Eye's Song-
 maker: '大都技研'
-ceiling: ''
+ceiling: 'AT間：通常時800G＋α／設定変更後500G＋α'
+ceilingSource: https://web-greenbelt.jp/post-118433/
 junzo: '約3.2枚/G'
 zone: ''
 released: 2026-11-02
@@ -19,6 +20,8 @@ fetched: 2026-09-29
 added: 2026-09-29
 draft: false
 watchKeyword: Vivy
+updated: 2026-09-29
+updateNote: 天井を追加（メーカー発表）
 ---
 
 ## メーカーの発表

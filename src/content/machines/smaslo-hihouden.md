@@ -1,7 +1,8 @@
 ---
 name: スマスロ秘宝伝
 maker: 'パオン・ディーピー'
-ceiling: ''
+ceiling: '799G＋α（BB後）／649G＋α（RB後）／499G＋α（設定変更後）'
+ceilingSource: https://web-greenbelt.jp/post-105895/
 junzo: ''
 zone: ''
 released: 2025-12
@@ -10,8 +11,8 @@ payout: '97.8%〜114.7%'
 source: https://www.daitogiken.com/contents/product/slot/smslhihouden/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-09-09
-updateNote: 天井・ゾーンを追加
+updated: 2026-09-29
+updateNote: 天井を追加（メーカー発表）
 draft: false
 gen: 'スマスロ'
 modelName: 'L／スマスロ秘宝伝／PA7'

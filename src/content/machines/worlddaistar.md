@@ -1,7 +1,8 @@
 ---
 name: スロット ワールドダイスター
 maker: 'パオン・ディーピー'
-ceiling: ''
+ceiling: '通常時999G＋α／設定変更後600G＋α／上位AT後600G＋α（いずれもボーナス当選）'
+ceilingSource: https://web-greenbelt.jp/post-114594/
 junzo: 約8.0枚/G（ダイスターボーナス）
 zone: ''
 released: 2026-08
@@ -10,8 +11,8 @@ payout: '97.8%〜112.4%'
 source: https://www.daitogiken.com/contents/product/slot/wds/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-09-09
-updateNote: 天井・ゾーンを追加
+updated: 2026-09-29
+updateNote: 天井を追加（メーカー発表）
 draft: false
 gen: 'スマスロ'
 modelName: 'L／ワールドダイスター／PA3'

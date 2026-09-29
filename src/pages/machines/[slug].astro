@@ -36,6 +36,10 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
           <h3>基本スペック</h3>{specs.some(([,v])=>v)?<>{<SpecRows items={specs}/>}{d.specNote&&<p class="muted spec-note">{d.specNote}</p>}</>:<p class="muted">公表値の記載はありません。</p>}
           <div class="source-note">{d.fictional?'出典：Re:Spect（自社シミュレーター）':<>{sources.map(([u,label],i)=><span class="source-link">出典{sources.length>1?circled[i]:''}：<a href={u} target="_blank" rel="noopener noreferrer">{label} <Icon name="external-link" /></a></span>)}{d.fetched&&<span>取得日：{fmt(d.fetched)}</span>}</>}</div>
         </section>
+        {!d.fictional&&d.ceiling&&<section class="spec-section"><div class="section-label"><span>02 / MAKER ANNOUNCED</span><h2>天井</h2></div>
+          <SpecRows items={[['天井',d.ceiling]]}/>
+          <div class="source-note"><span class="source-link">※メーカー発表（出典：<a href={d.ceilingSource} target="_blank" rel="noopener noreferrer">{/greenbelt|yugitsushin|yugi-nippon|amusement-japan|prtimes/.test(d.ceilingSource)?`業界紙「${paper(d.ceilingSource)}」の発表記事`:'メーカー公式'} <Icon name="external-link" /></a>）</span></div>
+        </section>}
         {d.fictional&&<section class="spec-section"><div class="section-label"><span>02 / OWN SIMULATOR</span><h2>天井・ゾーン</h2></div>
           {ceiling.some(([,v])=>v)?<SpecRows items={ceiling}/>:<p class="muted">掲載していません。</p>}
         </section>}

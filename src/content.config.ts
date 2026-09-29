@@ -70,7 +70,8 @@ const machines = defineCollection({
   schema: z.object({
     name: z.string(), // 機種名（必須）
     maker: z.coerce.string().default(''), // メーカー
-    ceiling: z.coerce.string().default(''), // 天井（例：1480G / モード別）※数値でも可
+    ceiling: z.coerce.string().default(''), // 天井（例：1480G / モード別）※数値でも可。実機は「メーカー発表」のときだけ（ceilingSource 必須）
+    ceilingSource: httpsUrl('天井の出典URL'), // 2026-09-29〜 天井を発表したメーカー公式ページ、またはメーカー発表を報じた業界紙の記事。攻略サイトは不可
     junzo: z.coerce.string().default(''), // 純増（例：7.0枚/G）
     zone: z.coerce.string().default(''), // ゾーン
     // 導入日 YYYY-MM-DD／メーカーが月までしか公表していない場合は YYYY-MM
@@ -122,12 +123,19 @@ const machines = defineCollection({
     // （アプリはサンプルとして同じ機種を内蔵しており、取り込むと二重になる）。
     fictional: z.boolean().default(false),
   }).refine(
-    // 2026-09-23〜 天井・ゾーンは扱わない（メーカー非公表の解析値で、条件の注釈を漏らすとクレームになるため）。実機には入れさせない
-    (d) => d.fictional || !(d.ceiling || d.zone || d.ceilingBonus || d.resetBehavior || d.noCeiling || d.verified),
+    // 2026-09-29〜 天井は「メーカー発表」だけ載せる：出典（ceilingSource）があり、攻略サイトでないこと
+    (d) => d.fictional || !d.ceiling || (d.ceilingSource.trim() !== '' && !isBlockedSource(d.ceilingSource)),
+    {
+      message: '実機の天井はメーカー発表のものだけです。ceilingSource にメーカー公式か業界紙の発表記事の URL を入れてください（攻略サイトは不可）',
+      path: ['ceilingSource'],
+    },
+  ).refine(
+    // 2026-09-23〜 天井・ゾーンは扱わない（2026-09-29 に天井だけ「メーカー発表なら出典つきで可」に変更。ゾーン・恩恵・設定変更時・天井なし・確認元は今も不可）（メーカー非公表の解析値で、条件の注釈を漏らすとクレームになるため）。実機には入れさせない
+    (d) => d.fictional || !(d.zone || d.ceilingBonus || d.resetBehavior || d.noCeiling || d.verified),
     {
       // メーカー非公表の項目は、確認元と確認日を持たずに配信させない。
       // 詳細は PIPELINE.md「どこから取るか」と SOURCES.md。
-      message: '天井・ゾーン・天井恩恵・設定変更時・天井なし・確認元（verified）は扱いません（2026-09-23 決定）。架空機以外では空にしてください',
+      message: 'ゾーン・天井恩恵・設定変更時・天井なし・確認元（verified）は扱いません（2026-09-23 決定）。天井はメーカー発表のときだけ ceilingSource つきで入れられます',
       path: ['verified'],
     },
   ).refine((d) => d.draft || d.fictional || d.source.trim() !== '', {
