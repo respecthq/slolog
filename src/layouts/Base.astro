@@ -2,7 +2,7 @@
 import { inlineIcon } from '../lib/icons';
 import { url } from '../lib/url';
 interface Props { title: string; description?: string; socialImage?: string | null; }
-const { title, description = '記録から、判断へ。スロログはパチスロの記録・分析・立ち回りをつなぐアプリです。', socialImage = 'og.jpg' } = Astro.props;
+const { title, description = '記録から、判断へ。スロログはパチスロの記録・分析・立ち回りをつなぐアプリです。', socialImage = 'og_v2.jpg' } = Astro.props;
 const home=url('');
 const ogImage=socialImage ? new URL(url(socialImage),Astro.site ?? Astro.url).href : null;
 const isMachine=Astro.url.pathname.startsWith(url('machines'));

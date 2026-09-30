@@ -3,7 +3,7 @@ import Header from '../components/editorial/Header.astro';
 import Footer from '../components/editorial/Footer.astro';
 import {url} from '../lib/url';
 interface Props { title: string; description?: string; socialImage?: string | null; home?: boolean; }
-const {title, description='記録から、判断へ。スロログはパチスロの記録・分析・立ち回りをつなぐアプリです。', socialImage='og.jpg', home=false} = Astro.props;
+const {title, description='記録から、判断へ。スロログはパチスロの記録・分析・立ち回りをつなぐアプリです。', socialImage='og_v2.jpg', home=false} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 // CSSのキャッシュ対策：ビルドごとに変わる印を付けて、公開後に古い見た目が残らないようにする
 const assetVer = String(Date.now()).slice(-8);
