@@ -1,5 +1,5 @@
 ---
-name: スロット Vivy -Fluorite Eye's Song-
+name: スロット Vivy -Fluorite Eye’s Song-
 maker: '大都技研'
 ceiling: 'AT間：通常時800G＋α／設定変更後500G＋α'
 ceilingSource: https://web-greenbelt.jp/post-118433/
@@ -19,9 +19,14 @@ bonus: ''
 fetched: 2026-09-29
 added: 2026-09-29
 draft: false
+image:
+  src: images/machines/vivy-kyoutai.png
+  alt: スロット Vivy -Fluorite Eye’s Song- の筐体
+  placement: above
+  credit: ©Vivy Score／アニプレックス・WIT STUDIO　©DAITO GIKEN,INC.
 watchKeyword: Vivy
 updated: 2026-09-29
-updateNote: 天井を追加（メーカー発表）
+updateNote: 筐体画像を追加
 ---
 
 ## メーカーの発表
