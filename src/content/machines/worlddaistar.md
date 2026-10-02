@@ -11,9 +11,14 @@ payout: '97.8%〜112.4%'
 source: https://www.daitogiken.com/contents/product/slot/wds/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-09-29
-updateNote: 天井を追加（メーカー発表）
+updated: 2026-10-02
+updateNote: 筐体画像を追加
 draft: false
+image:
+  src: images/machines/worlddaistar-kyoutai.png
+  alt: スロット ワールドダイスター の筐体
+  placement: above
+  credit: ©Sirius/Project WDS　©DAITO GIKEN,INC.
 gen: 'スマスロ'
 modelName: 'L／ワールドダイスター／PA3'
 modelNameSource: https://www.p-world.co.jp/machine/database/10517
