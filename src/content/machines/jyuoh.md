@@ -1,7 +1,8 @@
 ---
 name: スマスロ 獣王
 maker: 'サミー'
-ceiling: ''
+ceiling: '救済機能 最大999G（設定変更後はサバ連するまで最大599G）'
+ceilingSource: https://www.develop-voice.sammy.co.jp/article/ps_jyu_oh/458.html
 junzo: ''
 zone: ''
 released: 2026-10-05
@@ -21,8 +22,8 @@ watch:
   - https://p.hisshobon.jp/machine/4786
 payout: '97.8%〜114.3%'
 specSource: 'https://www.sammy.co.jp/japanese/product/pachislot/sp_jyu_oh/'
-updated: '2026-09-24'
-updateNote: 'メーカーが設定別スペックを公表'
+updated: '2026-10-03'
+updateNote: '天井（救済機能）を追加（メーカー発表・サミー開発ボイス）'
 ---
 
 ## メーカーの発表
