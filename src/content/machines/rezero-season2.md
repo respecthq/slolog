@@ -19,7 +19,12 @@ gen: 'スマスロ'
 modelName: 'L Re：ゼロから始める異世界生活 season2PA5'
 modelNameSource: https://www.p-world.co.jp/machine/database/10121
 kenteiNo: '430205'
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: 2026-10-04
+updateNote: 筐体画像を追加
+image:
+  src: images/machines/rezero-season2-kyoutai.png
+  alt: スロット Re:ゼロから始める異世界生活 season2 の筐体
+  placement: above
+  credit: ©長月達平・株式会社KADOKAWA刊／Re:ゼロから始める異世界生活2製作委員会　©DAITO GIKEN,INC.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: SHAKE BONUS TRIGGER
+name: ＳＨＡＫＥ ＢＯＮＵＳ ＴＲＩＧＧＥＲ
 maker: '大都技研'
 ceiling: ''
 noCeiling: true
@@ -18,6 +18,13 @@ gen: 'スマスロ'
 modelName: 'LB／シェイクボーナストリガー／A1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10361
 kenteiNo: '530293'
+updated: 2026-10-04
+updateNote: 筐体画像を追加（機種名をメーカー指定の表記に）
+image:
+  src: images/machines/shake-bonus-trigger-kyoutai.png
+  alt: ＳＨＡＫＥ ＢＯＮＵＳ ＴＲＩＧＧＥＲ の筐体
+  placement: above
+  credit: ©DAITO GIKEN,INC.
 ---
 
 
