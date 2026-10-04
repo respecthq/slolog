@@ -19,6 +19,8 @@ const specs=[['純増',d.junzo],['ボーナス',d.bonusPayout],['ボーナス合
 const paper=(u:string)=>/yugitsushin/.test(u)?'遊技通信':/greenbelt/.test(u)?'グリーンべると':/amusement-japan|yugi-nippon/.test(u)?'遊技日本':/prtimes/.test(u)?'PR TIMES':'業界紙';
 const sources=[[d.source,'メーカー公式'],[d.specSource,'スペック（メーカー公式）'],[d.newsSource,d.newsSource?`業界紙「${paper(d.newsSource)}」`:'']].filter(([u])=>u) as [string,string][];
 const circled='①②③④';
+// 見出しの番号は出す節の順に振る（天井が無い機種でもリール配列が 02 になる）
+const reelNo=String(2+(!d.fictional&&d.ceiling?1:0)).padStart(2,'0');
 const ceiling=[['天井',d.ceiling],['天井恩恵',d.ceilingBonus],['ゾーン',d.zone],['設定変更時',d.resetBehavior]];
 import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
 ---
@@ -40,6 +42,10 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
           <SpecRows items={[['天井',d.ceiling]]}/>
           {d.ceilingCheck?(d.maker==='北電子'&&<div class="source-note"><span>※独自調査値</span></div>):
           <div class="source-note"><span class="source-link">※メーカー発表（出典：<a href={d.ceilingSource} target="_blank" rel="noopener noreferrer">{/greenbelt|yugitsushin|yugi-nippon|amusement-japan|prtimes/.test(d.ceilingSource)?`業界紙「${paper(d.ceilingSource)}」`:'メーカー公式'} <Icon name="external-link" /></a>）</span></div>}
+        </section>}
+        {!d.fictional&&d.reels&&<section class="spec-section reel-section"><div class="section-label"><span>{reelNo} / REEL STRIP</span><h2>リール配列</h2></div>
+          <div class:list={['reel-grid',{'no-symbols':!d.reels.symbols}]}><figure class="reel-strip"><img src={url(d.reels.src)} alt={`${d.name} のリール配列（左・中・右）`} loading="lazy" /></figure>{d.reels.symbols&&<figure class="reel-symbols"><img src={url(d.reels.symbols)} alt={`${d.name} の図柄一覧`} loading="lazy" /></figure>}</div>
+          <p class="reel-rights">{d.reels.credit}</p>
         </section>}
         {d.fictional&&<section class="spec-section"><div class="section-label"><span>02 / OWN SIMULATOR</span><h2>天井・ゾーン</h2></div>
           {ceiling.some(([,v])=>v)?<SpecRows items={ceiling}/>:<p class="muted">掲載していません。</p>}

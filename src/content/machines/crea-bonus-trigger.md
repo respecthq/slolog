@@ -18,12 +18,16 @@ gen: 'スマスロ'
 modelName: 'LB／クレアの秘宝伝ボーナストリガーVER．／A2'
 modelNameSource: https://www.p-world.co.jp/machine/database/10325
 kenteiNo: '530057'
-updated: 2026-10-04
-updateNote: 筐体画像を追加（機種名をメーカー指定の表記に）
 image:
   src: images/machines/crea-bonus-trigger-kyoutai.png
   alt: クレアの秘宝伝～はじまりの扉と太陽の石～ボーナストリガーver. の筐体
   placement: above
+  credit: ©DAITO GIKEN,INC.
+updated: 2026-10-04
+updateNote: 筐体画像とリール配列を追加（機種名をメーカー指定の表記に）
+reels:
+  src: images/machines/crea-bonus-trigger-reel.png
+  symbols: images/machines/crea-bonus-trigger-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

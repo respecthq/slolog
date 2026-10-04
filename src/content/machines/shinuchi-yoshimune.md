@@ -20,12 +20,16 @@ gen: 'スマスロ'
 modelName: 'L／真打吉宗／A1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10448
 kenteiNo: '530504'
-updated: 2026-10-04
-updateNote: 筐体画像を追加
 image:
   src: images/machines/shinuchi-yoshimune-kyoutai.png
   alt: 真打 吉宗 の筐体
   placement: above
+  credit: ©DAITO GIKEN,INC.
+updated: 2026-10-04
+updateNote: 筐体画像とリール配列を追加
+reels:
+  src: images/machines/shinuchi-yoshimune-reel.png
+  symbols: images/machines/shinuchi-yoshimune-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

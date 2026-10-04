@@ -21,7 +21,16 @@ gen: 'スマスロ'
 modelName: 'L／いざ番長／SB8'
 modelNameSource: https://www.p-world.co.jp/machine/database/10275
 kenteiNo: '430901'
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: 2026-10-04
+updateNote: 筐体画像とリール配列を追加
+image:
+  src: images/machines/iza-bancho-kyoutai.png
+  alt: いざ！番長 の筐体
+  placement: above
+  credit: ©DAITO GIKEN,INC.
+reels:
+  src: images/machines/iza-bancho-reel.png
+  symbols: images/machines/iza-bancho-zugara.png
+  credit: ©DAITO GIKEN,INC.
 ---
 

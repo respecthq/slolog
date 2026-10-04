@@ -19,12 +19,16 @@ gen: 'スマスロ'
 modelName: 'L押忍！番長4 A3'
 modelNameSource: https://www.p-world.co.jp/machine/database/10023
 kenteiNo: '3S1296'
-updated: 2026-10-04
-updateNote: 筐体画像を追加
 image:
   src: images/machines/bancho4-kyoutai.png
   alt: 押忍！番長４ の筐体
   placement: above
+  credit: ©DAITO GIKEN,INC.
+updated: 2026-10-04
+updateNote: 筐体画像とリール配列を追加
+reels:
+  src: images/machines/bancho4-reel.png
+  symbols: images/machines/bancho4-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

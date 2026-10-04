@@ -15,6 +15,15 @@ const machineImage = z.object({
   }
 });
 
+// 2026-10-04〜 リール配列（メーカーの素材サイトの画像を加工せずに縮小だけして置く）。LP だけに出し、アプリへは送らない（spec.ts に入れない）
+const localImage = (label: string) => z.string().regex(/^images\/[\p{L}\p{N}_./ -]+\.(?:png|jpe?g|webp|avif)$/iu, `${label}は images/ から始まるローカル画像パスを指定してください`)
+  .refine((src) => !src.split('/').includes('..') && existsSync(resolve('public', src)), { message: `public配下に画像がありません。パスを確認してください` });
+const machineReels = z.object({
+  src: localImage('リール配列'), // 3 リールの配列（縦長）
+  symbols: localImage('図柄一覧').optional(), // 図柄の一覧
+  credit: z.string().trim().min(1, 'リール配列の権利表記を記入してください'), // 素材ガイドの指定どおり（画像の近くにスミ一色で出す）
+});
+
 // 出典に使えない配信元（攻略・解析メディア）。
 // これらの数値は「編集部調べ」＝各メディアの成果物で、メーカー公表事実ではない。
 // 利用規約 第2条「当方が解析値や攻略情報を提供することはありません」と矛盾するので、
@@ -107,6 +116,7 @@ const machines = defineCollection({
       date: dateish,                                // 確認日
       crosscheck: httpsUrl('照合URL'),               // 照合に使った2件目のURL（QA用・ページには出さない）
     }).optional(),
+    reels: machineReels.optional(), // リール配列（LP だけ。アプリへは送らない）
     image: machineImage.optional(), // 許諾済み筐体画像。上部／タイトル背景を選べる
     // 出典・トレーサビリティ（メーカー公表事実の裏取り。出典明示にもなる）
     source: httpsUrl('出典URL'), // 出典URL（メーカー公式/ニュース）

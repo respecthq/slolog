@@ -16,12 +16,16 @@ gen: 'スマスロ'
 modelName: 'L／スマスロ秘宝伝／PA7'
 modelNameSource: https://www.p-world.co.jp/machine/database/10390
 kenteiNo: '5S0926'
-updated: 2026-10-04
-updateNote: 筐体画像を追加（機種名をメーカー指定の表記に）
 image:
   src: images/machines/smaslo-hihouden-kyoutai.png
   alt: スマスロ 秘宝伝 の筐体
   placement: above
+  credit: ©DAITO GIKEN,INC.
+updated: 2026-10-04
+updateNote: 筐体画像とリール配列を追加（機種名をメーカー指定の表記に）
+reels:
+  src: images/machines/smaslo-hihouden-reel.png
+  symbols: images/machines/smaslo-hihouden-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

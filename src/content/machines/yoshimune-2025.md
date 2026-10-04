@@ -10,12 +10,21 @@ koyaku: ''
 source: https://www.daitogiken.com/contents/product/slot/yoshimunes/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-09-29
-updateNote: 天井を追加（メーカー発表）
 draft: false
 gen: 'スマスロ'
 modelName: 'L／ヨシムネS／SC2'
 modelNameSource: https://www.p-world.co.jp/machine/database/10242
 kenteiNo: '430582'
+updated: 2026-10-04
+updateNote: 筐体画像とリール配列を追加
+image:
+  src: images/machines/yoshimune-2025-kyoutai.png
+  alt: 吉宗 の筐体
+  placement: above
+  credit: ©DAITO GIKEN,INC.
+reels:
+  src: images/machines/yoshimune-2025-reel.png
+  symbols: images/machines/yoshimune-2025-zugara.png
+  credit: ©DAITO GIKEN,INC.
 ---
 

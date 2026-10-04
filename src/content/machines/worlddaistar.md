@@ -11,8 +11,6 @@ payout: '97.8%〜112.4%'
 source: https://www.daitogiken.com/contents/product/slot/wds/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-10-02
-updateNote: 筐体画像を追加
 draft: false
 image:
   src: images/machines/worlddaistar-kyoutai.png
@@ -23,6 +21,12 @@ gen: 'スマスロ'
 modelName: 'L／ワールドダイスター／PA3'
 modelNameSource: https://www.p-world.co.jp/machine/database/10517
 kenteiNo: '6S0003'
+updated: 2026-10-04
+updateNote: リール配列を追加
+reels:
+  src: images/machines/worlddaistar-reel.png
+  symbols: images/machines/worlddaistar-zugara.png
+  credit: ©Sirius/Project WDS　©DAITO GIKEN,INC.
 ---
 
 
