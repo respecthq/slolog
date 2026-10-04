@@ -30,7 +30,6 @@ image:
   credit: ©DAITO GIKEN,INC.
 reels:
   src: images/machines/iza-bancho-reel.png
-  symbols: images/machines/iza-bancho-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

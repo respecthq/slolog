@@ -28,7 +28,6 @@ updated: 2026-10-04
 updateNote: 筐体画像とリール配列を追加
 reels:
   src: images/machines/bancho4-reel.png
-  symbols: images/machines/bancho4-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

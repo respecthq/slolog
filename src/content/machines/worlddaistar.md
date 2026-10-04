@@ -25,7 +25,6 @@ updated: 2026-10-04
 updateNote: リール配列を追加
 reels:
   src: images/machines/worlddaistar-reel.png
-  symbols: images/machines/worlddaistar-zugara.png
   credit: ©Sirius/Project WDS　©DAITO GIKEN,INC.
 ---
 

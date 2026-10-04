@@ -29,7 +29,6 @@ updated: 2026-10-04
 updateNote: 筐体画像とリール配列を追加
 reels:
   src: images/machines/shinuchi-yoshimune-reel.png
-  symbols: images/machines/shinuchi-yoshimune-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

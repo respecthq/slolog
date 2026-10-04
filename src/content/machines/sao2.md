@@ -31,7 +31,6 @@ updated: 2026-10-04
 updateNote: 筐体画像とリール配列を追加
 reels:
   src: images/machines/sao2-reel.png
-  symbols: images/machines/sao2-zugara.png
   credit: ©2017 川原 礫／KADOKAWA アスキー・メディアワークス／SAO-A Project　©DAITO GIKEN,INC.
 ---
 

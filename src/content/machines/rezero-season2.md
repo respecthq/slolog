@@ -28,7 +28,6 @@ updated: 2026-10-04
 updateNote: 筐体画像とリール配列を追加
 reels:
   src: images/machines/rezero-season2-reel.png
-  symbols: images/machines/rezero-season2-zugara.png
   credit: ©長月達平・株式会社KADOKAWA刊／Re:ゼロから始める異世界生活2製作委員会　©DAITO GIKEN,INC.
 ---
 

@@ -25,7 +25,6 @@ updated: 2026-10-04
 updateNote: 筐体画像とリール配列を追加（機種名をメーカー指定の表記に）
 reels:
   src: images/machines/smaslo-hihouden-reel.png
-  symbols: images/machines/smaslo-hihouden-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 

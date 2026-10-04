@@ -24,7 +24,6 @@ image:
   credit: ©DAITO GIKEN,INC.
 reels:
   src: images/machines/yoshimune-2025-reel.png
-  symbols: images/machines/yoshimune-2025-zugara.png
   credit: ©DAITO GIKEN,INC.
 ---
 
