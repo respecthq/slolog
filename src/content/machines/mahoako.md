@@ -18,7 +18,7 @@ payout: '97.6%〜112.0%'
 bonus: '1/249.6（全設定共通）'
 fetched: 2026-10-05
 added: 2026-10-05
-draft: true
+draft: false
 watchKeyword: 魔法少女にあこがれて
 ---
 
