@@ -25,4 +25,4 @@ watch:
 - 発表：北電子（2026年9月）
 - 導入開始：2027年1月18日
 
-権利表記：©コーエーテクモゲームス All Rights Reserved.　©KITA DENSHI
+権利表記：©コーエーテクモゲームス All rights reserved.　©KITA DENSHI
