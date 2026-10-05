@@ -1,7 +1,7 @@
 ---
 name: スマスロ モンスターハンターライズ：サンブレイク
 maker: 'アデリオン'
-ceiling: ''
+ceiling: 'AT天井：AT間999G＋α／CZ天井：CZ間333G＋α／AT間でCZ6連続失敗→次のCZが成功濃厚'
 junzo: ''
 zone: ''
 released: 2026-10-05
@@ -19,6 +19,14 @@ watchKeyword: モンスターハンターライズ
 watch:
   - https://p-gabu.jp/guideworks/machinecontents/detail/7126
   - https://p.hisshobon.jp/machine/4830
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7126
+    - https://p.hisshobon.jp/machine/4830/1/4
+  date: 2026-10-05
+  note: '2サイトで3条件一致（パチガブ 10/02 掲載）。2026-10-05 ユーザー判断：「全部AT当選」と誤解されないよう、何に当選する天井か（AT天井／CZ天井）を明記'
+updated: '2026-10-05'
+updateNote: '天井を追加'
 ---
 
 ## メーカーの発表
