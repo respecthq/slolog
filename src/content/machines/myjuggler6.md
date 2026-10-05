@@ -12,8 +12,6 @@ source: https://www.kitadenshi.co.jp/slot/myjuggler6/
 fetched: 2026-09-04
 added: 2026-09-04
 crosscheckUrl: https://p.hisshobon.jp/machine/4780
-updated: '2026-09-23'
-updateNote: '導入日が確定（10/5）'
 draft: false
 bonus: '1/163.8〜1/114.6'
 specNote: '※独自調査値'
@@ -22,6 +20,16 @@ gen: '6号機'
 modelName: 'SマイジャグラーVI KK'
 modelNameSource: https://www.p-world.co.jp/machine/database/10513
 kenteiNo: '5S0437'
+updated: 2026-10-05
+updateNote: 筐体画像とリール配列を追加（北電子のプレスリリース素材）
+image:
+  src: images/machines/myjuggler6-kyoutai.png
+  alt: マイジャグラーVI の筐体
+  placement: above
+  credit: ©KITA DENSHI
+reels:
+  src: images/machines/myjuggler6-reel.png
+  credit: ©KITA DENSHI
 ---
 
 
