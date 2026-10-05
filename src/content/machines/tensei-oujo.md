@@ -1,7 +1,7 @@
 ---
 name: L転生王女と天才令嬢の魔法革命
 maker: 'オリンピアエステート'
-ceiling: ''
+ceiling: 'ボーナス天井：通常時510G＋α'
 junzo: ''
 zone: ''
 released: '2026-10-05'
@@ -16,11 +16,17 @@ fetched: 2026-09-21
 added: 2026-09-21
 draft: false
 newsSource: 'https://web-greenbelt.jp/post-116545/'
-updated: '2026-09-23'
-updateNote: '導入日が確定（10/5）'
+updated: '2026-10-05'
+updateNote: '天井を追加'
 watch:
   - https://p-gabu.jp/guideworks/machinecontents/detail/7135
   - https://p.hisshobon.jp/machine/4814
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7135
+    - https://p.hisshobon.jp/machine/4814/1/4
+  date: 2026-10-05
+  note: '510Gは2サイト一致（パチガブは＋α表記なし）。CZ間410G・設定変更時は必勝本のみ'
 ---
 
 ## メーカーの発表

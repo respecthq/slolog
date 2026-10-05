@@ -6,13 +6,16 @@ junzo: '下位AT 約2.5枚/G／上位AT 約5.0枚/G'
 zone: ''
 released: 2026-10-19
 koyaku: ''
-type: 'A+AT'
+type: '疑似A+AT'
 gen: 'スマスロ'
 modelName: 'L魔法少女にあこがれてNP'
 modelNameSource: https://www.p-world.co.jp/machine/database/10563
 kenteiNo: '630414'
 source: https://www.newgin.co.jp/products/lmahoako
+specSource: https://www.newgin.co.jp/products/lmahoako/
 newsSource: https://web-greenbelt.jp/post-115232/
+payout: '97.6%〜112.0%'
+bonus: '1/249.6（全設定共通）'
 fetched: 2026-10-05
 added: 2026-10-05
 draft: true
@@ -30,3 +33,20 @@ watchKeyword: 魔法少女にあこがれて
 - AT は純増約2.5枚の下位 AT と、純増約5.0枚の上位 AT の2段階
 - 決められた条件を満たすまで終わらない「条件達成型」の AT を搭載
 - リーチ目など、出目で楽しむ要素もある
+
+## 公表スペック
+
+ニューギンの製品ページ「スペック」に載っている値です。
+
+| 設定 | CZ | ボーナス | AT | 出玉率 |
+|---:|---:|---:|---:|---:|
+| 1 | 1/357.0 | 1/249.6 | 1/436.3 | 97.6% |
+| 2 | 1/333.8 | 1/249.6 | 1/422.7 | 98.8% |
+| 3 | 1/310.7 | 1/249.6 | 1/401.4 | 100.5% |
+| 4 | 1/273.3 | 1/249.6 | 1/352.4 | 105.0% |
+| 5 | 1/243.0 | 1/249.6 | 1/316.1 | 110.2% |
+| 6 | 1/235.4 | 1/249.6 | 1/305.7 | 112.0% |
+
+- ベース：31.4G（50枚あたり）
+- 純増：約2.5枚/G または 約5.0枚/G
+

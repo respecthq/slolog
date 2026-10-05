@@ -11,13 +11,14 @@ gen: 'スマスロ'
 modelName: 'LアカマターL1'
 modelNameSource: https://www.p-world.co.jp/machine/database/10561
 kenteiNo: '5S1615'
-source: https://oizumi.co.jp/wp-content/uploads/2026/09/aa25c54786413885a2223874e1354a57.pdf
+source: https://www.oizumi.co.jp/machine/akamater/
 newsSource: https://web-greenbelt.jp/post-118527/
 payout: '97.2%〜112.5%'
+bonus: '1/111.7〜（設定1〜）'
 bonusPayout: 'SUPER BIG BONUS 約300枚（50G）／BIG BONUS 約210枚（35G）／REGULAR BONUS 約90枚（15G）'
 fetched: 2026-10-05
 added: 2026-10-05
-draft: true
+draft: false
 watchKeyword: アカマター
 ---
 
@@ -30,4 +31,8 @@ watchKeyword: アカマター
 
 - 沖縄にすむ大蛇「アカマタ」がモチーフの、完全告知の AT 機
 - 出玉は純増約6.0枚の疑似ボーナスで、SUPER BIG・BIG・REGULAR の3種類
-- 1G連のシステムと新しい前兆の仕組み、「ボトルキープシステム」を搭載
+- 連チャンの仕組みは「ボトルキープシステム」。天国中などにボーナスを引くと、キープしたボトルの数だけ 1G 連が起きる（ストックは最大3つ）
+- 発生した時点で前兆や滞在モードを示唆する「ロングウェイト前兆」を搭載
+- 楽曲に荻野目洋子さんの「ダンシング・ヒーロー」、シャ乱Qの「ズルい女」を収録
+
+発表時のリリース：[オーイズミ「L アカマター」発売のお知らせ（PDF）](https://oizumi.co.jp/wp-content/uploads/2026/09/aa25c54786413885a2223874e1354a57.pdf)
