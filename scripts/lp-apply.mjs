@@ -17,6 +17,10 @@ for (const p of props) {
     if (k === 'verified') {
       fm = fm.replace(/^verified:\n(?:\s+.*\n)+/m, '');
       fm = fm.replace(/\n$/, `\nverified:\n  by: [${v.by.map((x) => `'${x}'`).join(', ')}]\n  url: ${v.url}\n  date: ${v.date}\n  crosscheck: ${v.crosscheck}\n`);
+    } else if (k === 'ceilingCheck') {
+      // 2026-10-05〜 メーカー非公表の天井：2 か所で一致を確かめた記録（ページには出さない）
+      fm = fm.replace(/^ceilingCheck:\n(?:\s+.*\n)+/m, '');
+      fm = fm.replace(/\n$/, `\nceilingCheck:\n  urls:\n${v.urls.map((u) => `    - ${u}`).join('\n')}\n  date: ${v.date}\n  note: ${q(v.note ?? '')}\n`);
     } else set(k, v);
   }
   for (const [from, to] of p.body ?? []) { if (!body.includes(from)) { console.error(`✗ ${p.id}：本文に「${from}」が見つかりません`); process.exit(1); } body = body.replace(from, to); }

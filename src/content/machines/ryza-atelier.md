@@ -16,6 +16,8 @@ fetched: 2026-09-21
 added: 2026-09-21
 draft: false
 watchKeyword: ライザのアトリエ
+watch:
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7191
 ---
 
 ## メーカーの発表

@@ -19,6 +19,7 @@ newsSource: 'https://web-greenbelt.jp/post-116545/'
 updated: '2026-09-23'
 updateNote: '導入日が確定（10/5）'
 watch:
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7135
   - https://p.hisshobon.jp/machine/4814
 ---
 
