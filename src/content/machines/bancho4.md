@@ -1,12 +1,7 @@
 ---
 name: 押忍！番長４
 maker: '大都技研'
-ceiling: 'ボーナス間699G＋α／AT非当選のボーナス9連続'
-ceilingCheck:
-  urls:
-    - https://p-gabu.jp/guideworks/machinecontents/detail/6568
-    - https://p.hisshobon.jp/machine/4289/1/102701
-  date: 2026-09-29
+ceiling: 'ボーナス間699G＋α → ボーナス／AT非当選のボーナス最大9連続 → 次のボーナスでAT'
 junzo: 約2.7枚/G（頂RISE・50G+α）／番長ボーナス 約2.7枚/G（30G+α）／超番長ボーナス 約4.5枚/G（50G）
 zone: ''
 released: 2024-04
@@ -24,10 +19,16 @@ image:
   alt: 押忍！番長４ の筐体
   placement: above
   credit: ©DAITO GIKEN,INC.
-updated: 2026-10-04
-updateNote: 筐体画像とリール配列を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 reels:
   src: images/machines/bancho4-reel.png
   credit: ©DAITO GIKEN,INC.
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/6568
+    - https://p.hisshobon.jp/machine/4289/1/102701
+  date: 2026-10-10
+  note: ''
 ---
 

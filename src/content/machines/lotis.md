@@ -1,12 +1,7 @@
 ---
 name: ローティス
 maker: '北電子'
-ceiling: '通常時900G'
-ceilingCheck:
-  urls:
-    - https://p-gabu.jp/guideworks/machinecontents/detail/7082
-    - https://p.hisshobon.jp/machine/4754/1/116167
-  date: 2026-09-29
+ceiling: '通常時900G → ボーナス'
 junzo: ''
 zone: ''
 released: 2026-07
@@ -20,8 +15,14 @@ gen: 'スマスロ'
 modelName: 'LローティスTN'
 modelNameSource: https://www.p-world.co.jp/machine/database/10491
 kenteiNo: '531154'
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7082
+    - https://p.hisshobon.jp/machine/4754/1/116167
+  date: 2026-10-10
+  note: ''
 ---
 
 権利表記：©KITA DENSHI

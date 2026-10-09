@@ -1,14 +1,7 @@
 ---
 name: スマスロ とんでもスキルで異世界放浪メシ
 maker: 'コナミアミューズメント'
-ceiling: '通常時1000G＋α（設定変更後650G＋α）'
-ceilingCheck:
-  urls:
-    - https://p-gabu.jp/guideworks/machinecontents/detail/7077/summarize
-    - https://p.hisshobon.jp/machine/4756/1/115807
-    - https://www.p-world.co.jp/machine/database/10493
-  date: 2026-09-29
-  note: 'パチガブのみの「女神降臨失敗後650G」は省いた'
+ceiling: '通常時1000G＋α（設定変更後650G＋α） → オープニングボーナス'
 junzo: ''
 zone: ''
 payout: '97.9%〜112.1%'
@@ -25,8 +18,15 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: とんでもスキル
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7077/summarize
+    - https://p.hisshobon.jp/machine/4756/1/115807
+    - https://www.p-world.co.jp/machine/database/10493
+  date: 2026-10-10
+  note: 'パチガブのみの「女神降臨失敗後650G」は省いた。オープニングボーナスはパチガブ・P-WORLDで一致（必勝本は「ボーナス」）'
 ---
 
 ## メーカーの発表

@@ -1,14 +1,7 @@
 ---
 name: スマスロ ミリオンゴッド-神々の軌跡-
 maker: 'ミズホ'
-ceiling: 'GG間1480G＋α（設定変更後は510G・1000G・1480Gのいずれか）'
-ceilingCheck:
-  urls:
-    - https://p-gabu.jp/guideworks/machinecontents/detail/7036
-    - https://p.hisshobon.jp/machine/4693/1/113796
-    - https://www.p-world.co.jp/machine/database/10424
-  date: 2026-09-29
-  note: '設定変更後の振り分けはパチガブとP-WORLDで一致（必勝本は記載なし）'
+ceiling: 'GG間1480G＋α（設定変更後は510G・1000G・1480Gのいずれか） → GG'
 junzo: ''
 zone: ''
 released: '2026-04'
@@ -22,8 +15,15 @@ gen: 'スマスロ'
 modelName: 'L／ミリオンゴッド／CX'
 modelNameSource: 'https://www.p-world.co.jp/machine/database/10424'
 kenteiNo: '530692'
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7036
+    - https://p.hisshobon.jp/machine/4693/1/113796
+    - https://www.p-world.co.jp/machine/database/10424
+  date: 2026-10-10
+  note: '設定変更後の振り分けはパチガブとP-WORLDで一致（必勝本は記載なし）。当たるもの（GG）は3サイトで一致'
 ---
 
 ## ゲーム性

@@ -1,12 +1,7 @@
 ---
 name: Lパチスロ 喰霊-零-Re
 maker: 'オーイズミ'
-ceiling: 'ボーナス・ART間999G＋α'
-ceilingCheck:
-  urls:
-    - https://p-gabu.jp/guideworks/machinecontents/detail/7098/summarize
-    - https://p.hisshobon.jp/machine/4755/1/115800
-  date: 2026-09-29
+ceiling: 'ボーナス・ART間999G＋α → 無限ART'
 junzo: '約1.0枚/G（ART「喰霊CHANCE」）'
 zone: ''
 released: 2026-08-17
@@ -21,8 +16,14 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 喰霊
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7098/summarize
+    - https://p.hisshobon.jp/machine/4755/1/115800
+  date: 2026-10-10
+  note: ''
 ---
 
 ## メーカーの発表

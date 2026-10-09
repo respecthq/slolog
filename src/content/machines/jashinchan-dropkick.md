@@ -1,13 +1,7 @@
 ---
 name: L邪神ちゃんドロップキック
 maker: 'サンスリー'
-ceiling: '通常時799G（設定変更後599G）'
-ceilingCheck:
-  urls:
-    - https://p-gabu.jp/guideworks/machinecontents/detail/7110/summarize
-    - https://p.hisshobon.jp/machine/4765/1/116121
-  date: 2026-09-29
-  note: 'パチガブのみの「ボーナス10連続AT非当選の救済」は省いた'
+ceiling: '通常時799G（設定変更後599G） → ボーナス／AT非当選のボーナス最大10スルー → 次のボーナスがEPISODE BONUS以上濃厚'
 junzo: ''
 zone: ''
 released: 2026-08-03
@@ -22,8 +16,15 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 邪神ちゃん
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7110/summarize
+    - https://p.hisshobon.jp/machine/4765/1/116121
+    - https://www.p-world.co.jp/machine/database/10498
+  date: 2026-10-10
+  note: '10スルー後のEPISODE BONUS以上濃厚はパチガブとP-WORLDで一致（必勝本は記載なし）'
 ---
 
 ## メーカーの発表
