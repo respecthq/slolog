@@ -1,7 +1,7 @@
 ---
 name: 真打 吉宗
 maker: '大都技研'
-ceiling: 'AT間1500G（設定変更後1000G＋α・真BB後700G＋α）／CZ間1000G／最大6周期'
+ceiling: 'AT天井：AT間1500G（設定変更後1000G＋α・真BB後700G＋α）／CZ天井：CZ間1000G・最大6周期'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7047
@@ -25,8 +25,8 @@ image:
   alt: 真打 吉宗 の筐体
   placement: above
   credit: ©DAITO GIKEN,INC.
-updated: 2026-10-04
-updateNote: 筐体画像とリール配列を追加
+updated: '2026-10-10'
+updateNote: '天井に何に当選するかを明記'
 reels:
   src: images/machines/shinuchi-yoshimune-reel.png
   credit: ©DAITO GIKEN,INC.
