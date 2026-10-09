@@ -1,7 +1,7 @@
 ---
 name: Lパチスロ からくりサーカス2
 maker: 'SANKYO'
-ceiling: '液晶ゲーム数1200G（設定変更後500G）／CZ・AT間 実ゲーム数890G＋α／CZ4連続スルー／AT間 実ゲーム数2500G'
+ceiling: '液晶ゲーム数 最大1200G（設定変更後500G） → CZ／CZ・AT間 実ゲーム数890G＋α → CZ／AT間 実ゲーム数2500G → AT／CZ4連続スルー → 5回目のCZがAT'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7065/summarize
@@ -24,8 +24,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: からくりサーカス2
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 ---
 
 ## メーカーの発表

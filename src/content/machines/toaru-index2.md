@@ -1,7 +1,7 @@
 ---
 name: スマスロ とある魔術の禁書目録2
 maker: '藤商事'
-ceiling: '液晶ゲーム数800G＋α（設定変更後200G＋α）／実ゲーム数 AT間1200G（設定変更後777G）'
+ceiling: '液晶ゲーム数 最大800G＋α（設定変更後200G＋α） → CZかAT／AT間 実ゲーム数1200G（設定変更後777G） → AT'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7076/summarize
@@ -23,8 +23,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 禁書目録2
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 ---
 
 ## メーカーの発表

@@ -1,7 +1,7 @@
 ---
 name: スマスロ やじきた道中記参る！
 maker: 'ユニバーサルブロス'
-ceiling: 'CZ間999まいる／CZ（関所チャレンジ）6連続スルー'
+ceiling: 'CZ間999まいる → CZ／CZ（関所チャレンジ）6連続スルー → 7回目のCZは勝率100%'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7113/summarize
@@ -21,8 +21,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: やじきた
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 ---
 
 ## メーカーの発表

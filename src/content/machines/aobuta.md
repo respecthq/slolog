@@ -1,7 +1,7 @@
 ---
 name: L青春ブタ野郎はバニーガール先輩の夢を見ない
 maker: 'オリンピア'
-ceiling: 'CZ間560G＋α／思春期ポイント1000pt／ボーナス間899G＋α（設定変更後699G＋α）／CZ6連続スルー'
+ceiling: 'CZ間560G＋α → CZ／ST終了後の通常時899G＋α（設定変更後699G＋α） → ボーナス／思春期ポイント1000pt → CZ／CZ6連続スルー → 次のCZが成功濃厚'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7140
@@ -24,8 +24,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: 青春ブタ野郎
-updated: 2026-09-29
-updateNote: 天井を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 ---
 
 ## メーカーの発表

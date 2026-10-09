@@ -1,7 +1,7 @@
 ---
 name: スロット Re:ゼロから始める異世界生活 season2
 maker: 'パオン・ディーピー'
-ceiling: 'AT間1400pt（設定変更後1000pt）／AT間1300G'
+ceiling: 'AT間1400pt（設定変更後1000pt） → 殲滅ラッシュ／AT間1300G → 超強欲ラッシュ'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/6670
@@ -24,8 +24,8 @@ image:
   alt: スロット Re:ゼロから始める異世界生活 season2 の筐体
   placement: above
   credit: ©長月達平・株式会社KADOKAWA刊／Re:ゼロから始める異世界生活2製作委員会　©DAITO GIKEN,INC.
-updated: 2026-10-04
-updateNote: 筐体画像とリール配列を追加
+updated: '2026-10-10'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 reels:
   src: images/machines/rezero-season2-reel.png
   credit: ©長月達平・株式会社KADOKAWA刊／Re:ゼロから始める異世界生活2製作委員会　©DAITO GIKEN,INC.
