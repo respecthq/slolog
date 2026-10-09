@@ -1,7 +1,7 @@
 ---
 name: L ULTRAMAN 最終決戦
 maker: 'オッケー.'
-ceiling: 'CZ天井：CZ間700G＋α（設定変更後500G＋α）／AT天井：AT間1500G＋α（設定変更後1000G）'
+ceiling: 'AT間1500G＋α（設定変更後1000G） → AT／CZ間700G＋α（設定変更後500G＋α） → CZ'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7119/summarize
@@ -22,7 +22,7 @@ added: 2026-09-23
 draft: false
 watchKeyword: ULTRAMAN
 updated: '2026-10-10'
-updateNote: '天井に何に当選するかを明記'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 ---
 
 ## メーカーの発表

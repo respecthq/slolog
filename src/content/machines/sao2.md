@@ -1,7 +1,7 @@
 ---
 name: スロット ソードアート・オンラインⅡ
 maker: 'パオン・ディーピー'
-ceiling: 'AT天井：AT間1200G／CZ天井：CZ間499G（設定変更後・初回のデス・ガンバトル失敗後256G＋α）／液晶ゲーム数800G'
+ceiling: 'AT間1200G → AT／CZ間499G（設定変更後・初回のデス・ガンバトル失敗後256G＋α） → CZ／液晶ゲーム数 最大800G'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7095
@@ -28,7 +28,7 @@ image:
   placement: above
   credit: ©2017 川原 礫／KADOKAWA アスキー・メディアワークス／SAO-A Project　©DAITO GIKEN,INC.
 updated: '2026-10-10'
-updateNote: '天井に何に当選するかを明記'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 reels:
   src: images/machines/sao2-reel.png
   credit: ©2017 川原 礫／KADOKAWA アスキー・メディアワークス／SAO-A Project　©DAITO GIKEN,INC.

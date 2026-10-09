@@ -1,7 +1,7 @@
 ---
 name: L転生王女と天才令嬢の魔法革命
 maker: 'オリンピアエステート'
-ceiling: 'ゲーム数天井：CZ中を除く通常時510G＋α（設定変更後410G＋α） → ボーナス、CZ間410G＋α（設定変更後310G＋α） → CZ'
+ceiling: 'CZ中を除く通常時510G＋α（設定変更後410G＋α） → ボーナス／CZ間410G＋α（設定変更後310G＋α） → CZ'
 junzo: ''
 zone: ''
 released: '2026-10-05'
@@ -17,7 +17,7 @@ added: 2026-09-21
 draft: false
 newsSource: 'https://web-greenbelt.jp/post-116545/'
 updated: '2026-10-10'
-updateNote: '天井の書き方を「種類：条件 → 当たるもの」に'
+updateNote: '天井の書き方を「条件 → 当たるもの」に'
 watch:
   - https://p-gabu.jp/guideworks/machinecontents/detail/7135
   - https://p.hisshobon.jp/machine/4814
