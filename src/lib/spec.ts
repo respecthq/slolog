@@ -29,7 +29,8 @@ export type MachineSpec = {
 /** 設定別の確率（メーカー公表）。denoms[i] は settings[i] の設定の分母（1/273.1 → 273.1） */
 export type Settei = {
   settings: number[]; // 設定の番号（設定3が無い機種は [1,2,4,5,6] など。表の行の順）
-  roles: { name: string; denoms: number[] }[];
+  roles: { name: string; kind: string; denoms: number[] }[]; // kind：アプリが重なりを判定する種類（big_total / reg_total）
+  detail: boolean; // 自分の判別値（ぶどう・単独REG など）を足した細かい判別を確かめた機種か
   payout?: number[]; // 設定ごとの出玉率（%）
   note?: string;     // 「※独自調査値」などメーカーの但し書き
 };
@@ -70,11 +71,14 @@ export function parseSettei(body: string | undefined, note?: string): Settei | u
     if (v.every((x) => Number.isFinite(x) && x > 1)) roles.push({ name: roleName(h), denoms: v });
   });
   // いまはAタイプ（BIG・REG）だけ。AT機の初当りは、通常時のゲーム数の数え方が機種ごとに違うので出さない（2026-10-10 ユーザー判断）
-  const ab = roles.filter((r) => r.name === 'BIG' || r.name === 'REG');
+  const ab = roles
+    .filter((r) => r.name === 'BIG' || r.name === 'REG')
+    .map((r) => ({ name: r.name, kind: r.name === 'BIG' ? 'big_total' : 'reg_total', denoms: r.denoms }));
   if (!ab.length) return undefined;
   return {
     settings: settings.map((r) => Number(r[0])),
     roles: ab,
+    detail: false, // toSpec で機種ごとに決める
     ...(payout ? { payout } : {}),
     ...(note ? { note } : {}),
   };
@@ -110,7 +114,11 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   ].filter(Boolean);
   if (notes.length) spec.memo = notes.join(' ／ ');
   if (d.source) spec.source = d.source;
-  const settei = parseSettei(entry.body, d.specNote);
-  if (settei) spec.settei = settei;
+  // 設定判別のデータは、前提（BIG・REG・小役が同じゲームで重ならない分け方）を確かめた北電子のジャグラー系だけ（2026-10-11）。
+  // 細かい判別（自分の判別値を足す）は、ボーナスの同時抽選が単独・チェリー重複だけの機種に限る。
+  // ミスタージャグラーはピエロとの同時抽選もある（北電子公式）ので BIG・REG の判別だけ
+  const isJuggler = d.maker === '北電子' && /ジャグラー/.test(d.name);
+  const settei = isJuggler ? parseSettei(entry.body, d.specNote) : undefined;
+  if (settei) spec.settei = { ...settei, detail: !/ミスタージャグラー/.test(d.name) };
   return spec;
 }
