@@ -33,6 +33,21 @@ export type Settei = {
   detail: boolean; // 自分の判別値（ぶどう・単独REG など）を足した細かい判別を確かめた機種か
   payout?: number[]; // 設定ごとの出玉率（%）
   note?: string;     // 「※独自調査値」などメーカーの但し書き
+  count?: string;    // 数え方の注意（BT 機の「通常時だけ数える」など）。アプリの小役カウンタに出す
+};
+
+/**
+ * ジャグラー系のほかに設定判別を配る機種（2026-10-11〜）。条件：
+ *   ・メーカーが設定別の BIG・REG を公表している
+ *   ・攻略メディアの設定判別ツールが、同じ公表値で BIG・REG の判別をしている（数え方を確かめられる）
+ * 細かい判別（自分の判別値を足す）は確かめていないので detail は付けない
+ */
+const SETTEI_EXTRA: Record<string, { count: string; checked: string }> = {
+  // なな徹「設定推測ツール（簡易版）」が 前任者の総G/BIG/REG＋通常時の消化G/BIG/REG を 1/278.9・1/434.0（公表値）で判別
+  matador3: {
+    count: 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください',
+    checked: 'https://nana-press.com/kaiseki/machine/997/suisoku2/',
+  },
 };
 
 /**
@@ -118,7 +133,14 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   // 細かい判別（自分の判別値を足す）は、ボーナスの同時抽選が単独・チェリー重複だけの機種に限る。
   // ミスタージャグラーはピエロとの同時抽選もある（北電子公式）ので BIG・REG の判別だけ
   const isJuggler = d.maker === '北電子' && /ジャグラー/.test(d.name);
-  const settei = isJuggler ? parseSettei(entry.body, d.specNote) : undefined;
-  if (settei) spec.settei = { ...settei, detail: !/ミスタージャグラー/.test(d.name) };
+  const extra = SETTEI_EXTRA[entry.id];
+  const settei = isJuggler || extra ? parseSettei(entry.body, d.specNote) : undefined;
+  if (settei) {
+    spec.settei = {
+      ...settei,
+      detail: isJuggler && !/ミスタージャグラー/.test(d.name),
+      ...(extra ? { count: extra.count } : {}),
+    };
+  }
   return spec;
 }
