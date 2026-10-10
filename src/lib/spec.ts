@@ -51,6 +51,11 @@ const SETTEI_EXTRA: Record<string, { count: string; checked: string[] }> = {
     count: BT_COUNT,
     checked: ['https://nana-press.com/kaiseki/machine/1006/suisoku/', 'https://kenslo65536.com/hanbetsu/lb-crea.html'],
   },
+  // なな徹（SBIG・BIG を半分ずつ）・けんのスロット（BIG 合算）が 合計ゲーム数と公表値 1/232.4・1/350.5 … で判別。BIG の公表値はスーパービッグを含む合算
+  kerotto5bt: {
+    count: 'BIG はスーパービッグとビッグを合わせて数えてください（メーカーの公表値が合算のため）',
+    checked: ['https://nana-press.com/kaiseki/machine/1170/suisoku2/', 'https://kenslo65536.com/hanbetsu/lb-kelot5.html'],
+  },
   // 一撃が 通常G数・BB・RB、けんのスロットが 回転数・BIG・REG を公表値（設定1・2・5・6）で判別。BT は JAC で別に数える
   'shake-bonus-trigger': {
     count: BT_COUNT,
@@ -77,14 +82,14 @@ export function parseSettei(body: string | undefined, note?: string): Settei | u
   if (settings.length < 2) return undefined;
   const roleName = (h: string) => {
     const n = h.replace(/確率$/, '').trim();
-    if (/^(BB|BIG)$/i.test(n)) return 'BIG';
+    if (/^(BB|BIG)(合算)?$/i.test(n)) return 'BIG'; // 「BIG合算」＝スーパービッグなどを含む BIG 全体（ケロット5BT）
     if (/^(RB|REG)$/i.test(n)) return 'REG';
     return n;
   };
   const roles: Settei['roles'] = [];
   let payout: number[] | undefined;
   head.forEach((h, i) => {
-    if (i === 0 || /合成|合算/.test(h)) return;
+    if (i === 0 || (/合成|合算/.test(h) && !/^(BB|BIG)合算/i.test(h))) return;
     if (/出玉率|機械割/.test(h)) {
       const v = settings.map((r) => Number((r[i] ?? '').replace(/[%％\s]/g, '')));
       if (v.every((x) => Number.isFinite(x) && x > 50 && x < 200)) payout = v;
