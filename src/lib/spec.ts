@@ -42,11 +42,19 @@ export type Settei = {
  *   ・攻略メディアの設定判別ツールが、同じ公表値で BIG・REG の判別をしている（数え方を確かめられる）
  * 細かい判別（自分の判別値を足す）は確かめていないので detail は付けない
  */
-const SETTEI_EXTRA: Record<string, { count: string; checked: string }> = {
+const BT_COUNT = 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください';
+const SETTEI_EXTRA: Record<string, { count: string; checked: string[] }> = {
   // なな徹「設定推測ツール（簡易版）」が 前任者の総G/BIG/REG＋通常時の消化G/BIG/REG を 1/278.9・1/434.0（公表値）で判別
-  matador3: {
-    count: 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください',
-    checked: 'https://nana-press.com/kaiseki/machine/997/suisoku2/',
+  matador3: { count: BT_COUNT, checked: ['https://nana-press.com/kaiseki/machine/997/suisoku2/'] },
+  // なな徹が 通常時消化G・BIG・REG を 1/299.3・1/383.3 … 1/240.1・1/247.3（公表値）で判別。けんのスロット・一撃も同じ公表値
+  'crea-bonus-trigger': {
+    count: BT_COUNT,
+    checked: ['https://nana-press.com/kaiseki/machine/1006/suisoku/', 'https://kenslo65536.com/hanbetsu/lb-crea.html'],
+  },
+  // 一撃が 通常G数・BB・RB、けんのスロットが 回転数・BIG・REG を公表値（設定1・2・5・6）で判別。BT は JAC で別に数える
+  'shake-bonus-trigger': {
+    count: BT_COUNT,
+    checked: ['https://1geki.jp/slot/lb_shake/99/', 'https://kenslo65536.com/hanbetsu/lb-shake.html'],
   },
 };
 
