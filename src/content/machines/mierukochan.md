@@ -22,6 +22,12 @@ watchKeyword: 見える子ちゃん
 watch:
   - https://p-gabu.jp/guideworks/machinecontents/detail/7121
   - https://p.hisshobon.jp/machine/4768
+counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
+  status: none
+  date: 2026-10-11
+  checked:
+    - https://1geki.jp/slot/l_mierukochan/
+  note: 'ボーナスの形をした AT 機（一撃は ATタイプ・天井あり、ぶどう等の小役カウンタの対象外）。BB合算・RB は初当りの確率'
 ---
 
 ## メーカーの発表

@@ -71,6 +71,36 @@ const dateish = z
   .union([z.string(), z.date()])
   .transform((v) => (v instanceof Date ? v.toISOString().slice(0, 10) : String(v).trim()));
 
+// 機種専用の小役カウンタ（設定判別）。2026-10-12〜 機種 md で決める（以前は spec.ts に直書き）
+//   status：unchecked＝未確認／none＝対象外（AT 機・疑似ボーナスなど）／bonus＝BIG・REG だけで判別／detail＝小役も数える（Pro で自分の値）
+//   判断の順（PIPELINE.md「小役カウンタ」）：Aタイプか → 設定別 BIG・REG の公表 → なな徹の簡易版 → 一撃・けんのスロットの詳細版
+const counterRole = z.object({
+  name: z.string().trim().min(1).max(30),                 // 画面に出す役名
+  kind: z.string().regex(/^[a-z][a-z0-9_]{1,23}$/),       // アプリが重なりを見る種類（big_total・grape・bell・bt_miss など）
+  group: z.enum(['bonus', 'koyaku', 'bt']),               // 同じゲームで重ならない役の組（bt は BT中のゲーム数で割る）
+});
+const machineCounter = z
+  .object({
+    status: z.enum(['unchecked', 'none', 'bonus', 'detail']),
+    date: dateish.default(''),                              // 判断した日
+    checked: z.array(httpsUrl('確かめたツールのURL')).default([]), // 確かめた判別ツール（なな徹・一撃・けんのスロット）
+    note: z.coerce.string().default(''),                    // 判断の理由・補足（ページには出さない）
+    count: z.coerce.string().default(''),                   // 数え方の注意（アプリの小役カウンタに出す。BT 機の「通常時だけ数える」など）
+    roles: z.array(counterRole).default([]),                // detail のときの数える役（確率は持たない）
+  })
+  .superRefine((c, ctx) => {
+    if (c.status === 'detail') {
+      const kinds = c.roles.map((r) => r.kind);
+      if (!kinds.includes('big_total') || !kinds.includes('reg_total')) {
+        ctx.addIssue({ code: 'custom', message: 'counter.roles に BIG（big_total）と REG（reg_total）を入れてください' });
+      }
+      if (new Set(kinds).size !== kinds.length) ctx.addIssue({ code: 'custom', message: 'counter.roles の kind が重なっています' });
+    }
+    if ((c.status === 'bonus' || c.status === 'detail') && c.checked.length === 0 && !c.note) {
+      ctx.addIssue({ code: 'custom', message: '判別を配る機種は、確かめたツールの URL（checked）か理由（note）を書いてください' });
+    }
+  });
+
 // 機種スペック（メーカー公表事実のみ）。1機種＝1 markdown（frontmatter＋本文メモ）。
 // このフォルダ（src/content/machines）を Obsidian の vault にすれば、md執筆→push→自動デプロイ。
 const machines = defineCollection({
@@ -96,6 +126,7 @@ const machines = defineCollection({
       })
       .default(''),
     koyaku: z.coerce.string().default(''), // 小役ロール（カウンター用・任意・カンマ区切り）
+    counter: machineCounter.optional(), // 機種専用の小役カウンタ（設定判別）。上の machineCounter を参照
     // 基本情報（メーカー公式の記載）
     type: z.coerce.string().default(''),    // タイプ（例 ノーマル／AT／ボーナストリガー）
     gen: z.coerce.string().default(''),     // 分類・号機（例 6号機（スマスロ））※アプリの号機チップに入る

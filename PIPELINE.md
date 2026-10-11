@@ -183,6 +183,36 @@ node scripts/watch-sources.mjs --all   # 全機種の現在の状態
 
 - **ニューギンのスペックは画像**（2026-10-05〜）：製品ページ（newgin.co.jp/products/<機種>/）の「スペック」ボタンの `data-images` に `M_SPEC.png` などの画像 URL がある。下書きを作る段階で画像を取得して読み、設定別の CZ・ボーナス・AT・出玉率・ベース・純増を表にして入れる（数字は拡大して確かめる。`specSource` に製品ページ）
 
+## 小役カウンタ（設定判別）（2026-10-12〜）
+
+Aタイプの機種は、アプリの「機種専用の小役カウンタ」（設定判別つき）を配るかどうかを機種 md の `counter:` で決める。進行表の「🎰 小役カウンタ（Aタイプ）」に一覧が出て、未確認の機種は更新待ちに「小役カウンタ未確認」と出る。
+
+**判断の順**（今回の 13 機種と同じやり方）
+1. **Aタイプか**：疑似ボーナスの AT 機・ART は対象外（`status: none`。例：見える子ちゃん、ツインエンジェル2）
+2. **メーカーが設定別の BIG・REG を公表しているか**：機種 md の設定別スペックの表に入っていること（`<!-- spec:begin -->`〜`<!-- spec:end -->` で囲む。アプリへはこの表の値を配る）
+3. **なな徹の設定推測ツール（簡易版）**があるか：公表値と同じ確率で判別しているか、何のゲーム数で割っているか（通常時か・BT中を除くか・合算か）を見る → あれば `status: bonus`（BIG・REG だけで判別＝無料）
+4. **一撃・けんのスロットの詳細版**があるか：数えている役を見て、専用カウンタの役（名前・種類 kind・同じゲームで重ならない組 group）を決める → `status: detail`（小役は Pro で自分の値を入れて判別）
+5. BT など数え方の注意は `count:` に書く（アプリのカウンタにそのまま出る）
+
+**書き方**（`src/content.config.ts` の machineCounter が確かめる。確率は書かない＝各社の独自調査値は配らない）
+```yaml
+counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
+  status: detail
+  date: 2026-10-11
+  checked:                       # 確かめた判別ツール（なな徹・一撃・けんのスロット）
+    - https://nana-press.com/kaiseki/machine/997/suisoku2/
+  note: '判断の理由（ページには出さない）'
+  count: 'BT中のゲーム数とボーナスは数えず、通常時だけを数えてください'   # 任意
+  roles:                         # detail のとき。BIG（big_total）と REG（reg_total）は必ず入れる
+    - { name: BIG, kind: big_total, group: bonus }
+    - { name: REG, kind: reg_total, group: bonus }
+    - { name: ベル, kind: bell, group: koyaku }
+    - { name: BT中ハズレ, kind: bt_miss, group: bt }
+```
+- **group**：`bonus`＝BIG・REG と、それらと同じゲームで重ならない役（ジャグラーのぶどうなど）／`koyaku`＝ボーナスと重なりうる小役（チェリー・ベル・スイカなど）／`bt`＝BT中の役（分母は BT中のゲーム数）。同じ組に同じゲームで重なる役（REG と単独REG など）を入れない
+- **kind**：英小文字の id（`big_total` `reg_total` `grape` `cherry_total` `bell` `suika` `chance` `bt_miss` など）。同じ機種で重ねない。アプリの自分の値（Pro）はこの kind で結びつく
+- 判断を変えるときも提案（`lp-proposals.json` の update・`changes.counter`）→ OK → `lp-apply` の流れに乗せる。配信される `machines.json` の `settei` は、`counter.status` が bonus／detail で設定別スペックの表がある機種だけに付く（`src/lib/spec.ts`）
+
 ## 型式名（modelName）の取り方
 
 - 型式名はメーカーの製品ページには載っていない。公安委員会の検定公示（型式試験の適合・検定通過の公示）に載る正式名で、

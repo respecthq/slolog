@@ -22,6 +22,18 @@ gen: 'スマスロ'
 modelName: 'LBマタドールIII TT'
 modelNameSource: https://www.p-world.co.jp/machine/database/10287
 kenteiNo: '530169'
+counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
+  status: detail
+  date: 2026-10-11
+  checked:
+    - https://nana-press.com/kaiseki/machine/997/suisoku2/
+    - https://1geki.jp/slot/l_mtd3/99/
+  note: 'なな徹の簡易版が前任者＋通常時の 2 区間を公表値 1/278.9・1/434.0 で判別。一撃は BT中1枚役も数える'
+  count: 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください'
+  roles:
+    - { name: BIG, kind: big_total, group: bonus }
+    - { name: REG, kind: reg_total, group: bonus }
+    - { name: BT中1枚役, kind: bt_one, group: bt }
 ---
 
 

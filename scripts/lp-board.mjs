@@ -38,7 +38,8 @@ const queueFresh = (q) => (inWin(q.foundAt) ? { kind: 'new', date: q.foundAt, no
 const manualWatch = new Set(existsSync('notes/watch-manual.json') ? JSON.parse(readFileSync('notes/watch-manual.json', 'utf8')) : []);
 const machines = [];
 for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWith('_'))) {
-  const fm = readFileSync(join(dir, f), 'utf8').split('---')[1] ?? '';
+  const text = readFileSync(join(dir, f), 'utf8');
+  const fm = text.split('---')[1] ?? '';
   const one = (k) => (fm.match(new RegExp(`^${k}:\\s*(.*)$`, 'm'))?.[1] ?? '').split(' #')[0].trim().replace(/^['"]|['"]$/g, '');
   const flag = (k) => new RegExp(`^${k}:\\s*true`, 'm').test(fm);
   if (flag('fictional')) continue;
@@ -78,8 +79,22 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
       if (changed.length) fresh = { kind: 'upd', date: lastChange(path), note: `${changed.join('・')}が変わった（更新メモなし）` };
     }
   }
+  // ---- 小役カウンタ（設定判別。2026-10-12〜）：Aタイプだけ。判断の順は PIPELINE.md「小役カウンタ」----
+  //   Aタイプ＝タイプがノーマル／Aタイプ／ボーナストリガー、または設定別スペックの表に BIG（BB）と REG（RB）の列がある
+  // 本文のどこかの表の見出し行に BIG（BB）と REG（RB）が両方ある（設定別スペック・公表スペックのどちらでも）
+  const bodyText = text.split('---').slice(2).join('---');
+  const bonusTable = bodyText.split('\n').some((l) => l.trim().startsWith('|') && /設定/.test(l) && /(BB|BIG)/i.test(l) && /(RB|REG)/i.test(l));
+  const typeA = /ノーマル|Aタイプ|ボーナストリガー/.test(one('type')) || bonusTable;
+  const cBlock = fm.match(/^counter:.*\n((?:[ \t]+.*\n?)*)/m)?.[1] ?? '';
+  const counter = {
+    status: cBlock.match(/^\s+status:\s*(\w+)/m)?.[1] ?? '',
+    date: cBlock.match(/^\s+date:\s*([\d-]+)/m)?.[1] ?? '',
+    checked: [...cBlock.matchAll(/^\s+-\s+(https:\/\/\S+)/gm)].map((x) => x[1]),
+    roles: [...cBlock.matchAll(/name:\s*([^,}]+),/g)].map((x) => x[1].trim()),
+  };
+  if (typeA && !flag('fictional') && (!counter.status || counter.status === 'unchecked')) wait.push('小役カウンタ未確認');
   const factRefs = { pworld: one('modelNameSource'), news: one('newsSource'), cross: one('crosscheckUrl') };
-  machines.push({ slug, fresh, factRefs, checkUrls, name: one('name'), maker: one('maker'), rel, source: one('source'), spec: one('specSource'), draft: flag('draft'), wait, refs, ceiling: one('ceiling'), noCeiling: flag('noCeiling'),
+  machines.push({ slug, fresh, factRefs, checkUrls, typeA, counter, name: one('name'), maker: one('maker'), rel, source: one('source'), spec: one('specSource'), draft: flag('draft'), wait, refs, ceiling: one('ceiling'), noCeiling: flag('noCeiling'),
     note: !hasSpec && specSettled && !flag('specNone') ? '公表値なし（導入60日超）' : '' });
 }
 const byRel = (a, b) => (b.rel || '').localeCompare(a.rel || '');
@@ -143,6 +158,14 @@ for (const m of waiting) {
   for (const w of m.wait) md += `  - ⏳ ${w}\n`;
   md += `  - ページ：${m.draft ? '（下書きのため非公開）' : SITE + m.slug + '/'}${m.source ? '｜出典：' + m.source : '｜出典：なし'}\n`;
 }
+// 小役カウンタ（Aタイプだけ）
+const CSTAT = { '': '未確認', unchecked: '未確認', none: '対象外', bonus: 'BIG・REGだけ', detail: '小役も数える' };
+const counterRows = machines.filter((m) => m.typeA).sort((a, b) => (CSTAT[a.counter.status] === '未確認' ? -1 : 0) - (CSTAT[b.counter.status] === '未確認' ? -1 : 0) || byRel(a, b));
+md += `\n## 🎰 小役カウンタ（Aタイプ）\n\n判断の順：Aタイプか → 設定別 BIG・REG の公表 → なな徹の簡易版 → 一撃・けんのスロットの詳細版（PIPELINE.md「小役カウンタ」）\n\n`;
+for (const m of counterRows) {
+  md += `- **${m.name}**｜${CSTAT[m.counter.status] ?? m.counter.status}${m.counter.date ? '｜' + m.counter.date : ''}${m.counter.roles.length ? '｜' + m.counter.roles.join('・') : ''}\n`;
+  for (const u of m.counter.checked) md += `  - 確認：${u}\n`;
+}
 md += `\n## 🟢 完了\n\n`;
 for (const m of done) md += `- ${mdMark(m.fresh)}${m.name}（${m.maker}）｜${m.rel}${m.note ? '｜' + m.note : ''}\n`;
 md += `\n---\n\n判定の決まり：完了＝型式名あり＋天井が決着（あり／仕様上なし）＋公表値が決着（掲載済み／導入から 60 日たっても未公表）＋導入済み。\n完了した機種も \`watch-sources.mjs\` が見張り続け、公式ページに変化があれば「OK 待ち」に戻します。\n`;
@@ -165,6 +188,8 @@ const rowsPending = pending.map((p) => `<tr><td><button class="ok" data-copy="${
 const rowsQueue = [...queue].sort((a, b) => (order[a.stage] ?? 9) - (order[b.stage] ?? 9)).map((q) => `<tr><td><b>${esc(q.name)}</b>${fchip(qFresh.get(q))}<div class="sub">${esc(q.maker || 'メーカー不明')}</div></td><td><span class="chip etc">${esc(q.stage)}</span></td><td class="num">${esc(q.release || '—')}${fnote(qFresh.get(q))}</td><td>${esc(q.next)}${q.note ? `<div class="sub">${esc(q.note)}</div>` : ''}</td><td>${link(q.officialUrl, '公式')}</td></tr>`).join('');
 const rowsWait = waiting.map((m) => `<tr><td><b>${esc(m.name)}</b>${fchip(m.fresh)}<div class="sub">${esc(m.maker)}</div>${fnote(m.fresh)}</td><td class="num">${esc(m.rel || '未定')}</td><td>${m.wait.map(chip).join(' ')}${factLinks(m.factRefs) ? `<div class="sub">確認元：${factLinks(m.factRefs)}</div>` : ''}${siteLinks(m.checkUrls) ? `<div class="sub">確認先：${siteLinks(m.checkUrls)}</div>` : ''}</td><td>${m.draft ? '<span class="mute">非公開</span>' : link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}${m.spec ? ' · ' + link(m.spec, 'スペック') : ''}</td></tr>`).join('');
 const rowsDone = done.map((m) => `<tr><td>${esc(m.name)}${fchip(m.fresh)}<div class="sub">${esc(m.maker)}</div>${fnote(m.fresh)}</td><td class="num">${esc(m.rel)}</td><td class="sub">${esc(m.note || '')}${m.note && factLinks(m.factRefs) ? '<br>' : ''}${factLinks(m.factRefs)}${siteLinks(m.checkUrls) ? `<br>確認先：${siteLinks(m.checkUrls)}` : ''}</td><td>${link(SITE + m.slug + '/', 'LP')} · ${link(m.source, '出典')}${m.spec ? ' · ' + link(m.spec, 'スペック') : ''}</td></tr>`).join('');
+const cchip = (st) => { const t = CSTAT[st] ?? st; return `<span class="chip ${t === '未確認' ? 'ceil' : t === '対象外' ? 'draft' : 'okc'}">${esc(t)}</span>`; };
+const rowsCounter = counterRows.map((m) => `<tr><td><b>${esc(m.name)}</b><div class="sub">${esc(m.maker)}</div></td><td>${cchip(m.counter.status)}${m.counter.date ? `<div class="sub">${esc(m.counter.date)}</div>` : ''}</td><td class="sub">${esc(m.counter.roles.join('・') || '—')}</td><td>${siteLinks(m.counter.checked) || '<span class="mute">—</span>'}</td></tr>`).join('');
 const lpOf = (name) => { const k = norm(name); const m = machines.find((x) => norm(x.name) === k && !x.draft); return m ? SITE + m.slug + '/' : ''; };
 const reportUrl = latest ? (latest.sessionUrl || (latest.draft ? 'file://' + process.cwd() + '/notes/weekly/' + latest.draft : '')) : '';
 const rowsRecent = recent.map((r) => { const lp = lpOf(r.name); return `<tr><td>${fchip(r.f).trim()}</td><td>${lp ? `<a href="${esc(lp)}" target="_blank" rel="noopener"><b>${esc(r.name)}</b></a>` : `<b>${esc(r.name)}</b>`}</td><td><a href="#${r.anchor}">${esc(r.where)}</a></td><td class="sub">${esc(r.f.note)}</td><td class="num">${r.f.src === 'report' && reportUrl ? `<a href="${esc(reportUrl)}" target="_blank" rel="noopener">週次レポート</a>` : r.f.src === 'report' ? '週次レポート' : 'LP'}<div class="sub">${esc(r.f.date)}</div></td></tr>`; }).join('');
@@ -231,6 +256,7 @@ ${section('weekly', '<b>MON</b>WEEKLY REPORT', '週次レポート', '月曜の�
 ${section('recent', "<b>THIS WEEK</b>WHAT'S NEW", '今週の NEW と追加情報', latest ? `週次レポート ${esc(latest.date)} より（既報 ${knownN} 件は省略）。<b>NEW</b>＝LP 未掲載／<b>追加情報</b>＝既存機種の続報。` : `週次レポートの取り込みがまだありません。`, ['種類', '機種', '状態', '内容', '出所'], rowsRecent, '今週の動きなし。')}
 ${section('queue', '<b>01</b>CANDIDATES', '候補', 'LP 未掲載の機種。公式の出典が取れたら OK 待ちへ。', ['機種', '段階', '導入', '次の作業', '公式'], rowsQueue, 'なし。')}
 ${section('wait', '<b>02</b>IN PROGRESS', '更新待ち', '情報待ちの機種。ラベルが待っているもの。', ['機種', '導入', '待ち', 'リンク'], rowsWait, 'なし。')}
+${section('counter', '<b>A</b>KOYAKU COUNTER', '小役カウンタ（Aタイプ）', '判断の順：Aタイプか → 設定別 BIG・REG の公表 → なな徹の簡易版 → 一撃・けんのスロットの詳細版。未確認が上。', ['機種', '状態', '数える役', '確かめたツール'], rowsCounter, 'Aタイプはありません。')}
 ${section('done', '<b>03</b>COMPLETE', '完了', '情報が出そろった機種。公式ページの見張りだけ続ける。', ['機種', '導入', 'メモ', 'リンク'], rowsDone, 'なし。', done.length)}
 </main>
 <footer><div class="wrap"><p class="sig"><b>SLOLOG</b>powered by 回胴キナナ</p>完了の条件：型式名あり ＋ 公表値が決着（掲載済み／導入から 60 日たっても未公表）＋ 導入済み。<br>このページは <code>node scripts/lp-board.mjs</code> が作り直します（手で編集しない）。同じ内容の md は notes/LP_BOARD.md。</div></footer>

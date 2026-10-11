@@ -1,6 +1,7 @@
 // 進行表の「OK 待ち」を反映する。  node scripts/lp-apply.mjs A1 A3   （all で全部）
 //   new    … 用意済みの md の draft を外して公開
 //   update … frontmatter の値を書き換え、updated / updateNote を付ける。body: [[旧, 新]] があれば本文も置き換える
+//            changes.counter（小役カウンタ）は {status, date, checked, note, count, roles} をまとめて書き換える
 // 反映したら notes/lp-proposals.json に appliedAt を記録する。このあと npm run build → crosscheck → push。
 import { readFileSync, writeFileSync } from 'node:fs';
 const P = 'notes/lp-proposals.json';
@@ -21,6 +22,15 @@ for (const p of props) {
       // 2026-10-05〜 メーカー非公表の天井：2 か所で一致を確かめた記録（ページには出さない）
       fm = fm.replace(/^ceilingCheck:\n(?:\s+.*\n)+/m, '');
       fm = fm.replace(/\n$/, `\nceilingCheck:\n  urls:\n${v.urls.map((u) => `    - ${u}`).join('\n')}\n  date: ${v.date}\n  note: ${q(v.note ?? '')}\n`);
+    } else if (k === 'counter') {
+      // 2026-10-12〜 機種専用の小役カウンタ（設定判別）。書き方は PIPELINE.md「小役カウンタ」
+      fm = fm.replace(/^counter:.*\n(?:[ \t]+.*\n)*/m, '');
+      const lines = ['counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える', `  status: ${v.status}`, `  date: ${v.date ?? ymd}`];
+      if (v.checked?.length) lines.push('  checked:', ...v.checked.map((u) => `    - ${u}`));
+      if (v.note) lines.push(`  note: ${q(v.note)}`);
+      if (v.count) lines.push(`  count: ${q(v.count)}`);
+      if (v.roles?.length) lines.push('  roles:', ...v.roles.map((r) => `    - { name: ${q(r.name)}, kind: ${r.kind}, group: ${r.group} }`));
+      fm = fm.replace(/\n$/, `\n${lines.join('\n')}\n`);
     } else set(k, v);
   }
   for (const [from, to] of p.body ?? []) { if (!body.includes(from)) { console.error(`✗ ${p.id}：本文に「${from}」が見つかりません`); process.exit(1); } body = body.replace(from, to); }

@@ -30,6 +30,17 @@ image:
 reels:
   src: images/machines/myjuggler6-reel.png
   credit: ©KITA DENSHI
+counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
+  status: detail
+  date: 2026-10-11
+  checked:
+    - https://kenslo65536.com/hanbetsu/juggler-my6.html
+  note: 'ジャグラー共通：北電子公表の BIG・REG で判別。けんのスロットの判別ツールと同じ数え方（ぶどうは BIG・REG と重ならないので同じ組・チェリーはボーナス重複も含むので別の組）'
+  roles:
+    - { name: BIG, kind: big_total, group: bonus }
+    - { name: REG, kind: reg_total, group: bonus }
+    - { name: ぶどう, kind: grape, group: bonus }
+    - { name: チェリー, kind: cherry_total, group: koyaku }
 ---
 
 

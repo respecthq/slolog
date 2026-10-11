@@ -28,6 +28,23 @@ updateNote: 筐体画像とリール配列を追加（機種名をメーカー�
 reels:
   src: images/machines/crea-bonus-trigger-reel.png
   credit: ©DAITO GIKEN,INC.
+counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
+  status: detail
+  date: 2026-10-11
+  checked:
+    - https://nana-press.com/kaiseki/machine/1006/suisoku/
+    - https://kenslo65536.com/hanbetsu/lb-crea.html
+    - https://1geki.jp/slot/l_crea/99/
+  note: 'なな徹・けんのスロット・一撃が通常時のゲーム数と大都の公表値で BIG・REG を判別。詳細版はベル・チェリー・スイカ・チャンス目と BT中のハズレ'
+  count: 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください'
+  roles:
+    - { name: BIG, kind: big_total, group: bonus }
+    - { name: REG, kind: reg_total, group: bonus }
+    - { name: ベル, kind: bell, group: koyaku }
+    - { name: チェリー, kind: cherry_total, group: koyaku }
+    - { name: スイカ, kind: suika, group: koyaku }
+    - { name: チャンス目, kind: chance, group: koyaku }
+    - { name: BT中ハズレ, kind: bt_miss, group: bt }
 ---
 
 

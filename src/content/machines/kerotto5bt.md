@@ -20,6 +20,21 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: ケロット
+counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
+  status: detail
+  date: 2026-10-11
+  checked:
+    - https://nana-press.com/kaiseki/machine/1170/suisoku2/
+    - https://kenslo65536.com/hanbetsu/lb-kelot5.html
+  note: 'なな徹（SBIG・BIG を半分ずつ）・けんのスロット（BIG 合算）が公表値で判別。オレンジは合算せず平行・斜めを別々に'
+  count: 'BIG はスーパービッグとビッグを合わせて数えてください（メーカーの公表値が合算のため）'
+  roles:
+    - { name: BIG, kind: big_total, group: bonus }
+    - { name: REG, kind: reg_total, group: bonus }
+    - { name: ベル, kind: bell, group: koyaku }
+    - { name: チェリー, kind: cherry_total, group: koyaku }
+    - { name: 平行オレンジ, kind: orange_flat, group: koyaku }
+    - { name: 斜めオレンジ, kind: orange_diag, group: koyaku }
 ---
 
 ## メーカーの発表

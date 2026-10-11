@@ -49,67 +49,6 @@ const BONUS: CounterRole[] = [
   { name: 'BIG', kind: 'big_total', group: 'bonus' },
   { name: 'REG', kind: 'reg_total', group: 'bonus' },
 ];
-// ジャグラー：けんのスロットはボーナス＋ブドウ。チェリーはボーナス重複も含めた全部なので別グループ（koyaku）
-const JUGGLER: CounterRole[] = [
-  ...BONUS,
-  { name: 'ぶどう', kind: 'grape', group: 'bonus' }, // ぶどうは BIG・REG と同じゲームで重ならない（1 つの多項分布で厳密に計算できる）
-  { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
-];
-const COUNTERS: Record<string, CounterRole[]> = {
-  // 一撃：通常G・BB・RB＋BT中G・BT中1枚役（バラケ目）
-  matador3: [...BONUS, { name: 'BT中1枚役', kind: 'bt_one', group: 'bt' }],
-  // なな徹・けんのスロット：ベル・チェリー・スイカ・チャンス目＋BT中G・BT中のハズレ
-  'crea-bonus-trigger': [
-    ...BONUS,
-    { name: 'ベル', kind: 'bell', group: 'koyaku' },
-    { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
-    { name: 'スイカ', kind: 'suika', group: 'koyaku' },
-    { name: 'チャンス目', kind: 'chance', group: 'koyaku' },
-    { name: 'BT中ハズレ', kind: 'bt_miss', group: 'bt' },
-  ],
-  // けんのスロット・一撃：ベル・チェリー・スイカ（BT中の JAC は回数の比率なので、いまは数えない）
-  'shake-bonus-trigger': [
-    ...BONUS,
-    { name: 'ベル', kind: 'bell', group: 'koyaku' },
-    { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
-    { name: 'スイカ', kind: 'suika', group: 'koyaku' },
-  ],
-  // けんのスロット：ベル・チェリー・平行オレンジ・斜めオレンジ（オレンジは合算せず別々に）
-  kerotto5bt: [
-    ...BONUS,
-    { name: 'ベル', kind: 'bell', group: 'koyaku' },
-    { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
-    { name: '平行オレンジ', kind: 'orange_flat', group: 'koyaku' },
-    { name: '斜めオレンジ', kind: 'orange_diag', group: 'koyaku' },
-  ],
-};
-
-/**
- * ジャグラー系のほかに設定判別を配る機種（2026-10-11〜）。条件：
- *   ・メーカーが設定別の BIG・REG を公表している
- *   ・攻略メディアの設定判別ツールが、同じ公表値で BIG・REG の判別をしている（数え方を確かめられる）
- * 数える役（専用カウンタ）は COUNTERS で決める
- */
-const BT_COUNT = 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください';
-const SETTEI_EXTRA: Record<string, { count: string; checked: string[] }> = {
-  // なな徹「設定推測ツール（簡易版）」が 前任者の総G/BIG/REG＋通常時の消化G/BIG/REG を 1/278.9・1/434.0（公表値）で判別
-  matador3: { count: BT_COUNT, checked: ['https://nana-press.com/kaiseki/machine/997/suisoku2/'] },
-  // なな徹が 通常時消化G・BIG・REG を 1/299.3・1/383.3 … 1/240.1・1/247.3（公表値）で判別。けんのスロット・一撃も同じ公表値
-  'crea-bonus-trigger': {
-    count: BT_COUNT,
-    checked: ['https://nana-press.com/kaiseki/machine/1006/suisoku/', 'https://kenslo65536.com/hanbetsu/lb-crea.html'],
-  },
-  // なな徹（SBIG・BIG を半分ずつ）・けんのスロット（BIG 合算）が 合計ゲーム数と公表値 1/232.4・1/350.5 … で判別。BIG の公表値はスーパービッグを含む合算
-  kerotto5bt: {
-    count: 'BIG はスーパービッグとビッグを合わせて数えてください（メーカーの公表値が合算のため）',
-    checked: ['https://nana-press.com/kaiseki/machine/1170/suisoku2/', 'https://kenslo65536.com/hanbetsu/lb-kelot5.html'],
-  },
-  // 一撃が 通常G数・BB・RB、けんのスロットが 回転数・BIG・REG を公表値（設定1・2・5・6）で判別。BT は JAC で別に数える
-  'shake-bonus-trigger': {
-    count: BT_COUNT,
-    checked: ['https://1geki.jp/slot/lb_shake/99/', 'https://kenslo65536.com/hanbetsu/lb-shake.html'],
-  },
-};
 
 /**
  * 本文の「設定別スペック」の表（<!-- spec:begin --> 〜 <!-- spec:end -->。メーカー公式から取り込んだもの）を
@@ -189,17 +128,16 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   ].filter(Boolean);
   if (notes.length) spec.memo = notes.join(' ／ ');
   if (d.source) spec.source = d.source;
-  // 設定判別のデータは、北電子のジャグラー系と SETTEI_EXTRA の機種だけ（2026-10-11）。
-  // 機種専用の小役カウンタ（counter）も一緒に配る。ミスタージャグラーのピエロ同時抽選は
-  // 単独／重複の内訳にだけ効くので、内訳を数えないジャグラー共通のカウンタなら問題ない
-  const isJuggler = d.maker === '北電子' && /ジャグラー/.test(d.name);
-  const extra = SETTEI_EXTRA[entry.id];
-  const settei = isJuggler || extra ? parseSettei(entry.body, d.specNote) : undefined;
-  if (settei) {
+  // 設定判別のデータ（設定別の BIG・REG＋機種専用の小役カウンタ）は、機種 md の counter で
+  // bonus（BIG・REG だけ）か detail（小役も数える）と決めた機種だけ配る（判断の順は PIPELINE.md「小役カウンタ」）
+  const c = d.counter;
+  const judge = c && (c.status === 'bonus' || c.status === 'detail');
+  const settei = judge ? parseSettei(entry.body, d.specNote) : undefined;
+  if (settei && c) {
     spec.settei = {
       ...settei,
-      counter: isJuggler ? JUGGLER : (COUNTERS[entry.id] ?? BONUS),
-      ...(extra ? { count: extra.count } : {}),
+      counter: c.status === 'detail' ? c.roles : BONUS,
+      ...(c.count ? { count: c.count } : {}),
     };
   }
   return spec;

@@ -22,6 +22,10 @@ draft: false
 watchKeyword: 海人
 watch:
   - https://p-gabu.jp/guideworks/machinecontents/detail/7153
+counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
+  status: none
+  date: 2026-10-11
+  note: 'なな徹・一撃・けんのスロットに判別ツールなし（2026-10-11 確認）。ツールが出たら見直す'
 ---
 
 ## メーカーの発表
