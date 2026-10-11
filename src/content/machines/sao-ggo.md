@@ -15,6 +15,8 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: ガンゲイル
+watch:
+  - https://p.hisshobon.jp/machine/4845
 ---
 
 ## メーカーの発表

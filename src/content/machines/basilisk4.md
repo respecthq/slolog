@@ -17,6 +17,7 @@ added: 2026-09-21
 draft: false
 watch:
   - https://p.hisshobon.jp/machine/4829
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7189
 ---
 
 ## ゲーム性

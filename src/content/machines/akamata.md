@@ -20,6 +20,8 @@ fetched: 2026-10-05
 added: 2026-10-05
 draft: false
 watchKeyword: アカマター
+watch:
+  - https://p.hisshobon.jp/machine/4846
 ---
 
 ## メーカーの発表

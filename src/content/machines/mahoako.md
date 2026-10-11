@@ -20,6 +20,9 @@ fetched: 2026-10-05
 added: 2026-10-05
 draft: false
 watchKeyword: 魔法少女にあこがれて
+watch:
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7155
+  - https://p.hisshobon.jp/machine/4841
 ---
 
 ## メーカーの発表
