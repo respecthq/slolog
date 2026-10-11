@@ -29,7 +29,7 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - https://nana-press.com/kaiseki/machine/997/suisoku2/
     - https://1geki.jp/slot/l_mtd3/99/
   note: 'なな徹の簡易版が前任者＋通常時の 2 区間を公表値 1/278.9・1/434.0 で判別。一撃は BT中1枚役も数える'
-  count: 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください'
+  count: '通常時G・BIG・REG には BT中の分を含めません。BT中1枚役は、BT中G と回数を別に入力してください'
   roles:
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }

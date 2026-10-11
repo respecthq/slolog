@@ -36,7 +36,7 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - https://kenslo65536.com/hanbetsu/lb-crea.html
     - https://1geki.jp/slot/l_crea/99/
   note: 'なな徹・けんのスロット・一撃が通常時のゲーム数と大都の公表値で BIG・REG を判別。詳細版はベル・チェリー・スイカ・チャンス目と BT中のハズレ'
-  count: 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください'
+  count: '通常時G・BIG・REG・小役には BT中の分を含めません。BT中ハズレは、BT中G と回数を別に入力してください'
   roles:
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }

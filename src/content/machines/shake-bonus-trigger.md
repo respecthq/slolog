@@ -35,7 +35,7 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - https://1geki.jp/slot/lb_shake/99/
     - https://kenslo65536.com/hanbetsu/lb-shake.html
   note: '一撃・けんのスロットが公表値（設定1・2・5・6）で BIG・REG を判別。BT中の JAC は回数の比率なので、いまは数えない'
-  count: 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください'
+  count: '通常時G・BIG・REG・小役には BT中の分を含めません（BT中のゲーム数とボーナス・小役は数えないでください）'
   roles:
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }
