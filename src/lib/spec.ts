@@ -24,6 +24,7 @@ export type MachineSpec = {
   memo?: string;    // アプリ側は memo をそのまま機種メモに使う
   source?: string; // 出典URL（トレーサビリティ）
   settei?: Settei; // 2026-10-10〜 設定別の確率（メーカー公表の表だけ・Aタイプの BIG/REG。アプリの設定判別に使う）
+  image?: { url: string; credit: string }; // 2026-10-12〜 筐体画像（アプリ内で使ってよいと許諾を得たメーカーだけ。APP_IMAGE_MAKERS）
 };
 
 /** 設定別の確率（メーカー公表）。denoms[i] は settings[i] の設定の分母（1/273.1 → 273.1） */
@@ -44,6 +45,13 @@ export type Settei = {
  * 通常時に数えやすいものを選ぶ。役の名前だけで、確率（各社の独自調査値）は配らない。
  */
 export type CounterRole = { name: string; kind: string; group: 'bonus' | 'koyaku' | 'bt' };
+
+/**
+ * アプリ内で筐体画像を使ってよいと許諾を得たメーカー（notes/MAKER_PERMISSIONS.md の「アプリ内で画像」が ✅ のもの）。
+ * 北電子＝2026-09-24 回答で OK（バックアップ ZIP への同梱も OK）。ほかのメーカーは許諾が出るまで足さない
+ */
+const APP_IMAGE_MAKERS = new Set(['北電子']);
+const SITE_ORIGIN = 'https://respecthq.github.io/slolog/';
 
 const BONUS: CounterRole[] = [
   { name: 'BIG', kind: 'big_total', group: 'bonus' },
@@ -139,6 +147,10 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
       counter: c.status === 'detail' ? c.roles : BONUS,
       ...(c.count ? { count: c.count } : {}),
     };
+  }
+  // 筐体画像（許諾を得たメーカーだけ・権利表記つき）。アプリは公式の配信から来たこの URL だけを取りに来る
+  if (d.image && APP_IMAGE_MAKERS.has(d.maker) && d.image.credit) {
+    spec.image = { url: SITE_ORIGIN + d.image.src, credit: d.image.credit };
   }
   return spec;
 }
