@@ -43,6 +43,16 @@ function setField(fm, key, value) {
   return re.test(fm) ? fm.replace(re, line) : `${fm.trimEnd()}\n${line}\n`;
 }
 
+const KITA_HOSTS = new Set(['www.kitadenshi.co.jp', 'kitadenshi.co.jp']);
+function isKitadenshi(url) {
+  try {
+    const u = new URL(url);
+    return u.protocol === 'https:' && KITA_HOSTS.has(u.hostname) && !u.username && !u.password && (u.port === '' || u.port === '443');
+  } catch {
+    return false;
+  }
+}
+
 let done = 0, skipped = 0;
 for (const file of readdirSync(dir).filter((f) => f.endsWith('.md') && !f.startsWith('_'))) {
   const path = join(dir, file);
@@ -50,11 +60,14 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.md') && !f.starts
   const [, fm, ...rest] = text.split('---');
   const body = rest.join('---');
   const source = (fm.match(/^source:\s*(.*)$/m)?.[1] ?? '').trim().replace(/^['"]|['"]$/g, '');
-  if (!source.includes('kitadenshi.co.jp')) continue;
+  // 北電子の公式サイトだけ（https・ホスト名の完全一致）。URL に「kitadenshi.co.jp」という文字が入っているだけの
+  // 別サイトを通さない。リダイレクト先も同じホストか確かめる（2026-10-12 監査）
+  if (!isKitadenshi(source)) continue;
 
   let html;
   try {
     const res = await fetch(source, { headers: { 'user-agent': 'Mozilla/5.0 (slolog spec-fetch)' }, signal: AbortSignal.timeout(20000) });
+    if (!isKitadenshi(res.url)) throw new Error(`北電子の公式サイト以外へ移動しました（${res.url}）`);
     if (res.status !== 200) throw new Error(`HTTP ${res.status}`);
     html = await res.text();
   } catch (e) {

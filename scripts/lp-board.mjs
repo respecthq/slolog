@@ -60,7 +60,9 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && !x.startsWit
   }
   // 天井の確認先（777パチガブ・必勝本）。verified / crosscheckUrl / watch のどこに書いてあっても拾う
   const refUrls = [...new Set([...fm.matchAll(/https:\/\/[^\s'"]*(?:p-gabu\.jp|hisshobon\.jp)[^\s'"]*/g)].map((x) => x[0]))];
-  const refs = { gabu: refUrls.find((u) => u.includes('p-gabu.jp')), hissho: refUrls.find((u) => u.includes('hisshobon.jp')) };
+  // ホスト名で見る（URL に文字が入っているだけの別サイトを拾わない）
+  const hostIs = (u, h) => { try { const x = new URL(u).hostname; return x === h || x.endsWith('.' + h); } catch { return false; } };
+  const refs = { gabu: refUrls.find((u) => hostIs(u, 'p-gabu.jp')), hissho: refUrls.find((u) => hostIs(u, 'hisshobon.jp')) };
   // ダブルチェック用：天井を確かめたページ（ceilingCheck の urls・見張り先・確認元）を全部。進行表でワンクリックで開けるように（2026-10-10）
   const checkUrls = [...new Set([...fm.matchAll(/https:\/\/[^\s'"]*(?:p-gabu\.jp|hisshobon\.jp|p-world\.co\.jp\/machine|p-town\.dmm\.com)[^\s'"]*/g)].map((x) => x[0]))];
   let fresh = null;
