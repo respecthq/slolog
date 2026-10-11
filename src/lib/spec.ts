@@ -30,17 +30,65 @@ export type MachineSpec = {
 export type Settei = {
   settings: number[]; // 設定の番号（設定3が無い機種は [1,2,4,5,6] など。表の行の順）
   roles: { name: string; kind: string; denoms: number[] }[]; // kind：アプリが重なりを判定する種類（big_total / reg_total）
-  detail: boolean; // 自分の判別値（ぶどう・単独REG など）を足した細かい判別を確かめた機種か
+  counter?: CounterRole[]; // 機種専用の小役カウンタで数える役（確率は持たない。公表値の無い小役は Pro の人が自分の値を入れる）
   payout?: number[]; // 設定ごとの出玉率（%）
   note?: string;     // 「※独自調査値」などメーカーの但し書き
   count?: string;    // 数え方の注意（BT 機の「通常時だけ数える」など）。アプリの小役カウンタに出す
 };
 
 /**
+ * 機種専用の小役カウンタの 1 役。group の中は同じゲームで重ならない役だけにする
+ * （bonus＝BIG・REG と、それらと同じゲームで重ならない役／koyaku＝ボーナスと重なりうる小役／bt＝BT中の役。分母は BT中のゲーム数）。
+ * アプリはグループごとに多項分布を出して掛け合わせる（けんのスロットと同じ考え方）。
+ * 数える役は、攻略メディアの判別ツール（なな徹・けんのスロット・一撃）が数えている要素から、
+ * 通常時に数えやすいものを選ぶ。役の名前だけで、確率（各社の独自調査値）は配らない。
+ */
+export type CounterRole = { name: string; kind: string; group: 'bonus' | 'koyaku' | 'bt' };
+
+const BONUS: CounterRole[] = [
+  { name: 'BIG', kind: 'big_total', group: 'bonus' },
+  { name: 'REG', kind: 'reg_total', group: 'bonus' },
+];
+// ジャグラー：けんのスロットはボーナス＋ブドウ。チェリーはボーナス重複も含めた全部なので別グループ（koyaku）
+const JUGGLER: CounterRole[] = [
+  ...BONUS,
+  { name: 'ぶどう', kind: 'grape', group: 'bonus' }, // ぶどうは BIG・REG と同じゲームで重ならない（1 つの多項分布で厳密に計算できる）
+  { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
+];
+const COUNTERS: Record<string, CounterRole[]> = {
+  // 一撃：通常G・BB・RB＋BT中G・BT中1枚役（バラケ目）
+  matador3: [...BONUS, { name: 'BT中1枚役', kind: 'bt_one', group: 'bt' }],
+  // なな徹・けんのスロット：ベル・チェリー・スイカ・チャンス目＋BT中G・BT中のハズレ
+  'crea-bonus-trigger': [
+    ...BONUS,
+    { name: 'ベル', kind: 'bell', group: 'koyaku' },
+    { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
+    { name: 'スイカ', kind: 'suika', group: 'koyaku' },
+    { name: 'チャンス目', kind: 'chance', group: 'koyaku' },
+    { name: 'BT中ハズレ', kind: 'bt_miss', group: 'bt' },
+  ],
+  // けんのスロット・一撃：ベル・チェリー・スイカ（BT中の JAC は回数の比率なので、いまは数えない）
+  'shake-bonus-trigger': [
+    ...BONUS,
+    { name: 'ベル', kind: 'bell', group: 'koyaku' },
+    { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
+    { name: 'スイカ', kind: 'suika', group: 'koyaku' },
+  ],
+  // けんのスロット：ベル・チェリー・平行オレンジ・斜めオレンジ（オレンジは合算せず別々に）
+  kerotto5bt: [
+    ...BONUS,
+    { name: 'ベル', kind: 'bell', group: 'koyaku' },
+    { name: 'チェリー', kind: 'cherry_total', group: 'koyaku' },
+    { name: '平行オレンジ', kind: 'orange_flat', group: 'koyaku' },
+    { name: '斜めオレンジ', kind: 'orange_diag', group: 'koyaku' },
+  ],
+};
+
+/**
  * ジャグラー系のほかに設定判別を配る機種（2026-10-11〜）。条件：
  *   ・メーカーが設定別の BIG・REG を公表している
  *   ・攻略メディアの設定判別ツールが、同じ公表値で BIG・REG の判別をしている（数え方を確かめられる）
- * 細かい判別（自分の判別値を足す）は確かめていないので detail は付けない
+ * 数える役（専用カウンタ）は COUNTERS で決める
  */
 const BT_COUNT = 'BT中のゲーム数とボーナスは数えず、通常時のゲーム数と通常時に引いた BIG・REG だけを数えてください';
 const SETTEI_EXTRA: Record<string, { count: string; checked: string[] }> = {
@@ -106,7 +154,6 @@ export function parseSettei(body: string | undefined, note?: string): Settei | u
   return {
     settings: settings.map((r) => Number(r[0])),
     roles: ab,
-    detail: false, // toSpec で機種ごとに決める
     ...(payout ? { payout } : {}),
     ...(note ? { note } : {}),
   };
@@ -142,16 +189,16 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
   ].filter(Boolean);
   if (notes.length) spec.memo = notes.join(' ／ ');
   if (d.source) spec.source = d.source;
-  // 設定判別のデータは、前提（BIG・REG・小役が同じゲームで重ならない分け方）を確かめた北電子のジャグラー系だけ（2026-10-11）。
-  // 細かい判別（自分の判別値を足す）は、ボーナスの同時抽選が単独・チェリー重複だけの機種に限る。
-  // ミスタージャグラーはピエロとの同時抽選もある（北電子公式）ので BIG・REG の判別だけ
+  // 設定判別のデータは、北電子のジャグラー系と SETTEI_EXTRA の機種だけ（2026-10-11）。
+  // 機種専用の小役カウンタ（counter）も一緒に配る。ミスタージャグラーのピエロ同時抽選は
+  // 単独／重複の内訳にだけ効くので、内訳を数えないジャグラー共通のカウンタなら問題ない
   const isJuggler = d.maker === '北電子' && /ジャグラー/.test(d.name);
   const extra = SETTEI_EXTRA[entry.id];
   const settei = isJuggler || extra ? parseSettei(entry.body, d.specNote) : undefined;
   if (settei) {
     spec.settei = {
       ...settei,
-      detail: isJuggler && !/ミスタージャグラー/.test(d.name),
+      counter: isJuggler ? JUGGLER : (COUNTERS[entry.id] ?? BONUS),
       ...(extra ? { count: extra.count } : {}),
     };
   }
