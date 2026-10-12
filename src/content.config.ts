@@ -91,8 +91,13 @@ const machineCounter = z
   .superRefine((c, ctx) => {
     if (c.status === 'detail') {
       const kinds = c.roles.map((r) => r.kind);
-      if (!kinds.includes('big_total') || !kinds.includes('reg_total')) {
-        ctx.addIssue({ code: 'custom', message: 'counter.roles に BIG（big_total）と REG（reg_total）を入れてください' });
+      // BIG・REG は全体（big_total）か内訳（big_solo・big_cherry など）のどちらかで数える（ジャグラーの詳細版は内訳。2026-10-12）
+      if (!kinds.some((k) => k.startsWith('big_')) || !kinds.some((k) => k.startsWith('reg_'))) {
+        ctx.addIssue({ code: 'custom', message: 'counter.roles に BIG（big_total か big_ の内訳）と REG（reg_total か reg_ の内訳）を入れてください' });
+      }
+      if ((kinds.includes('big_total') && kinds.some((k) => k.startsWith('big_') && k !== 'big_total')) ||
+          (kinds.includes('reg_total') && kinds.some((k) => k.startsWith('reg_') && k !== 'reg_total'))) {
+        ctx.addIssue({ code: 'custom', message: 'BIG・REG は全体か内訳のどちらか一方で数えてください（同じボーナスを二重に数えない）' });
       }
       if (new Set(kinds).size !== kinds.length) ctx.addIssue({ code: 'custom', message: 'counter.roles の kind が重なっています' });
     }
