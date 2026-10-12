@@ -27,18 +27,18 @@ const reelNo=String(2+(!d.fictional&&d.ceiling?1:0)).padStart(2,'0');
 const ceiling=[['天井',d.ceiling],['天井恩恵',d.ceilingBonus],['ゾーン',d.zone],['設定変更時',d.resetBehavior]];
 import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
 ---
-<Editorial title={`${d.name}｜新台・機種情報｜スロログ`} description={`${d.name}の基本情報と出典。機種データをスロログへ取り込めます。`} socialImage={null}>
+<Editorial title={`${d.name}｜基本情報・スペック｜スロログ`} description={`${d.name}の基本情報、掲載スペック、出典をまとめています。機種の基本情報をスロログに登録して、実戦記録や自分用メモに使えます。`} socialImage={null}>
   <div class="page-wrap">
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">{d.name}</span></nav>
     <div class:list={['detail-heading',{'has-image':!!d.image}]}>
-      <div><p class="eyebrow">MACHINE GUIDE / {d.maker}</p><h1>{d.name}</h1><div class="detail-meta"><span>{d.fictional?'架空機 / サンプル':`${fmt(d.released)} 導入`}</span>{d.type&&<span>{d.type}</span>}</div>{d.fictional?<p>Re:Spectのオリジナル機です。実在するホールには設置されていません。掲載値は自社シミュレーターの実装・実測に基づきます。</p>:d.added&&<p class="detail-dates">掲載 <time datetime={d.added}>{fmt(d.added)}</time>{d.updated&&d.updated>d.added&&<> ／ 更新 <time datetime={d.updated}>{fmt(d.updated)}</time></>}</p>}</div>
+      <div><p class="eyebrow">MACHINE GUIDE / {d.maker}</p><h1>{d.name}</h1><div class="detail-meta"><span>{d.fictional?'架空機 / サンプル':`導入時期：${fmt(d.released)}`}</span>{d.type&&<span>{d.type}</span>}</div>{d.fictional?<p>スロログのサンプルに使われているオリジナルの架空機です。実在のホールには設置されていません。掲載値は自社シミュレーターの実装・実測に基づきます。</p>:d.added&&<p class="detail-dates">掲載日 <time datetime={d.added}>{fmt(d.added)}</time>{d.updated&&d.updated>d.added&&<> ／ 更新日 <time datetime={d.updated}>{fmt(d.updated)}</time></>}</p>}</div>
       {d.image&&<figure><img src={url(d.image.src)} alt={d.image.alt} width="230" height="380" /><figcaption class:list={[{rights:d.image.credit?.startsWith('©')}]}>{d.image.credit}</figcaption></figure>}
     </div>
     <div class="detail-layout">
       <div class="detail-main">
         <section class="spec-section"><div class="section-label"><span>01 / BASIC INFORMATION</span><h2>基本情報</h2></div>
           <SpecRows items={[['メーカー',d.maker],['導入時期',d.fictional?'架空機のため実機導入なし':fmt(d.released)],['型式名',d.modelName],['タイプ',d.type],['分類',d.gen]]} />
-          <h3>基本スペック</h3>{specs.some(([,v])=>v)?<>{<SpecRows items={specs}/>}{d.specNote&&<p class="muted spec-note">{d.specNote}</p>}</>:<p class="muted">公表値の記載はありません。</p>}
+          <h3>基本スペック</h3>{specs.some(([,v])=>v)?<>{<SpecRows items={specs}/>}{d.specNote&&<p class="muted spec-note">{d.specNote}</p>}</>:<p class="muted">この項目の数値は掲載していません。</p>}
           <div class="source-note">{d.fictional?'出典：Re:Spect（自社シミュレーター）':<>{sources.map(([u,label],i)=><span class="source-link">出典{sources.length>1?circled[i]:''}：<a href={u} target="_blank" rel="noopener noreferrer">{label} <Icon name="external-link" /></a></span>)}{d.fetched&&<span>取得日：{fmt(d.fetched)}</span>}</>}</div>
         </section>
         {!d.fictional&&d.ceiling&&<section class="spec-section"><div class="section-label"><span>02 / CEILING</span><h2>天井</h2></div>
@@ -55,11 +55,27 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
         </section>}
         {toc.length>1&&<nav class="article-toc" aria-label="スペック詳細の目次"><span>このページの内容</span>{toc.map(h=><a href={`#${h.slug}`}>{h.text}</a>)}</nav>}
         <div class="machine-prose"><Content /></div>
-        {!d.fictional&&<details class="spec-json"><summary>取り込まれるデータを確認 <Icon name="plus" /></summary><pre tabindex="0">{specJson}</pre></details>}
+        {!d.fictional&&<details class="spec-json"><summary>登録する機種データを確認 <Icon name="plus" /></summary><pre tabindex="0">{specJson}</pre></details>}
       </div>
-      {d.fictional?<aside class="import-panel"><p class="eyebrow">SAMPLE MACHINE</p><h2>自分の記録を変えずに、<br />スロログを試す。</h2><p>実在しないオリジナル機です。アプリの「サンプルを入れる」から、架空の機種と実戦データを追加できます。</p><a class="button primary" href={url('#features')}>スロログの機能を見る <Icon /></a></aside>:
-      <aside class="import-panel"><p class="eyebrow">ADD TO SLOLOG</p><h2>この機種を、<br />自分のスロログへ。</h2>{counter.length>0&&<div class="counter-note"><p class="counter-tag">小役カウンタあり・設定判別つき</p><p>登録するときに、この機種専用の小役カウンタ（{counter.map(c=>c.name).join('・')}）も取り込めます。メーカー公表の BIG・REG で設定判別できます（スロログ 1.2 以降）。</p></div>}{DEEPLINK_ENABLED?<><p>機種の基本情報をスロログに登録できます。狙い目は、登録したあとアプリで書き足せます（期待値メモはスロログProの機能です）。</p><div class="deeplink-block" hidden><a class="button primary" id="open-in-app" href={deepLinkFor(m.id)} data-store={APP_STORE_URL_JP}>スロログに登録 <Icon name="external-link" /></a><p class="copy-status">iPhone のスロログ（1.0.2 以降）が開き、確認のあとに登録されます。</p><p class="copy-status" id="deeplink-store" hidden>アプリが開かないときは <a href={APP_STORE_URL_JP}>App Store からスロログを入手</a></p></div><div class="import-fallback"><h3 class="deeplink-only" hidden>アプリが開かないときは</h3><ol><li>機種データをコピー</li><li>アプリの「機種を取り込む」を開く</li><li>貼り付けて登録</li></ol></div></>:<><p>基本情報を取り込んで、狙い目はアプリで書き足せます（期待値メモはスロログProの機能です）。</p><ol><li>機種データをコピー</li><li>アプリの「機種を取り込む」を開く</li><li>貼り付けて登録</li></ol></>}<button class="button primary" id="copy-spec">機種データをコピー <Icon name="copy" /></button><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p><div id="copy-fallback" hidden><label for="manual-spec">データを選択してコピー</label><textarea id="manual-spec" readonly rows="8">{specJson}</textarea></div><script is:inline id="machine-spec" type="application/json" set:html={specJson.replaceAll('<','\u005cu003c')}></script></aside>}
+
+      {d.fictional ? (
+        <aside class="import-panel"><p class="eyebrow">SAMPLE MACHINE</p><h2>架空の実戦で、<br />使い方を確認。</h2><p>マイページの「サンプルを入れる」で、架空の機種・店舗・実戦データを追加できます。見本の期待値表とマイボーダー検証も、Proなしで試せます。</p><p class="copy-status">アプリ内に追加するデモデータです。実在機種の解析値や実際の収支ではありません。</p><a class="button primary" href={url('#features')}>スロログでできることを見る <Icon /></a></aside>
+      ) : (
+        <aside class="import-panel">
+          <p class="eyebrow">ADD TO SLOLOG</p><h2>調べた一台を、<br />自分の記録につなげる。</h2>
+          <p>機種の基本情報をスロログへ。登録後は、狙い目やヤメ時、自分の気づきをメモできます。</p>
+          <p class="copy-status">基本情報の登録やメモは無料。自分の期待値表を取り込んで計算する機能はProで使えます。</p>
+          {counter.length > 0 && <div class="counter-note"><p class="counter-tag">専用カウンタ・設定推測に対応</p><p>公式機種情報から登録するときに、専用の小役カウンタ（{counter.map(c=>c.name).join('・')}）も取り込めます。メーカー公表のボーナス確率による設定推測は無料です。</p>{d.counter?.status === 'detail' && <p>自分で用意した小役確率を加える機能はProで使えます。</p>}<p class="copy-status">スロログ1.2.0以降に対応。実際の設定を保証するものではありません。</p></div>}
+          {DEEPLINK_ENABLED && <div class="deeplink-block" hidden><a class="button primary" id="open-in-app" href={deepLinkFor(m.id)} data-store={APP_STORE_URL_JP}>スロログで登録する <Icon name="external-link" /></a><p class="copy-status">iPhoneのスロログが開き、取り込む内容を確認してから登録できます。</p><p class="copy-status" id="deeplink-store" hidden>アプリが開かないときは <a href={APP_STORE_URL_JP}>App Storeでスロログを入手</a>・更新してください。</p></div>}
+          <div class="import-fallback"><h3 class="deeplink-only" hidden>アプリが開かないときは</h3><ol><li>「機種データをコピー」を押す</li><li>スロログで「機種を取り込む」を開く</li><li>貼り付け、内容を確認して登録する</li></ol></div>
+          <button class="button primary" id="copy-spec">機種データをコピー <Icon name="copy" /></button>
+          {counter.length > 0 && <p class="copy-status">コピー経由でも、設定別確率や専用カウンタの情報は公式配信から確認します。通信できないと基本情報だけの登録になる場合があります。取り込む内容をご確認ください。</p>}
+          <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+          <div id="copy-fallback" hidden><label for="manual-spec">機種データを選択してコピー</label><textarea id="manual-spec" readonly rows="8">{specJson}</textarea></div>
+          <script is:inline id="machine-spec" type="application/json" set:html={specJson.replaceAll('<','\\u003c')}></script>
+        </aside>
+      )}
     </div>
-    <div class="back-to-catalog"><a href={url('machines/')} class="button">機種一覧へ戻る <Icon /></a></div>
+    <div class="back-to-catalog"><a href={url('machines/')} class="button">機種一覧に戻る <Icon /></a></div>
   </div>
 </Editorial>

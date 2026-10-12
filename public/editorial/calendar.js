@@ -105,12 +105,13 @@
     $('#month-year').textContent = searching ? 'SEARCH RESULTS / 全導入月' : month.slice(0,4);
     $('#month-number').textContent = searching ? '検索結果' : month.slice(5);
     $('#month-english').textContent = english[Number(month.slice(5)) - 1];
-    $('#result-label').innerHTML = searching ? `<strong>${items.length}</strong> 機種が見つかりました` : `導入予定 <strong>${items.length}</strong> 機種`;
+    $('#result-label').innerHTML = searching ? `<strong>${items.length}</strong> 機種が見つかりました` : `掲載 <strong>${items.length}</strong> 機種`;
     $('#lineup-count').textContent = `${items.length} MACHINES`;
-    $('#release-title').textContent = searching ? '検索結果のラインナップ' : `${Number(month.slice(5))}月の導入ラインナップ`;
+    $('#release-title').textContent = searching ? '検索結果のラインナップ' : `${Number(month.slice(5))}月の掲載ラインナップ`;
     $('#calendar-wrap').hidden = searching || view === 'list';
     $('#empty').hidden = items.length > 0;
-    $('#empty-description').textContent = query || maker ? '検索条件を変えて、もう一度お試しください。' : 'この月の導入情報はまだ掲載されていません。';
+    $('#empty h3').textContent = query || maker ? '条件に合う機種が見つかりませんでした' : 'この月の掲載機種は、まだありません';
+    $('#empty-description').textContent = query || maker ? '機種名の一部やメーカー名で検索するか、絞り込みを解除してください。' : 'ほかの月や、機種一覧をご覧ください。';
     $('#reset-filters').hidden = !query && !maker;
     document.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === view)));
     if (!dates.has(selectedDate)) selectedDate = '';

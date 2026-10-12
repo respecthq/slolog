@@ -3,8 +3,9 @@ import {url} from '../../lib/url';
 import {SOCIALS, SOCIAL_ICONS} from '../../lib/social';
 const socials = SOCIALS.filter(s => s.url);
 ---
-<footer><a class="brand" href={url("")}><img src={url("editorial/assets/logo.png")} alt="スロログ" width="160" height="53"></a><div><a href={url("privacy/")}>プライバシーポリシー</a><a href={url("terms/")}>利用規約</a><a href="mailto:respecthq.dev@gmail.com">サポート</a></div>{socials.length > 0 && <ul class="social" aria-label="公式SNS">{socials.map(s => <li><a href={s.url} target="_blank" rel="noopener" aria-label={s.label} title={s.label} data-social={s.key}><img src={url(`editorial/assets/${SOCIAL_ICONS[s.key]}`)} alt="" /></a></li>)}</ul>}<small>© 2026 Re:Spect / 回胴キナナ</small></footer>
+<footer><a class="brand" href={url("")}><img src={url("editorial/assets/logo.png")} alt="スロログ powered by 回胴キナナ" width="160" height="53"></a><div><a href={url("machines/")}>機種情報</a><a href={url("support/")}>サポート</a><a href={url("terms/")}>利用規約</a><a href={url("privacy/")}>プライバシーポリシー</a></div>{socials.length > 0 && <ul class="social" aria-label="公式SNS">{socials.map(s => <li><a href={s.url} target="_blank" rel="noopener" aria-label={s.label} title={s.label} data-social={s.key}><img src={url(`editorial/assets/${SOCIAL_ICONS[s.key]}`)} alt="" /></a></li>)}</ul>}<p class="footer-note">スロログは、遊技の記録と振り返りのためのアプリです。期待値や設定推測は参考情報であり、遊技の結果や利益を保証しません。18歳以上の方の利用を想定しています。遊技は無理のない範囲でお楽しみください。</p><small>© 2026 Re:Spect / 回胴キナナ</small></footer>
 <style>
+  .footer-note{flex-basis:100%;font-size:12px;line-height:1.8;color:var(--muted);margin:0;max-width:100%}
   .social{list-style:none;display:flex;gap:10px;margin:0;padding:0}
   .social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#111216;border-radius:50%;transition:background .18s,transform .18s}
   .social a:hover{background:#eb650b;transform:translateY(-2px)}

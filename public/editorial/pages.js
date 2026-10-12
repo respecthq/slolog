@@ -39,9 +39,9 @@ copyButton?.addEventListener('click', async () => {
   const status = document.querySelector('#copy-status');
   try {
     await navigator.clipboard.writeText(document.querySelector('#machine-spec').textContent);
-    status.textContent = 'コピーしました。アプリの「機種を取り込む」に貼り付けてください。';
+    status.textContent = 'コピーしました。スロログの「機種を取り込む」に貼り付けてください。';
   } catch {
-    status.textContent = '自動コピーが使えません。下の欄から手動でコピーできます。';
+    status.textContent = '自動でコピーできませんでした。下の欄のデータを選択してコピーしてください。';
     document.querySelector('#copy-fallback').hidden = false;
     const field = document.querySelector('#manual-spec');
     field.focus(); field.select();

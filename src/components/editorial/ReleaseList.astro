@@ -11,16 +11,16 @@ for (const m of machines.filter(m=>!m.data.draft&&!m.data.fictional).toSorted((a
   groups.get(key)!.push(m);
 }
 const format = (value:string) => {
-  if (!value) return '導入日未定';
+  if (!value) return '導入時期未定';
   const [y,m,d] = value.split('-').map(Number);
   return `${y}年${m}月${d?`${d}日`:''}`;
 };
 ---
 <section class="release-browser" aria-labelledby="release-title">
-  <p class="eyebrow">BY RELEASE DATE</p><h2 id="release-title">導入日から探す</h2>
-  <nav class="release-list" aria-label="導入日別の機種一覧" tabindex="0">
+  <p class="eyebrow">BY RELEASE DATE</p><h2 id="release-title">導入時期から探す</h2>
+  <nav class="release-list" aria-label="導入時期別の機種一覧" tabindex="0">
     {[...groups].map(([released,items])=><section class="release-group">
-      <h3>{released?<><time datetime={released}>{format(released)}</time><small>導入</small></>:'導入日未定'}</h3>
+      <h3>{released?<><time datetime={released}>{format(released)}</time><small>導入時期</small></>:'導入時期未定'}</h3>
       <ul>{items.map(m=><li><a href={url(`machines/${m.id}/`)}><span>{m.data.name}</span><Icon /></a></li>)}</ul>
     </section>)}
   </nav>

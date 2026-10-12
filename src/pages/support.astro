@@ -3,29 +3,86 @@ import Editorial from '../layouts/Editorial.astro';
 import Icon from '../components/editorial/Icon.astro';
 import { SUPPORT_EMAIL } from '../lib/legal';
 import { url } from '../lib/url';
-const arrow = '<svg class="ico-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="→"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
-const withArrows = (t: string) => t.replaceAll('→', arrow);
 const sections = [
-  { id: 'contact', title: 'お問い合わせ', body: null },
-  { id: 'lost', title: '記録が消えてしまった', body: 'アプリは起動時に、前回の保存から20時間以上たっていれば端末内へ自動バックアップを取ります（おおむね1日1回・直近3世代・写真本体は含みません）。マイページ →「自動バックアップから復元」を開くと、日時と件数を見ながら戻す世代を選べます。手動で書き出したバックアップZIPがあれば、そちらからも復元できます。' },
-  { id: 'migrate', title: '機種変更するときは', body: 'マイページ →「バックアップ」で写真込みのZIPを書き出し、新しい端末で読み込んでください。CSVは文字だけのファイルなので、写真・期待値メモ・店舗の交換率や貸メダルの設定は含まれません（店名は入ります）。記録と写真をまとめて移すときは、必ずZIPを使ってください。プロフィールや通知などのアプリの設定はZIPにも含まれないので、新しい端末で設定し直してください。' },
-  { id: 'cancel', title: 'スロログProを解約したい', body: 'iPhoneの「設定」→ お名前 →「サブスクリプション」→ スロログ から解約できます。無料トライアル中に解約すれば料金はかかりません（期間終了の24時間前までに手続きが必要です）。機種変更したときは、マイページの「購入を復元」で引き継げます。解約しても、取り込んだ期待値表は端末に残ります（自分の機種での計算はProの間だけ使えます）。' },
-  { id: 'ev', title: '期待値のデータは配っていますか', body: '実在する機種の期待値表は配っていません。スロログは中立の計算機に徹していて、期待値の表はご自身で用意したものを取り込む形です。アプリから解析値や攻略情報を提供することはありません。架空のサンプル機種「回胴キナナ トロピカルパラダイス」の表だけは、機能を試すためにアプリに入っています。サンプル機種では、期待値メモとマイボーダー検証をProなしで試せます。' },
+  {
+    "id": "lost",
+    "title": "記録が見つからないとき",
+    "paragraphs": [
+      "まず、表示期間や機種・ホールの絞り込みをご確認ください。記録が消えたように見える場合も、アプリの削除や再インストールはせず、現在のデータを書き出せるか確認してください。",
+      "端末内の自動バックアップが残っていれば、マイページの「自動バックアップから復元」で、日時と件数を見ながら復元する世代を選べます。通常は起動時に前回から20時間以上たっている場合に作成し、直近3世代を保存します。ただし、必ず復元できることを保証する仕組みではありません。",
+      "自動バックアップに写真本体は含まれません。写真まで戻すには、手動で書き出した写真込みのZIPが必要です。運営側で端末内の記録を保管・復元することはできません。"
+    ]
+  },
+  {
+    "id": "migrate",
+    "title": "機種変更するとき",
+    "paragraphs": [
+      "旧端末のマイページで「バックアップを書き出す」を選び、写真込みのZIPを保存します。新端末では「バックアップを読み込む」から、そのZIPを選んでください。",
+      "ZIPには、実戦記録、登録機種、期待値表、自分の小役確率、店舗とレート設定、台メモ、小役カウンタの設定、保存されている写真が含まれます。プロフィール・通知・アプリロックなどのアプリ設定は、新端末で設定し直してください。サンプルデータはバックアップの対象外です。",
+      "復元すると、現在の内容が更新されます。実戦記録は同じIDなら更新、新しいIDなら追加されますが、バックアップに小役カウンタの設定が含まれている場合は、現在のカウンタセット全体が置き換わります。古いZIPを読み込むと、後から編集・追加した内容が戻ったり失われたりする場合があります。復元前にも、現在の状態を書き出しておいてください。",
+      "新端末で記録と写真を確認するまでは、旧端末やバックアップを削除しないでください。"
+    ]
+  },
+  {
+    "id": "csv-zip",
+    "title": "CSVとZIP、どちらを使えばいいですか？",
+    "paragraphs": [
+      "表計算ソフトで扱いたいときや、他アプリから移るときはCSV。スロログのデータを写真込みで保管・移行するときはZIPです。",
+      "CSVには日付、ホール、機種、投資、回収、収支、獲得枚数、打ち始めG、稼働時間、タグ、メモ、複数台記録の機種一覧、レート名を書き出します。一方、写真・期待値表・店舗レートの数値設定・回したゲーム数・小役カウントの詳細などは含まれません。稼働時間も時間の長さだけで、開始・終了時刻は含まれません。",
+      "CSVをZIPバックアップの代わりにしないようご注意ください。"
+    ]
+  },
+  {
+    "id": "restore-purchase",
+    "title": "購入したのにProにならないとき",
+    "paragraphs": [
+      "通信できる状態で、購入に使ったApple Accountをご確認のうえ、マイページの「購入を復元」をお試しください。まず復元と購入状況の確認を行い、すぐに同じプランを買い直さないでください。",
+      "解決しない場合は、表示されたメッセージとアプリのバージョンを添えてお問い合わせください。決済やサブスクリプションの管理はAppleの仕組みを利用します。"
+    ]
+  },
+  {
+    "id": "cancel",
+    "title": "Proを解約したいとき",
+    "paragraphs": [
+      "iPhoneの「設定」→ お名前 →「サブスクリプション」からスロログを選び、解約します。アプリ内のデータ削除やアプリの削除では、サブスクリプションは解約されません。",
+      "無料体験の課金を希望しない場合は、体験終了の24時間以上前に手続きしてください。対象かどうか・体験期間・請求内容は、購入確認画面をご確認ください。",
+      "Proが終了しても、実戦記録や取り込んだ期待値表・小役確率は端末に残ります。記録と基本の集計、バックアップはそのまま利用できます。"
+    ]
+  },
+  {
+    "id": "ev",
+    "title": "期待値表や小役確率は配っていますか？",
+    "paragraphs": [
+      "実在機種の期待値表や、メーカー非公表の設定別小役確率は配布していません。利用条件を確認したうえで、ご自身が信頼するデータを取り込んで使います。",
+      "一方、対応機種のメーカー公表のボーナス確率は、公式機種情報から取り込み、無料の設定推測に利用できます。架空のサンプル機種には、機能を試すための見本の期待値表を用意しています。"
+    ]
+  },
+  {
+    "id": "calculations",
+    "title": "表示した期待値や設定推測が、想像と違うとき",
+    "paragraphs": [
+      "機種・ゲーム数・カウント値に加えて、表の単位、貸メダル、交換率、計算に使っている役をご確認ください。設定推測は実際の設定を保証するものではなく、期待値も個別の実戦結果を予測するものではありません。",
+      "数値の取り込み方が分からない場合は、アプリ内の使い方ガイドをご覧ください。問い合わせ時に、利用条件のある表の全文や、不要な実戦記録を送る必要はありません。"
+    ]
+  }
 ];
 ---
-<Editorial title="サポート｜スロログ" description="スロログのお問い合わせ・よくある質問。">
+<Editorial title="サポート｜バックアップ・購入・お問い合わせ｜スロログ" description="スロログのデータ移行、バックアップ、Proの購入・解約について。不具合の連絡先と、問い合わせ前に確認したいことをご案内します。">
   <div class="page-wrap legal-wrap">
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><span aria-current="page">サポート</span></nav>
-    <div class="page-title"><p class="eyebrow">SUPPORT</p><h1>サポート</h1><p>不具合・ご要望・データの引っ越しについて。</p></div>
+    <div class="page-title"><p class="eyebrow">SUPPORT</p><h1>サポート</h1><p>データの移行・購入・使い方について。</p></div>
     <div class="document-grid">
-      <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次">{sections.map(s=><a href={`#${s.id}`}>{s.title}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={`mailto:${SUPPORT_EMAIL}`}>メールで問い合わせ <Icon name="external-link" /></a></div></aside>
+      <aside class="document-toc"><details open><summary>このページの内容 <Icon name="plus" /></summary><nav aria-label="目次"><a href="#start">操作を試すには</a><a href="#contact">お問い合わせ</a>{sections.map(s=><a href={`#${s.id}`}>{s.title}</a>)}</nav></details><div class="document-links"><a href={url('privacy/')}>プライバシーポリシー</a><a href={url('terms/')}>利用規約</a><a href={`mailto:${SUPPORT_EMAIL}`}>メールで問い合わせ <Icon name="external-link" /></a></div></aside>
       <article class="legal-text">
+        <h2 id="start">操作を試すには</h2>
+        <p>マイページの「サンプルを入れる」で、架空の機種・店舗・実戦データを追加できます。記録やグラフに加え、見本の期待値表とマイボーダー検証も無料で試せます。詳しい手順は、同じマイページの「使い方ガイド」をご覧ください。</p>
         <h2 id="contact">お問い合わせ</h2>
-        <p>不具合の報告・ご要望は <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> までお送りください。端末の機種とiOSのバージョン、どの画面で何をしたときに起きたかを書いていただけると、原因を特定しやすくなります。</p>
-        {sections.filter(s=>s.body).map(s=><><h2 id={s.id}>{s.title}</h2><p set:html={withArrows(s.body!)} /></>)}
-        <div class="document-end"><span>スロログ / Re:Spect</span><a href={url('')}>トップに戻る <Icon /></a></div>
+        <p>不具合の報告やご要望は、<a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> までお送りください。次の情報を添えてください。</p>
+        <ul><li>スロログのバージョン</li><li>iPhoneの機種とiOSのバージョン</li><li>どの画面で、何をしたときに起きたか</li><li>表示されたエラーメッセージ</li></ul>
+        <p>スクリーンショットでは、公開したくない店舗名・収支・個人情報などを隠してください。Apple Accountのパスワードや確認コードは送らないでください。バックアップ一式や実戦記録は、最初のお問い合わせには添付不要です。</p>
+        {sections.map(s=><><h2 id={s.id}>{s.title}</h2>{s.paragraphs.map(p=><p>{p}</p>)}</>)}
+        <div class="document-end"><span>スロログ / Re:Spect</span><a href={url('')}>トップページへ戻る <Icon /></a></div>
       </article>
     </div>
   </div>
 </Editorial>
-<style is:global>.ico-inline{width:1em;height:1em;vertical-align:-0.15em;margin:0 .15em}</style>
