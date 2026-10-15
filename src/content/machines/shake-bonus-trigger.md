@@ -23,25 +23,26 @@ image:
   alt: ＳＨＡＫＥ ＢＯＮＵＳ ＴＲＩＧＧＥＲ の筐体
   placement: above
   credit: ©DAITO GIKEN,INC.
-updated: 2026-10-04
-updateNote: 筐体画像とリール配列を追加（機種名をメーカー指定の表記に）
+updated: 2026-10-16
+updateNote: 小役カウンタのベル・スイカをA・B合算と明記
 reels:
   src: images/machines/shake-bonus-trigger-reel.png
   credit: ©DAITO GIKEN,INC.
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: detail
-  date: 2026-10-11
+  date: 2026-10-16
   checked:
     - https://1geki.jp/slot/lb_shake/99/
     - https://kenslo65536.com/hanbetsu/lb-shake.html
-  note: '一撃・けんのスロットが公表値（設定1・2・5・6）で BIG・REG を判別。BT中の JAC は回数の比率なので、いまは数えない'
-  count: '通常時G・BIG・REG・小役には BT中の分を含めません（BT中のゲーム数とボーナス・小役は数えないでください）'
+    - https://1geki.jp/slot/lb_shake/0/
+  note: '公表値（設定1・2・5・6）でBIG・REGを推測。一撃の通常時小役はベル・スイカともA・B合算。旧bell・suikaで登録した確率を黙って読み替えないよう合算のkindを新設。重複3項目とBT中JACは1.2.1以降で扱いを整理'
+  count: '通常時だけを数えます（BT中・ボーナス消化中は除く）。ベル・スイカはA・B合算で数え、設定別の確率も通常時の合算値を入力してください。'
   roles:
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }
-    - { name: ベル, kind: bell, group: koyaku }
+    - { name: ベル, kind: bell_ab, group: koyaku }
     - { name: チェリー, kind: cherry_total, group: koyaku }
-    - { name: スイカ, kind: suika, group: koyaku }
+    - { name: スイカ, kind: suika_ab, group: koyaku }
 ---
 
 

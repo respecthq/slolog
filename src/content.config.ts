@@ -2,6 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { counterRolesSchema } from './lib/counter-schema';
 
 // 許諾済み画像をpublic配下に置く。未登録なら画像枠は出さない。
 const machineImage = z.object({
@@ -74,20 +75,16 @@ const dateish = z
 // 機種専用の小役カウンタ（設定判別）。2026-10-12〜 機種 md で決める（以前は spec.ts に直書き）
 //   status：unchecked＝未確認／none＝対象外（AT 機・疑似ボーナスなど）／bonus＝BIG・REG だけで判別／detail＝小役も数える（Pro で自分の値）
 //   判断の順（PIPELINE.md「小役カウンタ」）：Aタイプか → 設定別 BIG・REG の公表 → なな徹の簡易版 → 一撃・けんのスロットの詳細版
-const counterRole = z.object({
-  name: z.string().trim().min(1).max(30),                 // 画面に出す役名
-  kind: z.string().regex(/^[a-z][a-z0-9_]{1,23}$/),       // アプリが重なりを見る種類（big_total・grape・bell・bt_miss など）
-  group: z.enum(['bonus', 'koyaku', 'bt']),               // 同じゲームで重ならない役の組（bt は BT中のゲーム数で割る）
-});
 const machineCounter = z
   .object({
     status: z.enum(['unchecked', 'none', 'bonus', 'detail']),
     date: dateish.default(''),                              // 判断した日
     checked: z.array(httpsUrl('確かめたツールのURL')).default([]), // 確かめた判別ツール（なな徹・一撃・けんのスロット）
     note: z.coerce.string().default(''),                    // 判断の理由・補足（ページには出さない）
-    count: z.coerce.string().default(''),                   // 数え方の注意（アプリの小役カウンタに出す。BT 機の「通常時だけ数える」など）
-    roles: z.array(counterRole).default([]),                // detail のときの数える役（確率は持たない）
+    count: z.string().trim().max(120).default(''),           // アプリと同じ120字上限。数え方の注意を黙って欠落させない
+    roles: counterRolesSchema.default([]),                 // detail のときの数える役（確率は持たない）
   })
+  .strict() // 配信する定義は counter ひとつ。v2 などの未対応項目を黙って捨てない
   .superRefine((c, ctx) => {
     if (c.status === 'detail') {
       const kinds = c.roles.map((r) => r.kind);
@@ -95,11 +92,6 @@ const machineCounter = z
       if (!kinds.some((k) => k.startsWith('big_')) || !kinds.some((k) => k.startsWith('reg_'))) {
         ctx.addIssue({ code: 'custom', message: 'counter.roles に BIG（big_total か big_ の内訳）と REG（reg_total か reg_ の内訳）を入れてください' });
       }
-      if ((kinds.includes('big_total') && kinds.some((k) => k.startsWith('big_') && k !== 'big_total')) ||
-          (kinds.includes('reg_total') && kinds.some((k) => k.startsWith('reg_') && k !== 'reg_total'))) {
-        ctx.addIssue({ code: 'custom', message: 'BIG・REG は全体か内訳のどちらか一方で数えてください（同じボーナスを二重に数えない）' });
-      }
-      if (new Set(kinds).size !== kinds.length) ctx.addIssue({ code: 'custom', message: 'counter.roles の kind が重なっています' });
     }
     if ((c.status === 'bonus' || c.status === 'detail') && c.checked.length === 0 && !c.note) {
       ctx.addIssue({ code: 'custom', message: '判別を配る機種は、確かめたツールの URL（checked）か理由（note）を書いてください' });
@@ -144,7 +136,7 @@ const machines = defineCollection({
     // 天井まわり（どのメーカーも非公表。法人2媒体で一致を確認したものだけ載せる）
     ceilingBonus: z.coerce.string().default(''),  // 天井恩恵
     resetBehavior: z.coerce.string().default(''), // 設定変更・電源OFF/ON時の挙動
-    noCeiling: z.boolean().default(false),        // 天井が仕様上存在しない（ノーマルAタイプ等）。ページには出さない・天井の見張りから外すための内部の印（2026-09-29 夜 復活）
+    noCeiling: z.boolean().default(false),        // 天井が仕様上存在しない（ノーマルAタイプ等）。天井の見張りから外す印。2026-10-14〜アプリにも配信し期待値ツールの表示を制御
     // 確認元。ceiling/zone/ceilingBonus/resetBehavior に値を入れるなら必須
     verified: z.object({
       by: z.array(z.string().trim().min(1)).min(1), // 表示する確認元（例 ['777パチガブ']）
@@ -176,7 +168,7 @@ const machines = defineCollection({
     fictional: z.boolean().default(false),
   }).refine(
     // 2026-09-29 夜〜 実機の天井は ①メーカー発表（ceilingSource・攻略サイト不可）か ②2 か所で一致を確かめた記録（ceilingCheck）のどちらか一方が必須。
-    // アプリへは送らない（spec.ts の ceiling は常に空）。LP は見るための情報、アプリの天井は動く設定なので分ける
+    // 天井の数値はアプリへ送らない（spec.ts の ceiling は常に空）。「天井なし」の真偽だけは noCeiling で送る
     (d) => {
       if (d.fictional || !d.ceiling) return !(!d.fictional && (d.ceilingSource || d.ceilingCheck));
       const maker = d.ceilingSource.trim() !== '' && !isBlockedSource(d.ceilingSource);

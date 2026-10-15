@@ -18,21 +18,26 @@ specSource: https://yamasa-next.co.jp/slot/tlkfv/
 newsSource: https://www.yugitsushin.jp/news/%e3%82%b1%e3%83%ad%e3%83%83%e3%83%88%e3%81%ae%e6%9c%80%e6%96%b0%e4%bd%9c%e3%81%8c%e3%83%91%e3%83%af%e3%83%bc%e3%82%a2%e3%83%83%e3%83%97%e3%81%97%e3%81%a6%e6%96%b0%e7%99%bb%e5%a0%b4%ef%bc%81%e3%80%8c/
 fetched: 2026-09-23
 added: 2026-09-23
+updated: 2026-10-16
+updateNote: 小役カウンタを同色・異色BIGなどの8項目に整理
 draft: false
 watchKeyword: ケロット
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: detail
-  date: 2026-10-11
+  date: 2026-10-16
   checked:
     - https://nana-press.com/kaiseki/machine/1170/suisoku2/
     - https://kenslo65536.com/hanbetsu/lb-kelot5.html
-  note: 'なな徹（SBIG・BIG を半分ずつ）・けんのスロット（BIG 合算）が公表値で判別。オレンジは合算せず平行・斜めを別々に'
-  count: 'BIG はスーパービッグとビッグを合わせて数えてください（メーカーの公表値が合算のため）'
+    - https://1geki.jp/slot/lb_kelot5/99/
+  note: '一撃の通常時8項目を採用。SBIG（同色）とBIG（異色）はBIG合算の内訳。無料は合算してメーカー公表値で推測し、内訳の確率を両方入力したProは内訳を使用。確定役はボーナスと重複するため小役との合成は近似'
+  count: 'SBIG（同色）とBIG（異色）は分けて数えます。確定役はボーナスの当選契機です。G数・小役は通常時だけを数え、BT中やボーナス消化中の分は含めません。'
   roles:
-    - { name: BIG, kind: big_total, group: bonus }
+    - { name: SBIG（同色）, kind: big_same, group: bonus }
+    - { name: BIG（異色）, kind: big_mixed, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }
     - { name: ベル, kind: bell, group: koyaku }
     - { name: チェリー, kind: cherry_total, group: koyaku }
+    - { name: 確定役, kind: kakutei, group: koyaku }
     - { name: 平行オレンジ, kind: orange_flat, group: koyaku }
     - { name: 斜めオレンジ, kind: orange_diag, group: koyaku }
 ---

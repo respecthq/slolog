@@ -11,8 +11,8 @@ bonusPayout: 'BIG 266枚超の払い出しで終了／REG 98枚超の払い出�
 source: https://www.kitadenshi.co.jp/slot/mrjuggler/
 fetched: 2026-09-04
 added: 2026-09-04
-updated: 2026-09-23
-updateNote: ボーナスの終了条件を追加（北電子の配当表）
+updated: 2026-10-16
+updateNote: 小役カウンタをBIG・REG・ぶどうに整理
 draft: false
 bonus: '1/156.4〜1/118.7'
 specNote: '※独自調査値'
@@ -23,20 +23,15 @@ modelNameSource: https://www.p-world.co.jp/machine/database/10056
 kenteiNo: '3S0174'
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: detail
-  date: 2026-10-12
+  date: 2026-10-16
   checked:
-    - https://kenslo65536.com/hanbetsu/juggler-mr-detail.html
-  note: 'ジャグラー共通（2026-10-12 詳細版に）：無料は単独・チェリー重複を足して北電子公表の BIG・REG で判別。Pro は単独・重複の確率を自分で入れると内訳で判別（全部そろったときだけ）。けんのスロット詳細版と同じ内訳。ミスターは単独に1枚役重複を含み、ピエロ重複を別に数える'
-  count: '単独BIG・単独REGには1枚役との重複も含めます。チェリー・ピエロと一緒に揃ったボーナスは重複の役で、「チェリー」はボーナスと重ならなかった分だけを数えてください'
+    - https://kenslo65536.com/hanbetsu/juggler-mr.html
+  note: '1.2.0はけんのスロット通常版と同じBIG・REG・ぶどう。ボーナスはメーカー公表値、ぶどうはProで自分の確率を入力。契機別の詳細版は1.2.1で対応予定'
+  count: 'BIG・REGは当選契機を分けずに数えます。ぶどうとG数は通常時だけを数え、ボーナス消化中の分は含めません。'
   roles:
-    - { name: 単独BIG, kind: big_solo, group: bonus }
-    - { name: チェリーBIG, kind: big_cherry, group: bonus }
-    - { name: ピエロBIG, kind: big_pierrot, group: bonus }
-    - { name: 単独REG, kind: reg_solo, group: bonus }
-    - { name: チェリーREG, kind: reg_cherry, group: bonus }
-    - { name: ピエロREG, kind: reg_pierrot, group: bonus }
+    - { name: BIG, kind: big_total, group: bonus }
+    - { name: REG, kind: reg_total, group: bonus }
     - { name: ぶどう, kind: grape, group: bonus }
-    - { name: チェリー, kind: cherry_solo, group: bonus }
 ---
 
 

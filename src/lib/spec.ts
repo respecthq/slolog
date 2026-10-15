@@ -12,6 +12,7 @@ export type MachineSpec = {
   name: string;
   maker: string;
   ceiling: string; // 2026-09-23〜 常に空（天井・ゾーンは扱わない。契約 v1 の形を保つため項目だけ残す）
+  noCeiling?: boolean; // 2026-10-14〜 明示的な天井なし。true の機種はアプリの期待値ツールを出さない。false は未確認も含み「天井あり」の保証ではない
   junzo: string;
   zone: string;    // 同上
   released: string;
@@ -40,7 +41,7 @@ export type Settei = {
 /**
  * 機種専用の小役カウンタの 1 役。group の中は同じゲームで重ならない役だけにする
  * （bonus＝BIG・REG と、それらと同じゲームで重ならない役／koyaku＝ボーナスと重なりうる小役／bt＝BT中の役。分母は BT中のゲーム数）。
- * アプリはグループごとに多項分布を出して掛け合わせる（けんのスロットと同じ考え方）。
+ * アプリはグループごとに多項分布を出して掛け合わせる。通常時の組どうしの依存は近似で、他サイトと同じ計算を保証しない。
  * 数える役は、攻略メディアの判別ツール（なな徹・けんのスロット・一撃）が数えている要素から、
  * 通常時に数えやすいものを選ぶ。役の名前だけで、確率（各社の独自調査値）は配らない。
  */
@@ -116,6 +117,7 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
     name: d.name,
     maker: d.maker, // 業界での表記（P-WORLD・ぱちタウンの「メーカー」欄と同じ）
     ceiling: '',
+    noCeiling: d.noCeiling === true,
     junzo: d.junzo,
     zone: '',
     released: d.released,

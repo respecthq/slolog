@@ -12,8 +12,8 @@ source: https://www.kitadenshi.co.jp/slot/matador3/
 fetched: 2026-09-04
 added: 2026-09-04
 crosscheckUrl: https://p.hisshobon.jp/machine/4531
-updated: 2026-09-23
-updateNote: ボーナスの終了条件を追加（北電子の配当表）
+updated: 2026-10-16
+updateNote: 小役カウンタのBT中GとBT突入回数の違いを明記
 draft: false
 bonus: '1/169.8〜1/126.8'
 specNote: '※独自調査値'
@@ -24,12 +24,13 @@ modelNameSource: https://www.p-world.co.jp/machine/database/10287
 kenteiNo: '530169'
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: detail
-  date: 2026-10-11
+  date: 2026-10-16
   checked:
     - https://nana-press.com/kaiseki/machine/997/suisoku2/
     - https://1geki.jp/slot/l_mtd3/99/
+    - https://1geki.jp/slot/l_mtd3/61/
   note: 'なな徹の簡易版が前任者＋通常時の 2 区間を公表値 1/278.9・1/434.0 で判別。一撃は BT中1枚役も数える'
-  count: '通常時G・BIG・REG には BT中の分を含めません。BT中1枚役は、BT中G と回数を別に入力してください'
+  count: '通常時G・BIG・REGにはBT中の分を含めません。BT中Gは、BIG前半と後半の間の1枚掛け区間のG数です（BT突入回数ではありません）。この区間の1枚役を別に数えてください。'
   roles:
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }

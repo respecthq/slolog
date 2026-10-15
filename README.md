@@ -10,6 +10,7 @@ cd ~/slolog-lp
 npm install
 npm run dev      # http://localhost:4321
 npm run build    # dist/ に静的出力（そのままデプロイ）
+npm run test:spec # 配信JSON・機種専用カウンタの契約テスト
 ```
 
 ## 構成
@@ -34,12 +35,15 @@ src/
 
 ```json
 { "type": "slolog.machine", "v": 1, "name": "…", "maker": "…",
-  "ceiling": "1480G", "junzo": "7.0枚/G", "zone": "…",
+  "ceiling": "", "noCeiling": false, "junzo": "7.0枚/G", "zone": "",
   "released": "2024-04-15", "koyaku": "チェリー,スイカ" }
 ```
 
 - **v1（インフラ不要）**：機種ページの「アプリに登録用JSONをコピー」→ スロログに貼り付け。
 - **v2（UX最良）**：アプリが `/machines/xxx.json` を取得。`/machines.json` で全件一覧も配信。
+
+機種専用カウンタは機種 md の `counter:` ひとつで管理し、JSON の `settei.counter` と `settei.count` に出力する。版別のカウンタは配らない。
+定義変更時は、対応アプリの途中経過・ユーザー確率・実戦記録の扱いを確認してから公開する。旧アプリにも同じ定義が届くため、**ローカルでの反映・ビルド成功は公開許可を意味しない**。
 
 ※メーカー公表事実のみ。**狙い目/ヤメ時・期待値は含めない**（各自がアプリの「期待値メモ」で入力）。
 出典として使える範囲は [SOURCES.md](SOURCES.md)、メーカーの許諾状況は `notes/MAKER_PERMISSIONS.md`（非公開・git管理外）。
