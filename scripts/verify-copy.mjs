@@ -23,12 +23,15 @@ assert.equal(text(byId(home, 'feature-title')), features.ev.title.replaceAll('\n
 assert.equal(text(byId(home, 'feature-description')), features.ev.description);
 assert.deepEqual(find(byId(home, 'feature-list'), n => n.tagName === 'li').map(text), Array.from(features.ev.list));
 assert.equal(attr(byId(home, 'feature-image'), 'alt'), features.ev.alt);
+// トップでは6問を表示し、残りは「ほかの質問も見る」の中（#faq-more）に置く。合計11問は変えない
 assert.equal(find(byId(home, 'faq'), n => n.tagName === 'details').length, 11);
+assert.equal(find(byId(home, 'faq-more'), n => n.tagName === 'details').length, 5);
 assert.equal(find(byId(home, 'faq'), n => n.tagName === 'details' && attr(n, 'open') !== undefined).length, 0);
 const pro = find(home, n => attr(n, 'class')?.split(' ').includes('pro') && n.tagName === 'article')[0];
 assert.deepEqual(find(pro, n => n.tagName === 'strong').map(text), ['自分の機種の期待値表', 'マイボーダー検証', '期待値と実戦値', '自分の小役確率で設定推測', '共有画像のロゴを非表示']);
-assert.equal(find(byId(home, 'start'), n => n.tagName === 'article').length, 3);
-assert.match(text(byId(home, 'start')), /サンプルを入れる/);
+// トップの「まずは、一日分から。」は外した（2026-10 トップ改修）。サンプルの案内はサポートページの「操作を試すには」に残す
+const support = parse(await fs.readFile(path.join(root, 'dist/support/index.html'), 'utf8'));
+assert.match(text(byId(support, 'start').parentNode), /サンプルを入れる/);
 assert.doesNotMatch(text(home), /分析はぜんぶ無料|設定判別できます|Proを App Storeで試す|年額2か月お得/);
 
 const machines = JSON.parse(await fs.readFile(path.join(root, 'dist/machines.json'), 'utf8'));

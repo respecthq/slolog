@@ -41,3 +41,11 @@ menu.addEventListener('click', () => {
 });
 nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { closeMenu(); menu.focus(); } });
+const faqToggle = document.querySelector('.faq-toggle');
+const faqMore = document.querySelector('#faq-more');
+if (faqToggle && faqMore) faqToggle.addEventListener('click', () => {
+  const open = faqToggle.getAttribute('aria-expanded') !== 'true';
+  faqToggle.setAttribute('aria-expanded', open);
+  faqMore.hidden = !open;
+  faqToggle.firstChild.textContent = open ? 'ほかの質問を閉じる' : `ほかの質問も見る（${faqMore.querySelectorAll('details').length}件）`;
+});
