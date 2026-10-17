@@ -102,7 +102,7 @@
 .cal2 #lineup-count{display:block;margin-top:6px;font-size:12px;color:var(--muted);letter-spacing:.04em}
 .cal2 .rel-group{margin-top:32px;scroll-margin-top:24px}
 .cal2 .date-chip{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.cal2 .date-chip .chip{display:inline-flex;align-items:baseline;padding:6px 14px;border-radius:var(--radius);background:var(--band)}
+.cal2 .date-chip .chip{display:inline-flex;align-items:baseline}
 .cal2 .date-chip strong{font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
 .cal2 .date-chip small{font-size:13px;font-weight:700;margin-left:4px}
 .cal2 .date-count{font-size:14px;font-weight:700}
@@ -205,7 +205,6 @@
   .cal2 #release-title{margin-top:6px;font-size:26px}
   .cal2 .rel-group{margin-top:24px}
   .cal2 .date-chip{margin-bottom:10px;gap:8px}
-  .cal2 .date-chip .chip{padding:5px 12px}
   .cal2 .date-chip strong{font-size:18px}
   .cal2 .date-chip small{font-size:12px;margin-left:2px}
   .cal2 .date-count{font-size:13px}
