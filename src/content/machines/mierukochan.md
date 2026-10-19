@@ -1,7 +1,7 @@
 ---
 name: パチスロ見える子ちゃん
 maker: 'パイオニア'
-ceiling: ''
+ceiling: '通常時900G＋α（設定変更後600G＋α） → ボーナス'
 junzo: ''
 zone: ''
 bonus: '1/135.4〜1/115.1'
@@ -28,6 +28,14 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
   checked:
     - https://1geki.jp/slot/l_mierukochan/
   note: 'ボーナスの形をした AT 機（一撃は ATタイプ・天井あり、ぶどう等の小役カウンタの対象外）。BB合算・RB は初当りの確率'
+ceilingCheck:
+  urls:
+    - https://p.hisshobon.jp/machine/4768/1/115921
+    - https://p-town.dmm.com/machines/5042
+  date: 2026-10-19
+  note: '必勝本と DMMぱちタウンで一致（パチガブ・P-WORLD は天井の記載なし）'
+updated: '2026-10-20'
+updateNote: '天井を追加'
 ---
 
 ## メーカーの発表

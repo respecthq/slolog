@@ -1,7 +1,7 @@
 ---
 name: Ｌ海人（ウミンチュ）
 maker: '岡崎産業'
-ceiling: ''
+ceiling: 'BIG後999G／REG後777G（設定変更後555G） → ボーナス'
 junzo: ''
 zone: ''
 bonus: '1/113.0〜1/86.7'
@@ -26,6 +26,15 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
   status: none
   date: 2026-10-11
   note: 'なな徹・一撃・けんのスロットに判別ツールなし（2026-10-11 確認）。ツールが出たら見直す'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7153
+    - https://p-town.dmm.com/machines/5111
+    - https://p.hisshobon.jp/machine/4836/1/4
+  date: 2026-10-20
+  note: 'BIG後999G・REG後777G・設定変更後555G はパチガブと DMMぱちタウンで一致（一撃も同じ）。必勝本は「ボーナス後999G」でREG後の区別なし（ユーザー判断 10/20：ぱちタウンにもREG後777Gがあるので載せる）'
+updated: '2026-10-20'
+updateNote: '天井を追加'
 ---
 
 ## メーカーの発表

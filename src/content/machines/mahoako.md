@@ -1,7 +1,7 @@
 ---
 name: L魔法少女にあこがれて
 maker: 'ニューギン'
-ceiling: ''
+ceiling: 'AT間999G＋α（設定変更後799G＋α） → AT'
 junzo: '下位AT 約2.5枚/G／上位AT 約5.0枚/G'
 zone: ''
 released: 2026-10-19
@@ -23,6 +23,15 @@ watchKeyword: 魔法少女にあこがれて
 watch:
   - https://p-gabu.jp/guideworks/machinecontents/detail/7155
   - https://p.hisshobon.jp/machine/4841
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7155
+    - https://p.hisshobon.jp/machine/4841/1/4
+    - https://www.p-world.co.jp/machine/database/10563
+  date: 2026-10-19
+  note: '3 か所で一致（P-WORLD は「擬似ボーナスを除く AT 間」）'
+updated: '2026-10-20'
+updateNote: '天井を追加'
 ---
 
 ## メーカーの発表

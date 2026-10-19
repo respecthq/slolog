@@ -4,7 +4,7 @@ maker: 'アクロス'
 ceiling: ''
 junzo: ''
 zone: ''
-released: 2026-12
+released: '2026-12-21'
 koyaku: ''
 type: AT
 gen: 'スマスロ'
@@ -18,6 +18,8 @@ draft: false
 watch:
   - https://p.hisshobon.jp/machine/4829
   - https://p-gabu.jp/guideworks/machinecontents/detail/7189
+updated: '2026-10-20'
+updateNote: '導入日が 12月21日に'
 ---
 
 ## ゲーム性
