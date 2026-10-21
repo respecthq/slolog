@@ -12,7 +12,7 @@ source: https://www.kitadenshi.co.jp/slot/mrjuggler/
 fetched: 2026-09-04
 added: 2026-09-04
 updated: 2026-10-16
-updateNote: 小役カウンタをBIG・REG・ぶどうに整理
+updateNote: 小役カウンタをBIG・REG・ブドウに整理
 draft: false
 bonus: '1/156.4〜1/118.7'
 specNote: '※独自調査値'
@@ -26,12 +26,12 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
   date: 2026-10-16
   checked:
     - https://kenslo65536.com/hanbetsu/juggler-mr.html
-  note: '1.2.0はけんのスロット通常版と同じBIG・REG・ぶどう。ボーナスはメーカー公表値、ぶどうはProで自分の確率を入力。契機別の詳細版は1.2.1で対応予定'
-  count: 'BIG・REGは当選契機を分けずに数えます。ぶどうとG数は通常時だけを数え、ボーナス消化中の分は含めません。'
+  note: '1.2.0はけんのスロット通常版と同じBIG・REG・ブドウ。ボーナスはメーカー公表値、ブドウはProで自分の確率を入力。契機別の詳細版は1.2.1で対応予定'
+  count: 'BIG・REGは当選契機を分けずに数えます。ブドウとG数は通常時だけを数え、ボーナス消化中の分は含めません。'
   roles:
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }
-    - { name: ぶどう, kind: grape, group: bonus }
+    - { name: ブドウ, kind: grape, group: bonus }
 ---
 
 

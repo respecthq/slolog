@@ -48,9 +48,9 @@ test('数える役は counter ひとつだけ。確率は公表BIG・REGのま�
   }
 });
 
-test('クレアはBIG・REGだけ、ミスターはBIG・REG・ぶどう', () => {
+test('クレアはBIG・REGだけ、ミスターはBIG・REG・ブドウ', () => {
   assert.deepEqual(toSpec(readMachine('crea-bonus-trigger')).settei.counter, [role('BIG', 'big_total'), role('REG', 'reg_total')]);
-  assert.deepEqual(toSpec(readMachine('mrjuggler')).settei.counter, [role('BIG', 'big_total'), role('REG', 'reg_total'), role('ぶどう', 'grape')]);
+  assert.deepEqual(toSpec(readMachine('mrjuggler')).settei.counter, [role('BIG', 'big_total'), role('REG', 'reg_total'), role('ブドウ', 'grape')]);
 });
 
 test('ケロットは同色・異色を分けた8項目。合算BIGのボタンは重ねない', () => {

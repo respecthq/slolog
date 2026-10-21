@@ -33,7 +33,7 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - { name: チェリーBIG, kind: big_cherry, group: bonus }
     - { name: 単独REG, kind: reg_solo, group: bonus }
     - { name: チェリーREG, kind: reg_cherry, group: bonus }
-    - { name: ぶどう, kind: grape, group: bonus }
+    - { name: ブドウ, kind: grape, group: bonus }
     - { name: チェリー, kind: cherry_solo, group: bonus }
 ---
 
