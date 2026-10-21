@@ -13,6 +13,11 @@ import chevronRight from 'lucide-static/icons/chevron-right.svg?raw';
 import chevronDown from 'lucide-static/icons/chevron-down.svg?raw';
 import chevronLeft from 'lucide-static/icons/chevron-left.svg?raw';
 import externalLink from 'lucide-static/icons/external-link.svg?raw';
+import hardDriveDownload from 'lucide-static/icons/hard-drive-download.svg?raw';
+import plus from 'lucide-static/icons/plus.svg?raw';
+import minus from 'lucide-static/icons/minus.svg?raw';
+import check from 'lucide-static/icons/check.svg?raw';
+import shieldCheck from 'lucide-static/icons/shield-check.svg?raw';
 
 /// アプリの CherryIcon と同じ座標（lib/widgets/cherry_icon.dart・2026-09-06 第5版）
 // アプリ側は 24px の枠に 1.0〜24.3 の絵柄を描くので、Lucide（2〜22に収まる）と
@@ -34,6 +39,7 @@ const cherry = `<svg width="24" height="24" viewBox="-1.25 -1.9 27.8 27.8" fill=
 export const icons: Record<string, string> = {
   chartColumn, chartLine, fileText, history, notebookPen, store, timer, search, cherry,
   chevronRight, chevronDown, chevronLeft, externalLink, scale,
+  hardDriveDownload, plus, minus, check, shieldCheck,
 };
 
 /** リンクの末尾に置く小さなアイコン。
