@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { counterRolesSchema } from './lib/counter-schema';
+import { counterRolesSchema, counterV2Schema } from './lib/counter-schema';
 
 // 許諾済み画像をpublic配下に置く。未登録なら画像枠は出さない。
 const machineImage = z.object({
@@ -83,9 +83,13 @@ const machineCounter = z
     note: z.coerce.string().default(''),                    // 判断の理由・補足（ページには出さない）
     count: z.string().trim().max(120).default(''),           // アプリと同じ120字上限。数え方の注意を黙って欠落させない
     roles: counterRolesSchema.default([]),                 // detail のときの数える役（確率は持たない）
+    v2: counterV2Schema.optional(),                        // 1.2.1以降。旧counterを残してcounter2/count2へ配信
   })
-  .strict() // 配信する定義は counter ひとつ。v2 などの未対応項目を黙って捨てない
+  .strict() // 未対応項目を黙って捨てない
   .superRefine((c, ctx) => {
+    if (c.v2 && c.status !== 'detail') {
+      ctx.addIssue({ code: 'custom', message: 'counter.v2 は detail の機種だけに指定してください' });
+    }
     if (c.status === 'detail') {
       const kinds = c.roles.map((r) => r.kind);
       // BIG・REG は全体（big_total）か内訳（big_solo・big_cherry など）のどちらかで数える（ジャグラーの詳細版は内訳。2026-10-12）

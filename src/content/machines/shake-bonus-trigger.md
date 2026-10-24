@@ -35,7 +35,7 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - https://1geki.jp/slot/lb_shake/99/
     - https://kenslo65536.com/hanbetsu/lb-shake.html
     - https://1geki.jp/slot/lb_shake/0/
-  note: '公表値（設定1・2・5・6）でBIG・REGを推測。一撃の通常時小役はベル・スイカともA・B合算。旧bell・suikaで登録した確率を黙って読み替えないよう合算のkindを新設。重複3項目とBT中JACは1.2.1以降で扱いを整理'
+  note: '公表値（設定1・2・5・6）でBIG・REGを推測。ベル・スイカはA・B合算。1.2.0向け5項目は維持し、1.2.1向けcounter2にスイカ＋ナディアBIG・ベル＋REGの内訳を追加。確率は配信せずProで入力。特殊役ⅠとBT中JACは追加しない'
   count: '通常時だけを数えます（BT中・ボーナス消化中は除く）。ベル・スイカはA・B合算で数え、設定別の確率も通常時の合算値を入力してください。'
   roles:
     - { name: BIG, kind: big_total, group: bonus }
@@ -43,6 +43,16 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - { name: ベル, kind: bell_ab, group: koyaku }
     - { name: チェリー, kind: cherry_total, group: koyaku }
     - { name: スイカ, kind: suika_ab, group: koyaku }
+  v2:
+    count: '通常時のみ（BT中・ボーナス消化中を除く）。ベル・スイカはA・B合算。BIG・REG・小役は重複分も合計に数え、追加2項目はその内訳を記録します（合計には自動加算されません）。途中から数えた内訳は推測に使わないでください。'
+    roles:
+      - { name: BIG, kind: big_total, group: bonus }
+      - { name: REG, kind: reg_total, group: bonus }
+      - { name: ベル, kind: bell_ab, group: koyaku }
+      - { name: チェリー, kind: cherry_total, group: koyaku }
+      - { name: スイカ, kind: suika_ab, group: koyaku }
+      - { name: スイカ＋ナディアBIG, kind: trig_big_suika, group: trigger_big }
+      - { name: ベル＋REG, kind: trig_reg_bell, group: trigger_reg }
 ---
 
 

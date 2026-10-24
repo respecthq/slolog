@@ -16,6 +16,7 @@ const spec=toSpec(m);
 const specJson=JSON.stringify(spec,null,2);
 // 機種専用の小役カウンタ（設定判別つき）。アプリ 1.2 以降、登録のときに一緒に取り込める
 const counter=spec.settei?.counter??[];
+const extraCounterRoles=spec.settei?.counter2?.filter(c=>!counter.some(old=>old.kind===c.kind))??[];
 const fmt=(value?:string)=>value?.replaceAll('-','.')||'未定';
 const specs=[['純増',d.junzo],['ボーナス',d.bonusPayout],['ボーナス合成確率',d.bonus],['出玉率',d.payout]];
 // 出典は①メーカー公式 ②スペックのページ（別にあるとき）③業界紙 の順に並べる
@@ -65,7 +66,7 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
           <p class="eyebrow">ADD TO SLOLOG</p><h2>調べた一台を、<br />自分の記録につなげる。</h2>
           <p>機種の基本情報をスロログへ。登録後は、狙い目やヤメ時、自分の気づきをメモできます。</p>
           <p class="copy-status">基本情報の登録やメモは無料。自分の期待値表を取り込んで計算する機能はProで使えます。</p>
-          {counter.length > 0 && <div class="counter-note"><p class="counter-tag">専用カウンタ・設定推測に対応</p><p>公式機種情報から登録するときに、専用の小役カウンタ（{counter.map(c=>c.name).join('・')}）も取り込めます。メーカー公表のボーナス確率による設定推測は無料です。</p>{d.counter?.status === 'detail' && <p>自分で用意した小役確率を加える機能はProで使えます。</p>}<p class="copy-status">スロログ1.2.0以降に対応。実際の設定を保証するものではありません。</p></div>}
+          {counter.length > 0 && <div class="counter-note"><p class="counter-tag">専用カウンタ・設定推測に対応</p><p>公式機種情報から登録するときに、専用の小役カウンタ（{counter.map(c=>c.name).join('・')}）も取り込めます。メーカー公表のボーナス確率による設定推測は無料です。</p>{extraCounterRoles.length > 0 && <p>スロログ1.2.1以降では、{extraCounterRoles.map(c=>c.name).join('・')}の内訳も記録できます。1.2.0では従来の{counter.length}項目を使えます。</p>}{d.counter?.status === 'detail' && <p>自分で用意した小役確率を加える機能はProで使えます。</p>}<p class="copy-status">スロログ1.2.0以降に対応。実際の設定を保証するものではありません。</p></div>}
           {DEEPLINK_ENABLED && <div class="deeplink-block" hidden><a class="button primary" id="open-in-app" href={deepLinkFor(m.id)} data-store={APP_STORE_URL_JP}>スロログで登録する <Icon name="external-link" /></a><p class="copy-status">iPhoneのスロログが開き、取り込む内容を確認してから登録できます。</p><p class="copy-status" id="deeplink-store" hidden>アプリが開かないときは <a href={APP_STORE_URL_JP}>App Storeでスロログを入手</a>・更新してください。</p></div>}
           <div class="import-fallback"><h3 class="deeplink-only" hidden>アプリが開かないときは</h3><ol><li>「機種データをコピー」を押す</li><li>スロログで「機種を取り込む」を開く</li><li>貼り付け、内容を確認して登録する</li></ol></div>
           <button class="button primary" id="copy-spec">機種データをコピー <Icon name="copy" /></button>

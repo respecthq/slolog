@@ -33,9 +33,11 @@ export type Settei = {
   settings: number[]; // 設定の番号（設定3が無い機種は [1,2,4,5,6] など。表の行の順）
   roles: { name: string; kind: string; denoms: number[] }[]; // kind：アプリが重なりを判定する種類（big_total / reg_total）
   counter?: CounterRole[]; // 機種専用の小役カウンタで数える役（確率は持たない。公表値の無い小役は Pro の人が自分の値を入れる）
+  counter2?: CounterRoleV2[]; // 1.2.1以降のボーナス内訳対応。1.2.0向けcounterは変更しない
   payout?: number[]; // 設定ごとの出玉率（%）
   note?: string;     // 「※独自調査値」などメーカーの但し書き
   count?: string;    // 数え方の注意（BT 機の「通常時だけ数える」など）。アプリの小役カウンタに出す
+  count2?: string;   // counter2 に対応する数え方。旧アプリにはcountを残す
 };
 
 /**
@@ -46,6 +48,8 @@ export type Settei = {
  * 通常時に数えやすいものを選ぶ。役の名前だけで、確率（各社の独自調査値）は配らない。
  */
 export type CounterRole = { name: string; kind: string; group: 'bonus' | 'koyaku' | 'bt' };
+// trigger_* はBIG/REGの内訳。独立な小役グループとして掛け合わせない。
+export type CounterRoleV2 = Omit<CounterRole, 'group'> & { group: CounterRole['group'] | 'trigger_big' | 'trigger_reg' };
 
 /**
  * アプリ内で筐体画像を使ってよいと許諾を得たメーカー（notes/MAKER_PERMISSIONS.md の「アプリ内で画像」が ✅ のもの）。
@@ -148,6 +152,7 @@ export function toSpec(entry: CollectionEntry<'machines'>): MachineSpec {
       ...settei,
       counter: c.status === 'detail' ? c.roles : BONUS,
       ...(c.count ? { count: c.count } : {}),
+      ...(c.v2 ? { counter2: c.v2.roles, count2: c.v2.count } : {}),
     };
   }
   // 筐体画像（許諾を得たメーカーだけ・権利表記つき）。アプリは公式の配信から来たこの URL だけを取りに来る

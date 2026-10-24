@@ -1,9 +1,11 @@
 // 進行表の「OK 待ち」を反映する。  node scripts/lp-apply.mjs A1 A3   （all で全部）
 //   new    … 用意済みの md の draft を外して公開
 //   update … frontmatter の値を書き換え、updated / updateNote を付ける。body: [[旧, 新]] があれば本文も置き換える
-//            changes.counter（小役カウンタ）は {status, date, checked, note, count, roles} をまとめて書き換える
+//            changes.counter（小役カウンタ）は {status, date, checked, note, count, roles, v2?}。v2省略時は既存の新アプリ向け定義を保持
 // 反映したら notes/lp-proposals.json に appliedAt を記録する。このあと npm run build → crosscheck → push。
 import { readFileSync, writeFileSync } from 'node:fs';
+import { parseFrontmatter } from '@astrojs/markdown-remark';
+import { counterFrontmatterLines } from './counter-frontmatter.mjs';
 const P = 'notes/lp-proposals.json';
 const props = JSON.parse(readFileSync(P, 'utf8'));
 const want = process.argv.slice(2); const _n = new Date(); const ymd = new Date(_n - _n.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
@@ -24,12 +26,9 @@ for (const p of props) {
       fm = fm.replace(/\n$/, `\nceilingCheck:\n  urls:\n${v.urls.map((u) => `    - ${u}`).join('\n')}\n  date: ${v.date}\n  note: ${q(v.note ?? '')}\n`);
     } else if (k === 'counter') {
       // 2026-10-12〜 機種専用の小役カウンタ（設定判別）。書き方は PIPELINE.md「小役カウンタ」
+      const previous = parseFrontmatter(`---${fm}---`).frontmatter.counter;
+      const lines = counterFrontmatterLines(v, ymd, previous);
       fm = fm.replace(/^counter:.*\n(?:[ \t]+.*\n)*/m, '');
-      const lines = ['counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える', `  status: ${v.status}`, `  date: ${v.date ?? ymd}`];
-      if (v.checked?.length) lines.push('  checked:', ...v.checked.map((u) => `    - ${u}`));
-      if (v.note) lines.push(`  note: ${q(v.note)}`);
-      if (v.count) lines.push(`  count: ${q(v.count)}`);
-      if (v.roles?.length) lines.push('  roles:', ...v.roles.map((r) => `    - { name: ${q(r.name)}, kind: ${r.kind}, group: ${r.group} }`));
       fm = fm.replace(/\n$/, `\n${lines.join('\n')}\n`);
     } else set(k, v);
   }
