@@ -8,13 +8,13 @@ import {url} from '../../lib/url';
 const lastOf = (d: {added?: string; updated?: string}) => ((d.updated ?? '') > (d.added ?? '') ? d.updated : d.added) ?? '';
 const machines = (await getCollection('machines',({data})=>!data.draft))
   .sort((a,b)=>lastOf(b.data).localeCompare(lastOf(a.data))||(b.data.released??'').localeCompare(a.data.released??'')||a.data.name.localeCompare(b.data.name,'ja'));
-// NEW／更新の印は 30 日以内だけ（更新の内容の 1 行は出さない：2026-10-27 ユーザー）（ビルドした日を基準。週次で作り直す）
+// NEW／更新の印は 7 日以内だけ（週次の更新に合わせる：2026-10-27 ユーザー）（更新の内容の 1 行は出さない：2026-10-27 ユーザー）（ビルドした日を基準。週次で作り直す）
 const today = new Date().toISOString().slice(0,10);
 const daysSince = (d: string) => (Date.parse(today) - Date.parse(d)) / 86400000;
 const badgeOf = (d: {added?: string; updated?: string}) => {
   const updated = (d.updated ?? '') > (d.added ?? '');
   const date = (updated ? d.updated : d.added) ?? '';
-  const recent = date !== '' && daysSince(date) <= 30;
+  const recent = date !== '' && daysSince(date) <= 7;
   return {updated, date, recent};
 };
 const real = machines.filter(m=>!m.data.fictional);
