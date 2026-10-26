@@ -17,6 +17,7 @@ draft: false
 watchKeyword: ガンゲイル
 watch:
   - https://p.hisshobon.jp/machine/4845
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7164
 ---
 
 ## メーカーの発表

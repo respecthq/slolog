@@ -17,4 +17,4 @@
 .catalog-mid h2{margin-top:0}
 .catalog-mid p{margin-bottom:0}
 .catalog-thumb img{display:block;width:72px;height:auto}
-.catalog-rights{display:block;flex:1;margin:10px 0 18px;font-size:10px;line-height:1.5;color:#000}
+.catalog-rights{display:block;flex:1;margin:10px 0 18px;font-size:10px;line-height:1.5;color:#000}.detail-heading figure p.image-disclaimer{font-size:11px;line-height:1.6;color:var(--muted);margin:6px 0 0}

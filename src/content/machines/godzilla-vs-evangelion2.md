@@ -2,7 +2,7 @@
 name: Lパチスロ ゴジラ対エヴァンゲリオン ２
 maker: 'ビスティ'
 ceiling: ''
-junzo: ''
+junzo: '約5.2枚/G'
 zone: ''
 released: 2026-11-02
 koyaku: ''
@@ -19,6 +19,10 @@ draft: false
 watchKeyword: ゴジラ対エヴァンゲリオン
 watch:
   - https://www.eva-project.jp/l_godzilla_vs_eva2/
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7170
+  - https://p.hisshobon.jp/machine/4849
+updated: '2026-10-26'
+updateNote: '純増（公式）を追加'
 ---
 
 ## メーカーの発表
