@@ -31,6 +31,9 @@ pv:
   youtube: M4jSimZyACc
   title: スロット『押忍！番長番付』本編PV
   channel: 大都技研 公式YouTube
+reels:
+  src: images/machines/bancho-banduke-reel.png
+  credit: ©DAITO GIKEN,INC.
 ---
 
 ## メーカーの発表
