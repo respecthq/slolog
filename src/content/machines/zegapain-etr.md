@@ -20,6 +20,10 @@ draft: false
 watchKeyword: ゼーガペイン
 watch:
   - https://p.hisshobon.jp/machine/4820
+pv:
+  youtube: 'HgCT7SNaTUs'
+  title: '【スマスロゼーガペインETR】 ティザーPV'
+  channel: '山佐 公式YouTube（山佐PR情報局）'
 ---
 
 ## メーカーの発表

@@ -35,6 +35,10 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }
     - { name: BT中1枚役, kind: bt_one, group: bt }
+pv:
+  youtube: '81DWmvLrwIE'
+  title: 'マタドールⅢ　プロモーションムービー'
+  channel: '北電子 公式YouTube'
 ---
 
 

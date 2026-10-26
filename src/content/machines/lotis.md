@@ -23,6 +23,10 @@ ceilingCheck:
     - https://p.hisshobon.jp/machine/4754/1/116167
   date: 2026-10-10
   note: ''
+pv:
+  youtube: 'gcAdVYg7pdE'
+  title: 'Lotis PV'
+  channel: '北電子 公式YouTube'
 ---
 
 権利表記：©KITA DENSHI

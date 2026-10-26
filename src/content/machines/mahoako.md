@@ -32,6 +32,10 @@ ceilingCheck:
   note: '3 か所で一致（P-WORLD は「擬似ボーナスを除く AT 間」）'
 updated: '2026-10-20'
 updateNote: '天井を追加'
+pv:
+  youtube: 'ibE6sC7MEac'
+  title: '【新台】スマスロ「魔法少女にあこがれて」プロモーションMOVIE'
+  channel: 'ニューギン 公式YouTube'
 ---
 
 ## メーカーの発表

@@ -18,6 +18,10 @@ watchKeyword: ガンゲイル
 watch:
   - https://p.hisshobon.jp/machine/4845
   - https://p-gabu.jp/guideworks/machinecontents/detail/7164
+pv:
+  youtube: 'Uw5xuTlhbrE'
+  title: '【公式】〈L ソードアート・オンライン オルタナティブ ガンゲイル・オンライン〉プロモーションビデオ【2026年11月2日全国導入予定】'
+  channel: '京楽産業． 公式YouTube'
 ---
 
 ## メーカーの発表

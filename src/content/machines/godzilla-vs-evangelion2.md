@@ -23,6 +23,10 @@ watch:
   - https://p.hisshobon.jp/machine/4849
 updated: '2026-10-26'
 updateNote: '純増（公式）を追加'
+pv:
+  youtube: 'GwV0vN_MV5I'
+  title: '【公式】「Lパチスロ ゴジラ対エヴァンゲリオン ２」プロモーションムービー第2弾'
+  channel: 'フィールズ 公式YouTube'
 ---
 
 ## メーカーの発表

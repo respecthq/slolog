@@ -26,6 +26,10 @@ ceilingCheck:
     - https://p.hisshobon.jp/machine/4793/1/4
   date: 2026-10-10
   note: ''
+pv:
+  youtube: 'cWvXcXMuNd0'
+  title: 'スマスロ ストリートファイター6　PV'
+  channel: 'エンターライズ 公式YouTube'
 ---
 
 ## メーカーの発表

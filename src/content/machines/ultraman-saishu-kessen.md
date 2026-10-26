@@ -23,6 +23,10 @@ draft: false
 watchKeyword: ULTRAMAN
 updated: '2026-10-10'
 updateNote: '天井の書き方を「条件 → 当たるもの」に'
+pv:
+  youtube: 'BpjuIzkf7Ww'
+  title: '「L ULTRAMAN 最終決戦」プロモーションムービー第1弾'
+  channel: 'フィールズ 公式YouTube'
 ---
 
 ## メーカーの発表

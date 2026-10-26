@@ -32,6 +32,10 @@ updateNote: '天井の書き方を「条件 → 当たるもの」に'
 reels:
   src: images/machines/sao2-reel.png
   credit: ©2017 川原 礫／KADOKAWA アスキー・メディアワークス／SAO-A Project　©DAITO GIKEN,INC.
+pv:
+  youtube: 'xreCS94ZpFI'
+  title: '『スロット ソードアート・オンラインⅡ』　ティザーPV'
+  channel: '大都技研 公式YouTube'
 ---
 
 

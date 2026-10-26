@@ -23,6 +23,10 @@ draft: false
 watchKeyword: モグモグ風林火山
 updated: '2026-10-10'
 updateNote: '天井の書き方を「条件 → 当たるもの」に'
+pv:
+  youtube: 'ymeDrxBAxmo'
+  title: '【公式PV】いざ大海原へ出陣！ 「モグモグ風林火山 大海戦の巻」 ネット株式会社'
+  channel: 'ネット 公式YouTube'
 ---
 
 ## メーカーの発表

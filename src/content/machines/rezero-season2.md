@@ -29,5 +29,9 @@ updateNote: '天井の書き方を「条件 → 当たるもの」に'
 reels:
   src: images/machines/rezero-season2-reel.png
   credit: ©長月達平・株式会社KADOKAWA刊／Re:ゼロから始める異世界生活2製作委員会　©DAITO GIKEN,INC.
+pv:
+  youtube: 'XK-bPfwyuIs'
+  title: '『スロット Re:ゼロから始める異世界生活 season2 』PV'
+  channel: '大都技研 公式YouTube'
 ---
 

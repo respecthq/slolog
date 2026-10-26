@@ -32,6 +32,10 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - { name: BIG, kind: big_total, group: bonus }
     - { name: REG, kind: reg_total, group: bonus }
     - { name: ブドウ, kind: grape, group: bonus }
+pv:
+  youtube: '3rJCcxU3L2w'
+  title: 'ミスタージャグラー　プロモーションムービー'
+  channel: '北電子 公式YouTube'
 ---
 
 

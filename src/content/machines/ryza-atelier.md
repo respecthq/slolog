@@ -18,6 +18,10 @@ draft: false
 watchKeyword: ライザのアトリエ
 watch:
   - https://p-gabu.jp/guideworks/machinecontents/detail/7191
+pv:
+  youtube: '3Q9IZRmZ4zE'
+  title: 'ライザのアトリエ～常闇の女王と秘密の隠れ家～　ティザーPV'
+  channel: '北電子 公式YouTube'
 ---
 
 ## メーカーの発表

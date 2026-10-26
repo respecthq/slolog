@@ -23,6 +23,10 @@ ceilingCheck:
     - https://www.p-world.co.jp/machine/database/10351
   date: 2026-10-10
   note: ''
+pv:
+  youtube: 'Eo_dWzw-Hlo'
+  title: 'BURNING EXPRESS（バーニング エクスプレス）プロモーションムービー'
+  channel: '北電子 公式YouTube'
 ---
 
 権利表記：©KITA DENSHI

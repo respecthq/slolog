@@ -35,6 +35,10 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - { name: チェリーREG, kind: reg_cherry, group: bonus }
     - { name: ブドウ, kind: grape, group: bonus }
     - { name: チェリー, kind: cherry_solo, group: bonus }
+pv:
+  youtube: '4dD3yFjNEa4'
+  title: 'ファンキージャグラー2　プロモーションムービー'
+  channel: '北電子 公式YouTube'
 ---
 
 

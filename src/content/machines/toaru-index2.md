@@ -25,6 +25,10 @@ draft: false
 watchKeyword: 禁書目録2
 updated: '2026-10-10'
 updateNote: '天井の書き方を「条件 → 当たるもの」に'
+pv:
+  youtube: 'INazzWB9yjw'
+  title: '【スロット | 本編PV】スマスロ とある魔術の禁書目録2《藤商事公式》'
+  channel: '藤商事 公式YouTube'
 ---
 
 ## メーカーの発表

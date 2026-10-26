@@ -27,6 +27,10 @@ ceilingCheck:
     - https://www.p-world.co.jp/machine/database/10493
   date: 2026-10-10
   note: 'パチガブのみの「女神降臨失敗後650G」は省いた。オープニングボーナスはパチガブ・P-WORLDで一致（必勝本は「ボーナス」）'
+pv:
+  youtube: '0Jr91Mtaq3E'
+  title: '【公式】 スマスロ とんでもスキルで異世界放浪メシ プロモーションムービー'
+  channel: 'コナミアミューズメント 公式YouTube'
 ---
 
 ## メーカーの発表

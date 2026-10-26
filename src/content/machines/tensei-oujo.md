@@ -27,6 +27,10 @@ ceilingCheck:
     - https://p.hisshobon.jp/machine/4814/1/4
   date: 2026-10-10
   note: '10/10 パチガブにも CZ間410G＋α・設定変更後の短縮（410／310）が載り、必勝本と一致したので追加'
+pv:
+  youtube: '-S634VRJOso'
+  title: '[製品PV]L転生王女と天才令嬢の魔法革命'
+  channel: '平和 公式YouTube（キュインちゃんねる）'
 ---
 
 ## メーカーの発表

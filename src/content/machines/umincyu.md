@@ -35,6 +35,10 @@ ceilingCheck:
   note: 'BIG後999G・REG後777G・設定変更後555G はパチガブと DMMぱちタウンで一致（一撃も同じ）。必勝本は「ボーナス後999G」でREG後の区別なし（ユーザー判断 10/20：ぱちタウンにもREG後777Gがあるので載せる）'
 updated: '2026-10-20'
 updateNote: '天井を追加'
+pv:
+  youtube: '1LnWFW4yK84'
+  title: 'ＬウミンチュPV'
+  channel: '岡崎産業 公式YouTube'
 ---
 
 ## メーカーの発表

@@ -22,6 +22,10 @@ draft: false
 watchKeyword: アカマター
 watch:
   - https://p.hisshobon.jp/machine/4846
+pv:
+  youtube: 'rUpA5WV73tU'
+  title: 'Lアカマター　プロモーションムービー'
+  channel: 'オーイズミ 公式YouTube'
 ---
 
 ## メーカーの発表

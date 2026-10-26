@@ -30,5 +30,9 @@ ceilingCheck:
     - https://p.hisshobon.jp/machine/4289/1/102701
   date: 2026-10-10
   note: ''
+pv:
+  youtube: 'YiBSO9GwE5I'
+  title: 'スロット『押忍！番長４』PV'
+  channel: '大都技研 公式YouTube'
 ---
 

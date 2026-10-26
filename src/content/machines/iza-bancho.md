@@ -31,5 +31,9 @@ ceilingCheck:
     - https://www.p-world.co.jp/machine/database/10275
   date: 2026-10-10
   note: '設定変更後600G＋αは必勝本とP-WORLDで一致。当たるもの（AT）は3サイトで一致'
+pv:
+  youtube: 'y6N4xF3eRP4'
+  title: 'スロット『いざ！番長』本編PV'
+  channel: '大都技研 公式YouTube'
 ---
 

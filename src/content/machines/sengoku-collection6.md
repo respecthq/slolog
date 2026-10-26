@@ -26,6 +26,10 @@ ceilingCheck:
     - https://p.hisshobon.jp/machine/4743/1/115539
   date: 2026-10-10
   note: ''
+pv:
+  youtube: 'wO73uNPCYb4'
+  title: '【公式】スマスロ 戦国コレクション６　プロモーションムービー'
+  channel: 'コナミアミューズメント 公式YouTube'
 ---
 
 ## メーカーの発表

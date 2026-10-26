@@ -26,6 +26,10 @@ draft: false
 watchKeyword: 青春ブタ野郎
 updated: '2026-10-10'
 updateNote: '天井の書き方を「条件 → 当たるもの」に'
+pv:
+  youtube: 'WuJCsOLdpbQ'
+  title: '[製品PV] L青春ブタ野郎はバニーガール先輩の夢を見ない'
+  channel: '平和 公式YouTube（キュインちゃんねる）'
 ---
 
 ## メーカーの発表

@@ -37,6 +37,10 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
     - https://1geki.jp/slot/l_crea/99/
   note: '1.2.0は通常時のBIG・REGだけをメーカー公表値で推測。小役の定義とボーナス重複の扱いを整理した詳細版は1.2.1で対応予定'
   count: '通常時のG数・BIG・REGを数えます。BT中のG数やボーナスは含めません。'
+pv:
+  youtube: 'iFp3MDmb-Qo'
+  title: 'スロット『クレアの秘宝伝 ～はじまりの扉と太陽の石～ ボーナストリガーver.』本編PV'
+  channel: '大都技研 公式YouTube'
 ---
 
 

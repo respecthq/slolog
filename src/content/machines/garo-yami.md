@@ -23,6 +23,10 @@ watch:
   - https://www.sansei-rd.com/products23/l_garo/index.html
   - https://p-gabu.jp/guideworks/machinecontents/detail/7163
   - https://p.hisshobon.jp/machine/4835
+pv:
+  youtube: 'VeEwQJ1q0-M'
+  title: '【PV】L牙狼 闇を照らす者【2026年11月2日導入開始】'
+  channel: 'サンセイR&D 公式YouTube'
 ---
 
 ## メーカーの発表

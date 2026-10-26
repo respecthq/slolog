@@ -22,6 +22,10 @@ ceilingCheck:
     - https://p.hisshobon.jp/machine/4692/1/115626
   date: 2026-10-10
   note: 'ジャングルボーナスは必勝本「当選」・パチガブ「濃厚」なので濃厚。金チケットは恩恵の中身なので書かない'
+pv:
+  youtube: 'trWevhZFLv4'
+  title: 'アニマルスロット ドッチ プロモーションムービー'
+  channel: '北電子 公式YouTube'
 ---
 
 権利表記：©KITA DENSHI

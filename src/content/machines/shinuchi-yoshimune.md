@@ -30,6 +30,10 @@ updateNote: '天井の書き方を「条件 → 当たるもの」に'
 reels:
   src: images/machines/shinuchi-yoshimune-reel.png
   credit: ©DAITO GIKEN,INC.
+pv:
+  youtube: 'pc_2aVEw0as'
+  title: 'スロット『真打 吉宗』本編PV'
+  channel: '大都技研 公式YouTube'
 ---
 
 

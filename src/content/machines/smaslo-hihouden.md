@@ -26,6 +26,10 @@ updateNote: 筐体画像とリール配列を追加（機種名をメーカー�
 reels:
   src: images/machines/smaslo-hihouden-reel.png
   credit: ©DAITO GIKEN,INC.
+pv:
+  youtube: 'c3H9vMQZ-f4'
+  title: '『スマスロ 秘宝伝』本編PV'
+  channel: '大都技研 公式YouTube'
 ---
 
 

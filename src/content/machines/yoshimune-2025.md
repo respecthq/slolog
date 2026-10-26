@@ -25,5 +25,9 @@ image:
 reels:
   src: images/machines/yoshimune-2025-reel.png
   credit: ©DAITO GIKEN,INC.
+pv:
+  youtube: 'h4CoajzVNww'
+  title: 'スロット『吉宗』本編PV'
+  channel: '大都技研 公式YouTube'
 ---
 

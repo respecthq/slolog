@@ -26,6 +26,10 @@ ceilingCheck:
     - https://www.p-world.co.jp/machine/database/10518
   date: 2026-10-10
   note: '必勝本はまだ天井ページなし。パチガブとP-WORLDで一致'
+pv:
+  youtube: 'McPTpYy_c6c'
+  title: '【スマスロパリピ孔明】プロモーションムービー'
+  channel: '山佐 公式YouTube（山佐PR情報局）'
 ---
 
 ## メーカーの発表

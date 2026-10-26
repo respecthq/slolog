@@ -27,6 +27,10 @@ ceilingCheck:
     - https://www.p-world.co.jp/machine/database/10488
   date: 2026-10-10
   note: 'パチガブのみのスイカ回数天井は省いた。飛翔終了後500Gはパチガブ・P-WORLDで一致'
+pv:
+  youtube: 'LrXY5MZatss'
+  title: '[製品PV] L南国育ち SPECIAL'
+  channel: '平和 公式YouTube（キュインちゃんねる）'
 ---
 
 ## メーカーの発表
