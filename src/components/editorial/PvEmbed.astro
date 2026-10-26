@@ -1,0 +1,33 @@
+---
+// 機種の公式PV（YouTube）。ページを開いただけでは YouTube を読み込まない。
+// 「再生」を押したときに初めて youtube-nocookie のプレーヤーを差し込む
+// （プライバシーポリシー「サイトに行動追跡・アクセス解析の仕組みを組み込まない」と両立させるため）。
+interface Props { id: string; title: string; channel: string }
+const {id, title, channel} = Astro.props;
+---
+<section class="spec-section pv-section">
+  <div class="section-label"><span>OFFICIAL MOVIE</span><h2>PV</h2></div>
+  <div class="pv-frame" data-pv={id}>
+    <button type="button" class="pv-play" aria-label={`${title}を再生する（YouTubeに接続します）`}>
+      <span class="pv-icon" aria-hidden="true"></span>
+      <span class="pv-text"><strong>{title}</strong><small>{channel}・再生するとYouTubeに接続します</small></span>
+    </button>
+  </div>
+  <p class="pv-link"><a href={`https://www.youtube.com/watch?v=${id}`} target="_blank" rel="noopener noreferrer">YouTubeで見る</a></p>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('.pv-frame').forEach((box) => {
+    const button = box.querySelector<HTMLButtonElement>('.pv-play');
+    button?.addEventListener('click', () => {
+      const id = box.dataset.pv ?? '';
+      if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      frame.title = button.getAttribute('aria-label') ?? 'PV';
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      box.replaceChildren(frame);
+      frame.focus();
+    });
+  });
+</script>

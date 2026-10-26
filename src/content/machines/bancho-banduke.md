@@ -27,6 +27,10 @@ updateNote: 'スペック・天井（メーカー発表）を追加'
 ceilingSource: https://yugi-nippon.com/pachinko-new-machine/post-80753/
 payout: '97.6%〜114.0%'
 newsSource: https://yugi-nippon.com/pachinko-new-machine/post-80753/
+pv:
+  youtube: M4jSimZyACc
+  title: スロット『押忍！番長番付』本編PV
+  channel: 大都技研 公式YouTube
 ---
 
 ## メーカーの発表
@@ -37,7 +41,7 @@ newsSource: https://yugi-nippon.com/pachinko-new-machine/post-80753/
 - タイプ：AT機（純増約7.0枚）。コイン単価約3.4円（設定1）
 - 救済機能：AT間999G＋α（設定変更後・短縮時は599G＋α）でAT当選。900ポイント到達でCZに当選
 
-## ゲーム性（メーカー発表の要点）
+## ゲーム性
 
 - 通常時はポイントをためてCZに入り、CZに成功するとATになる流れ。CZは2種類で、期待度約50%の「漢磨きチャレンジ」と、期待度約72%でストックも狙える「漢磨きバトル」
 - AT「轟チャンス」は、サッカー・バスケットボール・カーリング・書道・ロボットコンテストなどの対決から始まる。勝つと報酬の特化ゾーン「ビクトリーチャージ」で、種目ごとの特化ゾーンの上乗せがあり、そのあと疑似ボーナス（純増約7.0枚）へ
@@ -55,8 +59,4 @@ newsSource: https://yugi-nippon.com/pachinko-new-machine/post-80753/
 | 5 | 1/344.1 | 113.0% |
 | 6 | 1/272.3 | 114.0% |
 
-メーカー発表の値です（遊技日本の記事より）。
-
-発表の記事：[遊技日本「パチスロ新台『押忍！番長番付』機種情報が公開」](https://yugi-nippon.com/pachinko-new-machine/post-80753/)
-
-本編PV：[大都技研 公式YouTube「スロット『押忍！番長番付』本編PV」](https://www.youtube.com/watch?v=M4jSimZyACc)
+出典：[遊技日本](https://yugi-nippon.com/pachinko-new-machine/post-80753/)（パオン・ディーピーの発表）

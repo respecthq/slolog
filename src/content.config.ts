@@ -149,6 +149,12 @@ const machines = defineCollection({
       crosscheck: httpsUrl('照合URL'),               // 照合に使った2件目のURL（QA用・ページには出さない）
     }).optional(),
     reels: machineReels.optional(), // リール配列（LP だけ。アプリへは送らない）
+    // 2026-10-26〜 メーカー公式のPV（YouTube）。LP だけ（アプリへは送らない）。押すまで YouTube を読み込まない
+    pv: z.object({
+      youtube: z.string().regex(/^[A-Za-z0-9_-]{11}$/, 'YouTube の動画IDは11文字です'),
+      title: z.string().trim().min(1),
+      channel: z.string().trim().min(1), // 公開元（例：大都技研 公式YouTube）
+    }).strict().optional(),
     image: machineImage.optional(), // 許諾済み筐体画像。上部／タイトル背景を選べる
     // 出典・トレーサビリティ（メーカー公表事実の裏取り。出典明示にもなる）
     source: httpsUrl('出典URL'), // 出典URL（メーカー公式/ニュース）
