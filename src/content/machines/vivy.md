@@ -27,6 +27,9 @@ image:
 watchKeyword: Vivy
 updated: 2026-09-29
 updateNote: 筐体画像を追加
+reels:
+  src: images/machines/vivy-reel.png
+  credit: ©Vivy Score／アニプレックス・WIT STUDIO　©DAITO GIKEN,INC.
 ---
 
 ## メーカーの発表
