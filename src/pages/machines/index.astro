@@ -8,14 +8,14 @@ import {url} from '../../lib/url';
 const lastOf = (d: {added?: string; updated?: string}) => ((d.updated ?? '') > (d.added ?? '') ? d.updated : d.added) ?? '';
 const machines = (await getCollection('machines',({data})=>!data.draft))
   .sort((a,b)=>lastOf(b.data).localeCompare(lastOf(a.data))||(b.data.released??'').localeCompare(a.data.released??'')||a.data.name.localeCompare(b.data.name,'ja'));
-// NEW／更新の印は 30 日以内だけ（ビルドした日を基準。週次で作り直す）
+// NEW／更新の印は 30 日以内だけ（更新の内容の 1 行は出さない：2026-10-27 ユーザー）（ビルドした日を基準。週次で作り直す）
 const today = new Date().toISOString().slice(0,10);
 const daysSince = (d: string) => (Date.parse(today) - Date.parse(d)) / 86400000;
-const badgeOf = (d: {added?: string; updated?: string; updateNote?: string}) => {
+const badgeOf = (d: {added?: string; updated?: string}) => {
   const updated = (d.updated ?? '') > (d.added ?? '');
   const date = (updated ? d.updated : d.added) ?? '';
   const recent = date !== '' && daysSince(date) <= 30;
-  return {updated, date, recent, note: updated && recent ? (d.updateNote ?? '') : ''};
+  return {updated, date, recent};
 };
 const real = machines.filter(m=>!m.data.fictional);
 const kinana = machines.find(m=>m.data.fictional);
@@ -30,7 +30,7 @@ const kinana = machines.find(m=>m.data.fictional);
       <section aria-label="機種一覧">
         <div class="catalog-heading"><h2>掲載機種</h2><span>更新が新しい順</span></div>
         <div class="catalog-grid">{real.map(m=><article class="catalog-item" data-search={`${m.data.name} ${m.data.maker}`.normalize('NFKC').toLowerCase()}>
-          <a href={url(`machines/${m.id}/`)}>{(()=>{const b=badgeOf(m.data);return <div class="catalog-meta"><span>{m.data.maker}</span><span class="catalog-date">{b.recent&&<span class:list={['catalog-badge',b.updated?'is-update':'is-new']}>{b.updated?'更新':'NEW'}</span>}<time datetime={b.date} title={b.updated?'このサイトで情報を更新した日':'このサイトへの掲載日'}>{b.date.replaceAll('-','.')}</time></span></div>;})()}{m.data.image?<><div class="catalog-mid"><span class="catalog-thumb"><img src={url(m.data.image.src)} alt="" width="84" height="145" loading="lazy" /></span><div><h2>{m.data.name}</h2><p>{m.data.type||m.data.gen||'基本情報・出典'}</p></div></div>{m.data.image?.credit&&<small class="catalog-rights">{m.data.image.credit}</small>}</>:<><h2>{m.data.name}</h2><p>{m.data.type||m.data.gen||'基本情報・出典'}</p></>}{(()=>{const b=badgeOf(m.data);return b.note&&<p class="catalog-update">更新：{b.note}</p>;})()}<div class="catalog-foot"><span class="catalog-ceiling">{m.data.released?`導入時期：${m.data.released.replaceAll('-','.')}`:'導入時期未定'}</span><Icon /></div></a>
+          <a href={url(`machines/${m.id}/`)}>{(()=>{const b=badgeOf(m.data);return <div class="catalog-meta"><span>{m.data.maker}</span><span class="catalog-date">{b.recent&&<span class:list={['catalog-badge',b.updated?'is-update':'is-new']}>{b.updated?'更新':'NEW'}</span>}<time datetime={b.date} title={b.updated?'このサイトで情報を更新した日':'このサイトへの掲載日'}>{b.date.replaceAll('-','.')}</time></span></div>;})()}{m.data.image?<><div class="catalog-mid"><span class="catalog-thumb"><img src={url(m.data.image.src)} alt="" width="84" height="145" loading="lazy" /></span><div><h2>{m.data.name}</h2><p>{m.data.type||m.data.gen||'基本情報・出典'}</p></div></div>{m.data.image?.credit&&<small class="catalog-rights">{m.data.image.credit}</small>}</>:<><h2>{m.data.name}</h2><p>{m.data.type||m.data.gen||'基本情報・出典'}</p></>}<div class="catalog-foot"><span class="catalog-ceiling">{m.data.released?`導入時期：${m.data.released.replaceAll('-','.')}`:'導入時期未定'}</span><Icon /></div></a>
         </article>)}</div>
         <nav id="pager" class="pager" aria-label="ページ" hidden></nav>
         <div id="no-results" class="no-results" hidden><h2>条件に合う機種が見つかりませんでした</h2><p>機種名の一部や、メーカー名でお試しください。</p><button id="clear-search" class="button">検索をクリア</button></div>
