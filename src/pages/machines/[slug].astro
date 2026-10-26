@@ -66,7 +66,7 @@ import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
       ) : (
         <aside class="import-panel">
           <p class="eyebrow">ADD TO SLOLOG</p><h2>この機種を、<br />スロログに登録する。</h2>
-          <p>機種の基本情報をスロログへ。登録後は、狙い目やヤメ時、実戦に必要な情報をメモできます。</p>
+          <p>機種の基本情報をスロログへ。登録後は、狙い目やヤメ時、実戦に役立つ情報をメモできます。</p>
           <p class="copy-status">基本情報の登録やメモは無料。自分の期待値表を取り込んで計算する機能はProで使えます。</p>
           {counter.length > 0 && <div class="counter-note"><p class="counter-tag">専用カウンタ・設定推測に対応</p><p>公式機種情報から登録するときに、専用の小役カウンタ（{counter.map(c=>c.name).join('・')}）も取り込めます。メーカー公表のボーナス確率による設定推測は無料です。</p>{extraCounterRoles.length > 0 && <p>スロログ1.2.1以降では、{extraCounterRoles.map(c=>c.name).join('・')}の内訳も記録できます。1.2.0では従来の{counter.length}項目を使えます。</p>}{d.counter?.status === 'detail' && <p>自分で用意した小役確率を加える機能はProで使えます。</p>}<p class="copy-status">スロログ1.2.0以降に対応。実際の設定を保証するものではありません。</p></div>}
           {DEEPLINK_ENABLED && <div class="deeplink-block" hidden><a class="button primary" id="open-in-app" href={deepLinkFor(m.id)} data-store={APP_STORE_URL_JP}>スロログで登録する <Icon name="external-link" /></a><p class="copy-status">iPhoneのスロログが開き、取り込む内容を確認してから登録できます。</p><p class="copy-status" id="deeplink-store" hidden>アプリが開かないときは <a href={APP_STORE_URL_JP}>App Storeでスロログを入手</a>・更新してください。</p></div>}
