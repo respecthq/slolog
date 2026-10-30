@@ -3,9 +3,11 @@
 //   update … frontmatter の値を書き換え、updated / updateNote を付ける。body: [[旧, 新]] があれば本文も置き換える
 //            changes.counter（小役カウンタ）は {status, date, checked, note, count, roles, v2?}。v2省略時は既存の新アプリ向け定義を保持
 // 反映したら notes/lp-proposals.json に appliedAt を記録する。このあと npm run build → crosscheck → push。
+// new を公開したら、同じ機種を候補（notes/lp-queue.json）から外す（PIPELINE.md「候補がページになったら消す」。2026-10-30〜）
 import { readFileSync, writeFileSync } from 'node:fs';
 import { parseFrontmatter } from '@astrojs/markdown-remark';
 import { counterFrontmatterLines } from './counter-frontmatter.mjs';
+import { norm } from './lib-names.mjs';
 const P = 'notes/lp-proposals.json';
 const props = JSON.parse(readFileSync(P, 'utf8'));
 const want = process.argv.slice(2); const _n = new Date(); const ymd = new Date(_n - _n.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
@@ -38,3 +40,13 @@ for (const p of props) {
   p.appliedAt = ymd; console.log(`✓ ${p.id} ${p.name} を反映（${file}）`);
 }
 writeFileSync(P, JSON.stringify(props, null, 1));
+const published = new Set(props.filter((p) => p.kind === 'new' && p.appliedAt === ymd).map((p) => norm(p.name)));
+if (published.size) {
+  const QP = 'notes/lp-queue.json';
+  const queue = JSON.parse(readFileSync(QP, 'utf8'));
+  const keep = queue.filter((x) => !published.has(norm(x.name)));
+  if (keep.length !== queue.length) {
+    writeFileSync(QP, `${JSON.stringify(keep, null, 2)}\n`);
+    console.log(`✓ 候補から外した：${queue.filter((x) => published.has(norm(x.name))).map((x) => x.name).join('・')}`);
+  }
+}
