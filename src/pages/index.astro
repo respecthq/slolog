@@ -16,7 +16,7 @@ const releaseLabel = (r?: string) => {
   const date = `${m[1] === thisYear ? '' : `${m[1]}年`}${Number(m[2])}月${m[3] ? `${Number(m[3])}日` : ''}`;
   return `${date}導入`;
 };
-const topicCards = topics.filter((t) => machineData.has(t.slug)).map((t) => ({...t, release: releaseLabel(String(machineData.get(t.slug)?.released ?? ''))}));
+const topicCards = topics.filter((t) => machineData.has(t.slug)).map((t) => ({...t, title: machineData.get(t.slug)!.name, release: releaseLabel(String(machineData.get(t.slug)?.released ?? ''))}));
 ---
 <Editorial title="スロログ｜記録から、判断へ。パチスロ収支アプリ" description="収支を残すだけじゃない。次の立ち回りに、記録を使う。実戦記録・収支グラフ・小役カウンターをひとつにしたiPhoneアプリ。記録と基本の集計は無料、広告なし。Proでは、自分の期待値表を使った振り返りも。" home>
 
