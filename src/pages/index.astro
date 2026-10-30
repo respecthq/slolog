@@ -3,6 +3,20 @@ import Editorial from '../layouts/Editorial.astro';
 import {url} from '../lib/url';
 import {icons} from '../lib/icons';
 import {APP_STORE_URL_JP} from '../lib/store';
+import {getCollection} from 'astro:content';
+import {topics} from '../lib/topics';
+// TOPICS：機種ページへの入口。導入日は機種 md の released から。
+// 「予定」は付けない（サイトは週1で作り直すので、ビルドした日で予定／済みを分けると導入日を過ぎても「予定」が残る）
+const machineData = new Map((await getCollection('machines', ({data}) => !data.draft)).map((m) => [m.id, m.data]));
+const buildDay = new Date().toISOString().slice(0, 10);
+const thisYear = buildDay.slice(0, 4);
+const releaseLabel = (r?: string) => {
+  const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?/.exec(r ?? '');
+  if (!m) return '';
+  const date = `${m[1] === thisYear ? '' : `${m[1]}年`}${Number(m[2])}月${m[3] ? `${Number(m[3])}日` : ''}`;
+  return `${date}導入`;
+};
+const topicCards = topics.filter((t) => machineData.has(t.slug)).map((t) => ({...t, release: releaseLabel(String(machineData.get(t.slug)?.released ?? ''))}));
 ---
 <Editorial title="スロログ｜記録から、判断へ。パチスロ収支アプリ" description="収支を残すだけじゃない。次の立ち回りに、記録を使う。実戦記録・収支グラフ・小役カウンターをひとつにしたiPhoneアプリ。記録と基本の集計は無料、広告なし。Proでは、自分の期待値表を使った振り返りも。" home>
 
@@ -28,6 +42,10 @@ import {APP_STORE_URL_JP} from '../lib/store';
       </div>
     </section>
     <div class="trust-strip"><span><img src={url("editorial/assets/check.svg")} alt="">記録と基本の集計は無料</span><span><img src={url("editorial/assets/check.svg")} alt="">広告なし</span><span><img src={url("editorial/assets/shield-check.svg")} alt="">記録・写真は端末内に保存</span></div>
+
+    {topicCards.length > 0 && <section class="section topics" id="topics" aria-labelledby="topics-title"><div class="topics-heading"><div><p class="eyebrow">TOPICS</p><h2 id="topics-title">新台・注目機種</h2></div><a class="text-link" href={url("machines/")}>機種情報をすべて見る <img src={url("editorial/assets/chevron-right.svg")} alt=""></a></div><ul class="topic-list">
+      {topicCards.map((t) => <li><a class="topic-card" href={url(`machines/${t.slug}/`)}><img src={url(t.image)} width="716" height="511" loading="lazy" decoding="async" alt={`${t.title} の筐体とロゴ`}><div class="topic-body">{t.release && <span class="topic-chip">{t.release}</span>}<h3>{t.title}</h3><p>{t.text}</p></div></a></li>)}
+    </ul></section>}
 
     <section class="section features" id="features">
       <div class="section-heading"><p class="eyebrow"><b>01</b> THINK. RECORD. REVIEW.</p><h2>打つ前も、打った後も。<br>自分の立ち回りを、<em>ひとつに。</em></h2><p>狙い目を考えて、実戦を残し、結果を振り返る。<br>毎日の記録を、自分の判断に使える形へ。</p></div>
