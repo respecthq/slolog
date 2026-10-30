@@ -13,7 +13,7 @@ fetched: 2026-09-04
 added: 2026-09-04
 crosscheckUrl: https://p.hisshobon.jp/machine/4531
 updated: 2026-10-16
-updateNote: 小役カウンタのBT中GとBT突入回数の違いを明記
+updateNote: 小役カウンターのBT中GとBT突入回数の違いを明記
 draft: false
 bonus: '1/169.8〜1/126.8'
 specNote: '※独自調査値'

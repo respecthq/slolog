@@ -24,7 +24,7 @@ image:
   placement: above
   credit: ©DAITO GIKEN,INC.
 updated: 2026-10-16
-updateNote: 小役カウンタをBIG・REGの簡易版に整理
+updateNote: 小役カウンターをBIG・REGの簡易版に整理
 reels:
   src: images/machines/crea-bonus-trigger-reel.png
   credit: ©DAITO GIKEN,INC.

@@ -12,7 +12,7 @@ source: https://www.kitadenshi.co.jp/slot/mrjuggler/
 fetched: 2026-09-04
 added: 2026-09-04
 updated: 2026-10-16
-updateNote: 小役カウンタをBIG・REG・ブドウに整理
+updateNote: 小役カウンターをBIG・REG・ブドウに整理
 draft: false
 bonus: '1/156.4〜1/118.7'
 specNote: '※独自調査値'

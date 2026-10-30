@@ -24,7 +24,7 @@ image:
   placement: above
   credit: ©DAITO GIKEN,INC.
 updated: 2026-10-16
-updateNote: 小役カウンタのベル・スイカをA・B合算と明記
+updateNote: 小役カウンターのベル・スイカをA・B合算と明記
 reels:
   src: images/machines/shake-bonus-trigger-reel.png
   credit: ©DAITO GIKEN,INC.

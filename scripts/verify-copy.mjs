@@ -37,7 +37,7 @@ for (const machine of machines) {
   const data = JSON.parse(await fs.readFile(path.join(root, `dist/machines/${machine.id}.json`), 'utf8'));
   const html = parse(await fs.readFile(path.join(root, `dist/machines/${machine.id}/index.html`), 'utf8'));
   const hasCounter = Boolean(data.settei?.counter?.length);
-  assert.equal(text(html).includes('専用カウンタ・設定推測に対応'), hasCounter, machine.id);
+  assert.equal(text(html).includes('専用カウンター・設定推測に対応'), hasCounter, machine.id);
   if (hasCounter) counters++;
 }
 

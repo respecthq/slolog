@@ -19,7 +19,7 @@ newsSource: https://www.yugitsushin.jp/news/%e3%82%b1%e3%83%ad%e3%83%83%e3%83%88
 fetched: 2026-09-23
 added: 2026-09-23
 updated: 2026-10-16
-updateNote: 小役カウンタを同色・異色BIGなどの8項目に整理
+updateNote: 小役カウンターを同色・異色BIGなどの8項目に整理
 draft: false
 watchKeyword: ケロット
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える

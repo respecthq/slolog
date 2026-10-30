@@ -27,7 +27,7 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
   date: 2026-10-11
   checked:
     - https://1geki.jp/slot/l_mierukochan/
-  note: 'ボーナスの形をした AT 機（一撃は ATタイプ・天井あり、ブドウ等の小役カウンタの対象外）。BB合算・RB は初当りの確率'
+  note: 'ボーナスの形をした AT 機（一撃は ATタイプ・天井あり、ブドウ等の小役カウンターの対象外）。BB合算・RB は初当りの確率'
 ceilingCheck:
   urls:
     - https://p.hisshobon.jp/machine/4768/1/115921
