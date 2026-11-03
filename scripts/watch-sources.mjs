@@ -122,7 +122,11 @@ const REF = {
     search: (k) => 'https://p-gabu.jp/guideworks/machine?machine_keyword=' + encodeURIComponent(k),
     link: /href="(https:\/\/p-gabu\.jp\/guideworks\/machinecontents\/detail\/\d+)"[^>]*>([\s\S]*?)<\/a>/g,
     isSlot: (t) => !/^(e|P|PA|CR)\s?/.test(t),
-    hasCeiling: (text) => /天井機能[\s\S]{0,300}?\d{2,4}\s*G/.test(text) },
+    // 機種本文の「天井機能」節（id="contentType…" の見出し）だけを見る。ページ横の新着一覧（「○○ 天井機能」）に反応しないように（2026-11-03）
+    hasCeiling: (text, html) => {
+      const m = html.match(/id="contentType[\d_]+"[^>]*>(?:\s|<[^>]+>)*天井機能/);
+      return !!m && /\d{2,4}\s*G/.test(strip(html.slice(m.index, m.index + 4000)).slice(0, 400));
+    } },
   hissho: { label: '必勝本', host: 'hisshobon.jp', minId: 4700,
     search: (k) => 'https://p.hisshobon.jp/search?key=' + encodeURIComponent(k),
     link: /href="(\/machine\/\d+)\/?"[^>]*>([\s\S]*?)<\/a>/g,
@@ -138,7 +142,8 @@ for (const t of targets().filter((x) => x.needsCeiling)) {
   for (const [id, site] of Object.entries(REF)) {
     const url = t.refs.find((u) => u.includes(site.host));
     if (url) {
-      const has = site.hasCeiling(strip(await page(url)));
+      const html = await page(url);
+      const has = site.hasCeiling(strip(html), html);
       now[id] = { url, has };
       if (has && !old[id]?.has) notes.push(`★ ${site.label}に天井の記載が出た  ${url}`);
     } else {

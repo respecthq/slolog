@@ -22,6 +22,16 @@ pv:
   youtube: 'Uw5xuTlhbrE'
   title: '【公式】〈L ソードアート・オンライン オルタナティブ ガンゲイル・オンライン〉プロモーションビデオ【2026年11月2日全国導入予定】'
   channel: '京楽産業． 公式YouTube'
+ceiling: '通常時975G＋α（設定変更後300G＋α） → ボーナス／ボーナス6回連続でスクワッドジャム非当選（設定変更後・スクワッドジャム駆け抜け後は2回） → 次のボーナスでスクワッドジャム以上'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7164
+    - https://p.hisshobon.jp/machine/4845/1/4
+    - https://www.p-world.co.jp/machine/database/10535
+  date: 2026-11-03
+  note: '2種類とも3か所で一致（必勝本は「ST間最大7回目のボーナス（設定変更時・ST駆け抜け時は最大3回）」の書き方）'
+updated: '2026-11-03'
+updateNote: '天井を追加'
 ---
 
 ## メーカーの発表

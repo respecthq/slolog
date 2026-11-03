@@ -16,6 +16,15 @@ draft: false
 watchKeyword: ラグナドール
 watch:
   - https://p.hisshobon.jp/machine/4813
+ceiling: 'CZ間500G＋α → CZ／AT間999G＋α（設定変更後500G＋α） → AT'
+ceilingCheck:
+  urls:
+    - https://p.hisshobon.jp/machine/4813/1/4
+    - https://www.p-world.co.jp/machine/database/10546
+  date: 2026-11-03
+  note: '必勝本とP-WORLDで一致。パチガブは機種ページ未登録（新着一覧に「ラグナドール 天井機能」の記事はある）'
+updated: '2026-11-03'
+updateNote: '天井を追加'
 ---
 
 ## メーカーの発表

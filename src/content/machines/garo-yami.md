@@ -1,7 +1,7 @@
 ---
 name: L牙狼 闇を照らす者
 maker: 'サンセイR&D'
-ceiling: ''
+ceiling: '通常時999G＋α（設定変更後777G＋α） → ボーナス'
 junzo: '約9.1枚/G（AT）'
 zone: ''
 released: 2026-11-02
@@ -27,6 +27,15 @@ pv:
   youtube: 'VeEwQJ1q0-M'
   title: '【PV】L牙狼 闇を照らす者【2026年11月2日導入開始】'
   channel: 'サンセイR&D 公式YouTube'
+ceilingCheck:
+  urls:
+    - https://p.hisshobon.jp/machine/4835/1/4
+    - https://www.p-world.co.jp/machine/database/10582
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7163
+  date: 2026-11-03
+  note: '999G・設定変更後777Gは必勝本とP-WORLDで一致（＋αは必勝本だけ表記なし）。当たるもの：必勝本・P-WORLD＝ボーナス／パチガブ＝CZ → 多数決でボーナス。モード別の天井（777G〜111G）・ボーナス後／AT後の短縮は書かない'
+updated: '2026-11-03'
+updateNote: '天井を追加'
 ---
 
 ## メーカーの発表
