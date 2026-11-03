@@ -1,7 +1,7 @@
 ---
 name: Ｌ海人（ウミンチュ）
 maker: '岡崎産業'
-ceiling: 'BIG後999G／REG後777G（設定変更後555G） → ボーナス'
+ceiling: 'BIG後999G／REG後777G（設定変更後555G） → ボーナス当選'
 junzo: ''
 zone: ''
 bonus: '1/113.0〜1/86.7'

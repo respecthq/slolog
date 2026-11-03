@@ -1,7 +1,7 @@
 ---
 name: ローティス
 maker: '北電子'
-ceiling: '通常時900G → ボーナス'
+ceiling: '通常時900G → ボーナス当選'
 junzo: ''
 zone: ''
 released: 2026-07

@@ -1,7 +1,7 @@
 ---
 name: スロット Re:ゼロから始める異世界生活 season2
 maker: 'パオン・ディーピー'
-ceiling: 'AT間1400pt（設定変更後1000pt） → 殲滅ラッシュ／AT間1300G → 超強欲ラッシュ'
+ceiling: 'AT間1400pt（設定変更後1000pt） → 殲滅ラッシュ当選／AT間1300G → 超強欲ラッシュ当選'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/6670

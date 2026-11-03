@@ -1,7 +1,7 @@
 ---
 name: L魔法少女にあこがれて
 maker: 'ニューギン'
-ceiling: 'AT間999G＋α（設定変更後799G＋α） → AT'
+ceiling: 'AT間999G＋α（設定変更後799G＋α） → AT当選'
 junzo: '下位AT 約2.5枚/G／上位AT 約5.0枚/G'
 zone: ''
 released: 2026-10-19

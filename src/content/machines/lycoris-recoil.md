@@ -1,7 +1,7 @@
 ---
 name: スマスロ リコリス・リコイル
 maker: 'サミー'
-ceiling: 'ラッシュ間850G（設定変更後・ラッシュ駆け抜け後600G、上位CZ失敗後250G） → ラッシュ／ラッシュ・CZ間600G（設定変更後・ラッシュ駆け抜け後250G） → CZ'
+ceiling: 'ラッシュ間850G（設定変更後・ラッシュ駆け抜け後600G、上位CZ失敗後250G） → ラッシュ当選／ラッシュ・CZ間600G（設定変更後・ラッシュ駆け抜け後250G） → CZ当選'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7125

@@ -1,7 +1,7 @@
 ---
 name: いざ！番長
 maker: 'サボハニ'
-ceiling: '通常時999G＋α（設定変更後600G＋α） → AT'
+ceiling: '通常時999G＋α（設定変更後600G＋α） → AT当選'
 junzo: 約2.8枚/G（頂ZBASH）／上位AT 約5.0枚/G
 zone: ''
 released: 2025-06

@@ -1,7 +1,7 @@
 ---
 name: L ULTRAMAN 最終決戦
 maker: 'オッケー.'
-ceiling: 'AT間1500G＋α（設定変更後1000G） → AT／CZ間700G＋α（設定変更後500G＋α） → CZ'
+ceiling: 'AT間1500G＋α（設定変更後1000G） → AT当選／CZ間700G＋α（設定変更後500G＋α） → CZ当選'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7119/summarize

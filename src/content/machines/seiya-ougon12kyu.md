@@ -1,7 +1,7 @@
 ---
 name: L聖闘士星矢 黄金十二宮
 maker: 'サンスリー'
-ceiling: 'CZ間600G＋α（設定変更後300G＋α） → CZ／AT間1200G（設定変更後900G） → AT'
+ceiling: 'CZ間600G＋α（設定変更後300G＋α） → CZ当選／AT間1200G（設定変更後900G） → AT当選'
 junzo: '約4.0枚/G（AT「Battle of ZODIAC」）／上位AT「千日戦争」 約6.6枚/G'
 zone: ''
 released: 2026-11-02

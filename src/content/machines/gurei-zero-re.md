@@ -1,7 +1,7 @@
 ---
 name: Lパチスロ 喰霊-零-Re
 maker: 'オーイズミ'
-ceiling: 'ボーナス・ART間999G＋α → 無限ART'
+ceiling: 'ボーナス・ART間999G＋α → 無限ART当選'
 junzo: '約1.0枚/G（ART「喰霊CHANCE」）'
 zone: ''
 released: 2026-08-17

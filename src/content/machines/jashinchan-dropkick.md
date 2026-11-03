@@ -1,7 +1,7 @@
 ---
 name: L邪神ちゃんドロップキック
 maker: 'サンスリー'
-ceiling: '通常時799G（設定変更後599G） → ボーナス／AT非当選のボーナス最大10スルー → 次のボーナスがEPISODE BONUS以上濃厚'
+ceiling: '通常時799G（設定変更後599G） → ボーナス当選／AT非当選のボーナス最大10スルー → 次のボーナスがEPISODE BONUS以上濃厚'
 junzo: ''
 zone: ''
 released: 2026-08-03

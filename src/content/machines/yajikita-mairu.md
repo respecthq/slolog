@@ -1,7 +1,7 @@
 ---
 name: スマスロ やじきた道中記参る！
 maker: 'ユニバーサルブロス'
-ceiling: 'CZ間999まいる → CZ／CZ（関所チャレンジ）6連続スルー → 7回目のCZは勝率100%'
+ceiling: 'CZ間999まいる → CZ当選／CZ（関所チャレンジ）6連続スルー → 7回目のCZは勝率100%'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7113/summarize

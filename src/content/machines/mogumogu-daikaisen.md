@@ -1,7 +1,7 @@
 ---
 name: モグモグ風林火山 大海戦の巻
 maker: 'ネット'
-ceiling: 'CZ間699G＋α（設定変更後299G＋α） → CZ／最大6周期（設定変更後3周期） → CZ／CZ7連続スルー（設定変更後3スルー） → 次のCZでAT'
+ceiling: 'CZ間699G＋α（設定変更後299G＋α） → CZ当選／最大6周期（設定変更後3周期） → CZ当選／CZ7連続スルー（設定変更後3スルー） → 次のCZでAT当選'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7149/summarize

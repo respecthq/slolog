@@ -1,7 +1,7 @@
 ---
 name: Lパチスロ からくりサーカス2
 maker: 'SANKYO'
-ceiling: '液晶ゲーム数 最大1200G（設定変更後500G） → CZ／CZ・AT間 実ゲーム数890G＋α → CZ／AT間 実ゲーム数2500G → AT／CZ4連続スルー → 5回目のCZがAT'
+ceiling: '液晶ゲーム数 最大1200G（設定変更後500G） → CZ当選／CZ・AT間 実ゲーム数890G＋α → CZ当選／AT間 実ゲーム数2500G → AT当選／CZ4連続スルー → 5回目のCZでAT当選'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7065/summarize

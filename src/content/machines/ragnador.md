@@ -16,7 +16,7 @@ draft: false
 watchKeyword: ラグナドール
 watch:
   - https://p.hisshobon.jp/machine/4813
-ceiling: 'CZ間500G＋α → CZ／AT間999G＋α（設定変更後500G＋α） → AT'
+ceiling: 'CZ間500G＋α → CZ当選／AT間999G＋α（設定変更後500G＋α） → AT当選'
 ceilingCheck:
   urls:
     - https://p.hisshobon.jp/machine/4813/1/4

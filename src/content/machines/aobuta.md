@@ -1,7 +1,7 @@
 ---
 name: L青春ブタ野郎はバニーガール先輩の夢を見ない
 maker: 'オリンピア'
-ceiling: 'CZ間560G＋α → CZ／ST終了後の通常時899G＋α（設定変更後699G＋α） → ボーナス／思春期ポイント1000pt → CZ／CZ6連続スルー → 次のCZが成功濃厚'
+ceiling: 'CZ間560G＋α → CZ当選／ST終了後の通常時899G＋α（設定変更後699G＋α） → ボーナス当選／思春期ポイント1000pt → CZ当選／CZ6連続スルー → 次のCZが成功濃厚'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7140

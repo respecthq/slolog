@@ -1,7 +1,7 @@
 ---
 name: スロット ソードアート・オンラインⅡ
 maker: 'パオン・ディーピー'
-ceiling: 'AT間1200G → AT／CZ間499G（設定変更後・初回のデス・ガンバトル失敗後256G＋α） → CZ／液晶ゲーム数 最大800G'
+ceiling: 'AT間1200G → AT当選／CZ間499G（設定変更後・初回のデス・ガンバトル失敗後256G＋α） → CZ当選／液晶ゲーム数 最大800G'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7095

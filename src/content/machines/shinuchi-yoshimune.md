@@ -1,7 +1,7 @@
 ---
 name: 真打 吉宗
 maker: '大都技研'
-ceiling: 'AT間1500G（設定変更後1000G＋α・真BB後700G＋α） → AT／CZ間1000G → CZ／最大6周期 → CZ'
+ceiling: 'AT間1500G（設定変更後1000G＋α・真BB後700G＋α） → AT当選／CZ間1000G → CZ当選／最大6周期 → CZ当選'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7047
