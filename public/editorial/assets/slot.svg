@@ -1,0 +1,12 @@
+<!-- スロログ オリジナル：スロット台（機種）アイコン。Lucide と同じ 24px グリッド・線幅 2 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="4.2" y="1.8" width="15.6" height="20.8" rx="2" ry="2" />
+  <path d="M8 15.4h0" />
+  <path d="M12 15.4h0" />
+  <path d="M16 15.4h0" />
+  <line x1="5.2" y1="5.8" x2="19.3" y2="5.8" />
+  <line x1="5.2" y1="12.8" x2="19.3" y2="12.8" />
+  <line x1="5.2" y1="18.2" x2="19.3" y2="18.2" />
+  <line x1="9.4" y1="6.6" x2="9.4" y2="12.7" />
+  <line x1="14.8" y1="6.4" x2="14.8" y2="12.6" />
+</svg>
