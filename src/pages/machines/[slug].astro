@@ -29,7 +29,7 @@ const reelNo=String(2+(!d.fictional&&d.ceiling?1:0)).padStart(2,'0');
 const ceiling=[['天井',d.ceiling],['天井恩恵',d.ceilingBonus],['ゾーン',d.zone],['設定変更時',d.resetBehavior]];
 import {DEEPLINK_ENABLED, deepLinkFor, APP_STORE_URL_JP} from '../../lib/store';
 ---
-<Editorial title={`${d.name}｜基本情報・スペック｜スロログ`} description={`${d.name}の基本情報、掲載スペック、出典をまとめています。機種の基本情報をスロログに登録して、実戦記録や自分用メモに使えます。`} socialImage={d.image?.src ?? null} socialImageAlt={d.image?.alt} socialCard="summary">
+<Editorial title={`${d.name}｜基本情報・スペック｜スロログ`} description={`${d.name}の基本情報、掲載スペック、出典をまとめています。機種の基本情報をスロログに登録して、実戦記録や自分用メモに使えます。`} socialImage={d.image?.src ?? 'images/app-icon.webp'} socialImageAlt={d.image?.alt ?? 'スロログのアプリアイコン'} socialCard="summary">
   <div class="page-wrap">
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">{d.name}</span></nav>
     <div class:list={['detail-heading',{'has-image':!!d.image}]}>
