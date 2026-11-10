@@ -2,8 +2,8 @@
 import Header from '../components/editorial/Header.astro';
 import Footer from '../components/editorial/Footer.astro';
 import {url} from '../lib/url';
-interface Props { title: string; description?: string; socialImage?: string | null; home?: boolean; }
-const {title, description='記録から、判断へ。実戦記録・収支グラフ・小役カウンターをひとつに。スロログは、記録と基本の集計が無料のパチスロ収支アプリです。', socialImage='og_v2.jpg', home=false} = Astro.props;
+interface Props { title: string; description?: string; socialImage?: string | null; socialImageAlt?: string; socialCard?: 'summary' | 'summary_large_image'; home?: boolean; }
+const {title, description='記録から、判断へ。実戦記録・収支グラフ・小役カウンターをひとつに。スロログは、記録と基本の集計が無料のパチスロ収支アプリです。', socialImage='og_v2.jpg', socialImageAlt, socialCard, home=false} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 // CSSのキャッシュ対策：ビルドごとに変わる印を付けて、公開後に古い見た目が残らないようにする
 const assetVer = String(Date.now()).slice(-8);
@@ -22,8 +22,15 @@ const ogImage = socialImage ? new URL(url(socialImage), Astro.site ?? Astro.url)
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    {ogImage && <>
+      <meta property="og:image" content={ogImage} />
+      <meta name="twitter:image" content={ogImage} />
+      {socialImageAlt && <>
+        <meta property="og:image:alt" content={socialImageAlt} />
+        <meta name="twitter:image:alt" content={socialImageAlt} />
+      </>}
+    </>}
+    <meta name="twitter:card" content={socialCard ?? (ogImage ? 'summary_large_image' : 'summary')} />
     <link rel="icon" href={url('editorial/assets/app-icon.webp')} />
     <link rel="stylesheet" href={`${url('editorial/styles.css')}?v=${assetVer}`} />
     {!home && <link rel="stylesheet" href={`${url('editorial/pages.css')}?v=${assetVer}`} />}
