@@ -1,0 +1,167 @@
+{
+ "note": "メーカー公式 YouTube（news-watch.mjs が新着動画の RSS を見る）。足すときは channel_id（UC…）を調べて1行足す。2026-11-17 作成：LP の公式 PV から 23・YouTube 検索から 4（最近の動画で本物か確かめた）。ホール・ライター・原作側のチャンネルは入れない",
+ "channels": [
+  {
+   "maker": "DAXEL",
+   "channel": "DAXEL 【公式 チャンネル】",
+   "id": "UCwTzsp3IyfQKNJwpPL9uOog",
+   "url": "https://www.youtube.com/channel/UCwTzsp3IyfQKNJwpPL9uOog"
+  },
+  {
+   "maker": "SANKYO",
+   "channel": "SANKYOFEVERTV",
+   "id": "UCP4jA-DUfpu0Cud4gp--Ung",
+   "url": "https://www.youtube.com/@SANKYOFEVERTV"
+  },
+  {
+   "maker": "SANYO",
+   "channel": "【公式】SANYOチャンネル",
+   "id": "UCVXBHcBhD0pT0ls5NJEvLUA",
+   "url": "https://www.youtube.com/@sanyoofficial"
+  },
+  {
+   "maker": "エンターライズ",
+   "channel": "Enterrise Channel",
+   "id": "UCjfku2Kv02Nz2H0AFsGBmBA",
+   "url": "https://www.youtube.com/@EnterriseChannel"
+  },
+  {
+   "maker": "オーイズミ",
+   "channel": "株式会社オーイズミ",
+   "id": "UCDUpSyKUzKr7vfCCzLGQOUA",
+   "url": "https://www.youtube.com/@%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE%E3%82%AA%E3%83%BC%E3%82%A4%E3%82%BA%E3%83%9F"
+  },
+  {
+   "maker": "カルミナ",
+   "channel": "カルミナチャンネル",
+   "id": "UCSLdNktAskg_4nFDqjQtn4Q",
+   "url": "https://www.youtube.com/@CarminaChannel"
+  },
+  {
+   "maker": "コナミアミューズメント",
+   "channel": "コナミアミューズメント パチンコ・パチスロch",
+   "id": "UCWSPqhLRvqjC-vLYA5_n4LQ",
+   "url": "https://www.youtube.com/@KAM777ch"
+  },
+  {
+   "maker": "サミー",
+   "channel": "サミーチャンネル",
+   "id": "UCE7P1NwZnxaY2qyOHVkgUcg",
+   "url": "https://www.youtube.com/@SammyCorporation"
+  },
+  {
+   "maker": "サンセイR&D",
+   "channel": "サンセイチャンネル",
+   "id": "UCXURC20dHkJFmaF6eAXjrjA",
+   "url": "https://www.youtube.com/@Sanseirdch"
+  },
+  {
+   "maker": "スパイキー",
+   "channel": "【公式】スパイキー・クロスアルファブランド",
+   "id": "UCt3BM4kwZOBa271cYjHKsTA",
+   "url": "https://www.youtube.com/@spikycrossalpha"
+  },
+  {
+   "maker": "ニューギン",
+   "channel": "ニューギンチャンネル",
+   "id": "UCHtVcSYhL28QAdMddWwQkvA",
+   "url": "https://www.youtube.com/@newginchannel"
+  },
+  {
+   "maker": "ネット",
+   "channel": "ネット公式チャンネル",
+   "id": "UC7NaEgXbjALjeC96iJiJC0Q",
+   "url": "https://www.youtube.com/@777NET777"
+  },
+  {
+   "maker": "パイオニア",
+   "channel": "パイオニアちゃんねる",
+   "id": "UCmunP_l2MyX4VnGpDDnrE-g",
+   "url": "https://www.youtube.com/@PioneerPV"
+  },
+  {
+   "maker": "フィールズ",
+   "channel": "フィールズ株式会社　公式チャンネル",
+   "id": "UCuTsB6V7NdKVIKjjNnzMN7Q",
+   "url": "https://www.youtube.com/@fields-fan"
+  },
+  {
+   "maker": "ベルコ",
+   "channel": "ベルコ株式会社",
+   "id": "UC_VA5_0rcObV4t6cthUxVWg",
+   "url": "https://www.youtube.com/@%E3%83%99%E3%83%AB%E3%82%B3%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE"
+  },
+  {
+   "maker": "ボーダー",
+   "channel": "ボーダー【公式】",
+   "id": "UCZE3uWJkE_dwSr9LMn4C88g",
+   "url": "https://www.youtube.com/@%E3%83%9C%E3%83%BC%E3%83%80%E3%83%BC%E5%85%AC%E5%BC%8F"
+  },
+  {
+   "maker": "マルホン",
+   "channel": "マルホン工業公式チャンネル",
+   "id": "UCWP721-hcdv9SrdE_jJfPJg",
+   "url": "https://www.youtube.com/channel/UCWP721-hcdv9SrdE_jJfPJg"
+  },
+  {
+   "maker": "ユニバーサル",
+   "channel": "ユニバチャンネル",
+   "id": "UC8Xhs65nJMViR4ZO9qcPRng",
+   "url": "https://www.youtube.com/@uc2021"
+  },
+  {
+   "maker": "京楽",
+   "channel": "KYORAKU CHANNEL",
+   "id": "UCO6t3VQrpvrM4gYDRQ-58Ew",
+   "url": "https://www.youtube.com/@KYORAKUSANGYO"
+  },
+  {
+   "maker": "北電子",
+   "channel": "kitacjp",
+   "id": "UCfozDuqlOOYMo0aVzEnhDxg",
+   "url": "https://www.youtube.com/@kitacjp"
+  },
+  {
+   "maker": "大一商会",
+   "channel": "Daiichi公式チャンネル",
+   "id": "UCacGCTG_5zS15ODmIqocgAw",
+   "url": "https://www.youtube.com/channel/UCacGCTG_5zS15ODmIqocgAw"
+  },
+  {
+   "maker": "大都技研",
+   "channel": "株式会社 大都技研",
+   "id": "UCtCXrAWzsV0mF4IVQ6BvEww",
+   "url": "https://www.youtube.com/@DaitogikenTV"
+  },
+  {
+   "maker": "山佐",
+   "channel": "山佐PR情報局",
+   "id": "UCb-4ov2KFGo-Dgk0O86zeYA",
+   "url": "https://www.youtube.com/@yamasa-next"
+  },
+  {
+   "maker": "岡崎産業",
+   "channel": "岡崎産業チャンネル",
+   "id": "UCN4elyu3G6GWFk6XSE4cblg",
+   "url": "https://www.youtube.com/@okazakisangyoch"
+  },
+  {
+   "maker": "平和",
+   "channel": "キュインちゃんねる@HEIWA(ハルルナ)",
+   "id": "UCv5XfaorU_67je3AfovCEAQ",
+   "url": "https://www.youtube.com/@heiwa8808"
+  },
+  {
+   "maker": "藤商事",
+   "channel": "Fujishoji Channel",
+   "id": "UC5Gczn2J9pdfhj7hORCk0XA",
+   "url": "https://www.youtube.com/@fujishojichannel5288"
+  },
+  {
+   "maker": "高尾",
+   "channel": "【公式】 高尾ちゃんねる",
+   "id": "UCS1lRIO_OSL5n_7AOSuSlrw",
+   "url": "https://www.youtube.com/channel/UCS1lRIO_OSL5n_7AOSuSlrw"
+  }
+ ]
+}
