@@ -175,6 +175,21 @@ node scripts/watch-sources.mjs --all   # 全機種の現在の状態
 - ★★ が出たら：2 媒体の数値が一致するか読む → `ceiling` / `ceilingBonus` と `verified`（by・url・date・crosscheck）を入れる → `node scripts/crosscheck.mjs <slug>`
 
 
+## 業界紙の毎日の見張り（2026-11-16〜）
+
+新台の発表は**平日ほぼ均等・午後2時〜夕方6時に多い**（業界紙3紙・過去半年のパチスロ新台記事 78 件：月17／火14／水11／木18／金18・土日0）。月曜朝7時の週報だけだと、水〜金の発表を1週間取りこぼす（2026-11-16 週：開運JAPAN・もののがたり・デジスロ・ゲッターマウス）。クラウドの週報は業界紙のページを直接読めない。
+
+- `scripts/news-watch.mjs` が遊技通信・遊技日本・グリーンべるとの RSS を読み、見出しから**パチスロの機種名**を取り出して LP・候補と照らす
+  - LP にも候補にも無い機種 → 候補（`notes/lp-queue.json`）に `auto: true`・stage「メーカー発表（自動・未確認）」（検定通過の記事なら「検定通過」）で積む。**見出しだけで判断しているので、必ず本文を読んで確かめてから進める**
+  - 候補にある機種 → `updatedAt`・`updateNote` に記事を足す（進行表の「追加情報」に出る）
+  - LP にある機種・見出しに機種名の無い新台記事 → ログだけ（`notes/news-watch.log`）
+  - 「全刈」「超王道」のような演出名・キャッチコピーは機種名として扱わない（頭が L・LB・S・スマスロ・A-SLOT などの名前か、「パチスロ新台「○○」」の形だけ）
+  - 何か積んだら進行表を作り直し、Mac に通知を出す
+- 自動実行：`~/Library/LaunchAgents/com.respect.slolog.newswatch.plist`（**平日 19:00**。Mac が寝ていたら起きたときに回る）。止めるなら `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.respect.slolog.newswatch.plist`
+- 手で回す：`node scripts/news-watch.mjs`／試すだけ `--dry`／既読を無視して今の記事全部で試す `--test`
+- 既読の記録は `notes/news-seen.json`（初回は今ある記事を既読にするだけで、過去分は積まない）
+- 月曜朝の週報（クラウド）はそのまま。天井の見張り・X の下書き・規制ウォッチはそちらの担当
+
 ## 進行表（notes/LP_BOARD.md）と OK の流れ
 
 ユーザーが毎週ざっと確認するための一覧。`node scripts/lp-board.mjs` で作り直す（週次の検証の最後に必ず回す）。
