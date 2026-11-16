@@ -15,50 +15,85 @@ const boot = `window.CALENDAR_DATA=${JSON.stringify(machines).replace(/</g, '\\u
 ---
 <Editorial title="新台カレンダー｜パチスロの導入時期をチェック｜スロログ" description="掲載機種の導入時期を、月ごとのカレンダーと一覧で確認。機種名・メーカーで検索し、詳細ページでスペックや出典も確認できます。">
   <link rel="stylesheet" href={url('editorial/calendar.css')} />
-  <div class="page-wrap cal-top">
-    <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">新台カレンダー</span></nav>
-    <div class="page-title"><p class="eyebrow">RELEASE CALENDAR</p><h1>新台カレンダー</h1><p>気になる新台を、導入時期から。<br />掲載している機種を、月ごとにまとめています。</p></div>
-  </div>
-  <div class="cal2"><div class="shell">
+  <div class="cal2">
+    <nav class="cal-crumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">新台カレンダー</span></nav>
 
-    <div class="workspace">
-      <aside class="sidebar" aria-label="導入月から探す">
-        <div class="sidebar-heading"><h2>導入月から探す</h2><span>INDEX</span></div>
-        <nav id="month-nav" aria-label="導入予定月"></nav>
-        <details id="archive" hidden><summary>過去の導入月</summary><nav id="archive-nav" aria-label="過去の導入月"></nav></details>
-        <a class="app-promo" href={APP_STORE_URL_JP}>
-          <img src={url("editorial/assets/app-icon.webp")} width="40" height="40" alt="スロログ">
-          <strong>調べた機種を、次の記録へ。</strong><p>基本情報を登録して、<br>実戦やメモを自分のスロログに。</p><span>App Storeで入手<img src={url("editorial/assets/external-link.svg")} alt=""></span>
-        </a>
-      </aside>
-      <div class="content">
-        <div class="search-bar">
-          <div class="search-field"><img src={url("editorial/calendar/search.svg")} alt=""><input type="search" id="search" placeholder="機種名・メーカーで検索" aria-label="全導入月の機種名・メーカーを検索"><button id="clear-search" class="icon-button" type="button" aria-label="検索をクリア" title="検索をクリア" hidden><img src={url("editorial/calendar/x.svg")} alt=""></button></div>
-          <label class="maker-filter"><img src={url("editorial/calendar/sliders-horizontal.svg")} alt=""><select id="maker" aria-label="メーカーで絞り込む"><option value="">すべてのメーカー</option></select></label>
-        </div>
-        <div class="month-toolbar">
-          <div class="month-title"><p id="month-year">2027</p><div><h2 id="month-number">01</h2><span id="month-english">JANUARY</span></div></div>
-          <div class="month-actions"><button type="button" class="text-button" id="today">今月に戻る</button><div class="month-arrows"><button type="button" id="prev" class="icon-button" aria-label="前の月" title="前の月"><img src={url("editorial/calendar/chevron-left.svg")} alt=""></button><button type="button" id="next" class="icon-button" aria-label="次の月" title="次の月"><img src={url("editorial/calendar/chevron-right.svg")} alt=""></button></div></div>
-        </div>
-        <div class="view-toolbar">
-          <div class="result-summary"><span class="status-dot"></span><span id="result-label" role="status" aria-live="polite"></span></div>
-          <div class="segmented" role="group" aria-label="表示形式"><button type="button" data-view="calendar" aria-pressed="true"><img src={url("editorial/calendar/calendar-days.svg")} alt=""><span>カレンダー</span></button><button type="button" data-view="list" aria-pressed="false"><img src={url("editorial/calendar/list.svg")} alt=""><span>リスト</span></button></div>
-        </div>
-        <div id="calendar-wrap">
-          <div class="weekdays" aria-hidden="true"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
-          <div id="calendar" class="calendar-grid" role="group" aria-label="導入日カレンダー"></div>
-          <div class="calendar-key"><span><i></i>導入予定日</span><span>日付は変更される場合があります</span></div>
-        </div>
-        <section class="release-section" aria-labelledby="release-title"><div class="section-heading"><h2 id="release-title">今月の掲載ラインナップ</h2><span id="lineup-count"></span></div><div id="releases"></div></section>
-        <div id="empty" class="empty" hidden><img src={url("editorial/calendar/search.svg")} alt=""><h3>条件に合う機種が見つかりませんでした</h3><p id="empty-description">機種名の一部やメーカー名で検索するか、絞り込みを解除してください。</p><button type="button" id="reset-filters" class="text-button">絞り込みを解除</button></div>
+    <section class="cal-hero" aria-labelledby="cal-title">
+      <p class="cal-kicker">気になる新台の導入月をチェック</p>
+      <h1 id="cal-title">新台<em>カレンダー</em></h1>
+      <p class="cal-lead">掲載している機種を、月ごとにまとめています。<br />機種名やメーカーから、全部の月をまとめて探せます。</p>
+      <div class="search-bar">
+        <div class="search-field"><img src={url("editorial/calendar/search.svg")} alt=""><input type="search" id="search" placeholder="機種名・メーカーで検索" aria-label="全導入月の機種名・メーカーを検索"><button id="clear-search" class="icon-button" type="button" aria-label="検索をクリア" title="検索をクリア" hidden><img src={url("editorial/calendar/x.svg")} alt=""></button></div>
+        <label class="maker-filter"><img src={url("editorial/calendar/sliders-horizontal.svg")} alt=""><select id="maker" aria-label="メーカーで絞り込む"><option value="">すべてのメーカー</option></select></label>
       </div>
+    </section>
+
+    <section class="month-band" aria-label="導入月">
+      <div class="band-inner">
+        <div class="month-title">
+          <p id="month-year">2027</p>
+          <h2><span id="month-number">01</span><span class="month-unit">月</span></h2>
+          <span id="month-english">JANUARY</span>
+        </div>
+        <div class="band-row">
+          <div class="band-nav">
+            <nav id="month-nav" aria-label="導入予定月"></nav>
+            <details id="archive" hidden><summary>過去の導入月</summary><nav id="archive-nav" aria-label="過去の導入月"></nav></details>
+          </div>
+          <div class="month-actions">
+            <button type="button" class="today-button" id="today">今月に戻る</button>
+            <div class="month-arrows">
+              <button type="button" id="prev" class="icon-button" aria-label="前の月" title="前の月"><img src={url("editorial/calendar/chevron-left.svg")} alt=""></button>
+              <button type="button" id="next" class="icon-button" aria-label="次の月" title="次の月"><img src={url("editorial/calendar/chevron-right.svg")} alt=""></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cal-body">
+      <div class="view-toolbar">
+        <p class="result-summary" id="result-label" role="status" aria-live="polite"></p>
+        <div class="segmented" role="group" aria-label="表示形式">
+          <button type="button" data-view="calendar" aria-pressed="true"><img src={url("editorial/calendar/calendar-days.svg")} alt=""><span>カレンダー</span></button>
+          <button type="button" data-view="list" aria-pressed="false"><img src={url("editorial/calendar/list.svg")} alt=""><span>リスト</span></button>
+        </div>
+      </div>
+      <div id="calendar-wrap">
+        <div class="calendar-card">
+          <div class="weekdays" aria-hidden="true"><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span class="sat">土</span><span class="sun">日</span></div>
+          <div id="calendar" class="calendar-grid" role="group" aria-label="導入日カレンダー"></div>
+        </div>
+        <div class="calendar-key"><span><i></i>導入予定日</span><span>日付は変更される場合があります</span></div>
+      </div>
+
+      <section class="release-section" aria-labelledby="release-title">
+        <div class="lineup-heading">
+          <p class="cal-kicker" id="lineup-kicker">この月に入る新台</p>
+          <h2 id="release-title">今月の掲載ラインナップ</h2>
+          <span id="lineup-count"></span>
+        </div>
+        <div id="releases"></div>
+      </section>
+      <div id="empty" class="empty" hidden><img src={url("editorial/calendar/search.svg")} alt=""><h3>条件に合う機種が見つかりませんでした</h3><p id="empty-description">機種名の一部やメーカー名で検索するか、絞り込みを解除してください。</p><button type="button" id="reset-filters" class="text-button">絞り込みを解除</button></div>
+
+      <p class="cal-disclaimer">日付は掲載情報に基づく導入予定・導入時期の目安です。変更される場合があり、地域・ホールによっても異なります。正確な設置状況は各ホールへご確認ください。</p>
+
+      <section class="next-months" aria-labelledby="other-title">
+        <h2 id="other-title">ほかの導入月を見る</h2>
+        <div id="related-months"></div>
+      </section>
+
+      <section class="cal-app" aria-labelledby="app-title">
+        <p class="cal-kicker" id="app-title">調べた機種を、次の記録へ。</p>
+        <div class="cta-pair">
+          <a class="store-badge" href={APP_STORE_URL_JP} target="_blank" rel="noopener" aria-label="App Storeからダウンロード"><img src={url("editorial/assets/badge-appstore.svg")} alt="App Storeからダウンロード" width="196" height="72"></a>
+          <a class="cta-orange" href={url('machines/')}><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.2" y="1.8" width="15.6" height="20.8" rx="2" ry="2"/><path d="M8 15.4h0"/><path d="M12 15.4h0"/><path d="M16 15.4h0"/><line x1="5.2" y1="5.8" x2="19.3" y2="5.8"/><line x1="5.2" y1="12.8" x2="19.3" y2="12.8"/><line x1="5.2" y1="18.2" x2="19.3" y2="18.2"/><line x1="9.4" y1="6.6" x2="9.4" y2="12.7"/><line x1="14.8" y1="6.4" x2="14.8" y2="12.6"/></svg><span>機種一覧を見る</span></a>
+        </div>
+      </section>
     </div>
-    <p class="cal-disclaimer">日付は掲載情報に基づく導入予定・導入時期の目安です。変更される場合があり、地域・ホールによっても異なります。正確な設置状況は各ホールへご確認ください。</p>
-    <section class="next-months" aria-labelledby="other-title"><div class="section-heading"><h2 id="other-title">ほかの導入月を見る</h2><span>EXPLORE MORE</span></div><div id="related-months"></div></section>
-  </div>
-  <noscript><p class="cal-noscript">カレンダーの操作にはJavaScriptが必要です。機種一覧からも掲載情報をご覧いただけます。<a href={url('machines/')}>機種一覧を見る</a></p></noscript>
+    <noscript><p class="cal-noscript">カレンダーの操作にはJavaScriptが必要です。機種一覧からも掲載情報をご覧いただけます。<a href={url('machines/')}>機種一覧を見る</a></p></noscript>
   </div>
   <script is:inline set:html={boot}></script>
   <script is:inline defer src={url('editorial/calendar.js')}></script>
 </Editorial>
-<style>.cal-disclaimer{font-size:12px;color:var(--muted);line-height:1.8;margin-top:24px}</style>
