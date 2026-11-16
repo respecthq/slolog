@@ -23,8 +23,12 @@ bonus: '1/169.8〜1/140.3'
 payout: '97.9%〜110.8%'
 bonusPayout: 'SPECIAL BIG BONUS 252枚／BIG BONUS 203枚／MIDDLE BONUS 49枚'
 specSource: 'https://www.sammy.co.jp/japanese/product/pachislot/sp_twi_an_p2/'
-updated: '2026-09-24'
-updateNote: 'メーカーが設定別スペックを公表'
+updated: '2026-11-16'
+updateNote: '公式 PV を追加'
+pv:
+  youtube: 'kXz-bwrE78U'
+  title: '【公式】「スマスロ 快盗天使ツインエンジェル2」プロモーションムービー＜2026年12月7日全国導入予定＞'
+  channel: 'サミーチャンネル（サミー公式YouTube）'
 ---
 
 ## メーカーの発表

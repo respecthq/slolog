@@ -20,6 +20,7 @@ draft: false
 watchKeyword: ゼーガペイン
 watch:
   - https://p.hisshobon.jp/machine/4820
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7220
 pv:
   youtube: 'HgCT7SNaTUs'
   title: '【スマスロゼーガペインETR】 ティザーPV'

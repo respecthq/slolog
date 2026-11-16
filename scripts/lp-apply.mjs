@@ -32,6 +32,10 @@ for (const p of props) {
       const lines = counterFrontmatterLines(v, ymd, previous);
       fm = fm.replace(/^counter:.*\n(?:[ \t]+.*\n)*/m, '');
       fm = fm.replace(/\n$/, `\n${lines.join('\n')}\n`);
+    } else if (k === 'pv') {
+      // 2026-11-16〜 メーカー公式の PV（YouTube）。{youtube, title, channel}
+      fm = fm.replace(/^pv:\n(?:[ \t]+.*\n)+/m, '');
+      fm = fm.replace(/\n$/, `\npv:\n  youtube: '${v.youtube}'\n  title: ${q(v.title)}\n  channel: ${q(v.channel)}\n`);
     } else set(k, v);
   }
   for (const [from, to] of p.body ?? []) { if (!body.includes(from)) { console.error(`✗ ${p.id}：本文に「${from}」が見つかりません`); process.exit(1); } body = body.replace(from, to); }

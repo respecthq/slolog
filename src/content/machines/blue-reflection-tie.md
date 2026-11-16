@@ -18,10 +18,18 @@ fetched: 2026-11-09
 added: 2026-11-09
 draft: false
 watchKeyword: ブルーリフレクション
+watch:
+  - https://p.hisshobon.jp/machine/4856
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: none
   date: 2026-11-09
   note: 'AT 機のため対象外'
+pv:
+  youtube: 'zrQWIZA3MQc'
+  title: '[予告]Lブルーリフレクション帝'
+  channel: 'キュインちゃんねる@HEIWA（平和公式YouTube）'
+updated: '2026-11-16'
+updateNote: '公式 PV を追加'
 ---
 
 ## メーカーの発表

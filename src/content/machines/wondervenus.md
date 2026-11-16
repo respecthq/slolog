@@ -20,6 +20,8 @@ gen: 'スマスロ'
 modelName: 'LBワンダーヴィーナスKS'
 newsSource: https://web-greenbelt.jp/post-120049/
 watchKeyword: ワンダーヴィーナス
+watch:
+  - https://p.hisshobon.jp/machine/4866
 image:
   src: images/machines/wondervenus-kyoutai.png
   alt: ワンダーヴィーナス の筐体

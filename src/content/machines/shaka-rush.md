@@ -17,6 +17,12 @@ fetched: 2026-10-19
 added: 2026-10-19
 draft: false
 watchKeyword: シャカラッシュ
+pv:
+  youtube: 'QQnaMM-1i_I'
+  title: '「スマスロ シャカラッシュ」PV'
+  channel: 'ユニバチャンネル（ユニバーサル公式YouTube）'
+updated: '2026-11-16'
+updateNote: '公式 PV を追加'
 ---
 
 ## メーカーの発表

@@ -24,8 +24,12 @@ ceilingCheck:
     - https://www.p-world.co.jp/machine/database/10536
   date: 2026-11-03
   note: 'CZ間・AT間は必勝本とP-WORLDで一致（最終決戦敗北後・上位AT後の短縮も一致するが書かない）。週報の「最大6周期」はP-WORLDだけ（必勝本に無い）ので書かない。パチガブは機種ページ未登録'
-updated: '2026-11-03'
-updateNote: '天井を追加'
+updated: '2026-11-16'
+updateNote: '公式 PV を追加'
+pv:
+  youtube: 'kICzjWfWv70'
+  title: '【PV】L聖闘士星矢 黄金十二宮'
+  channel: '【公式】SANYOチャンネル'
 ---
 
 ## メーカーの発表

@@ -18,6 +18,8 @@ fetched: 2026-11-09
 added: 2026-11-09
 draft: false
 watchKeyword: 魔女と野獣
+watch:
+  - https://p.hisshobon.jp/machine/4857
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: none
   date: 2026-11-09

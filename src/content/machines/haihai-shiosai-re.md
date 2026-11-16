@@ -17,6 +17,20 @@ draft: false
 watchKeyword: ハイハイシオサイ
 watch:
   - https://p.hisshobon.jp/machine/4818
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7178
+ceiling: '通常時最大999G（設定変更後は最大555G） → ボーナス当選'
+ceilingCheck:
+  urls:
+    - https://p-gabu.jp/guideworks/machinecontents/detail/7178
+    - https://p.hisshobon.jp/machine/4818/1/4
+  date: 2026-11-16
+  note: '999G・設定変更後555G・恩恵（ボーナス当選）は2か所で一致。必勝本は「999G＋α」「555G＋α」、パチガブは＋αなしなので＋αは書かない。「設定変更後の約25%は200Gで当選」はパチガブだけなので書かない'
+updated: '2026-11-16'
+updateNote: '天井・公式 PV を追加'
+pv:
+  youtube: '2ZtoiMbQjrA'
+  title: '「スマート沖スロ ハイハイシオサイRe」 プロモーションムービー'
+  channel: 'パイオニアちゃんねる（パイオニア公式YouTube）'
 ---
 
 ## メーカーの発表

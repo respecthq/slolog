@@ -19,10 +19,18 @@ fetched: 2026-11-09
 added: 2026-11-09
 draft: false
 watchKeyword: 海スロ
+watch:
+  - https://p.hisshobon.jp/machine/4863
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: unchecked
   date: 2026-11-09
   note: '設定別の BB・RB は発表済み。導入前で判別ツールはまだ確かめられないので、ツールが出たら判断する'
+pv:
+  youtube: 'sWhI2d-gUCY'
+  title: '【PV】LB海スロ'
+  channel: '【公式】SANYOチャンネル'
+updated: '2026-11-16'
+updateNote: '公式 PV を追加'
 ---
 
 ## メーカーの発表

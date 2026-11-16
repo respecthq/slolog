@@ -22,8 +22,12 @@ watch:
   - https://p.hisshobon.jp/machine/4786
 payout: '97.8%〜114.3%'
 specSource: 'https://www.sammy.co.jp/japanese/product/pachislot/sp_jyu_oh/'
-updated: '2026-10-03'
-updateNote: '天井（救済機能）を追加（メーカー発表・サミー開発ボイス）'
+updated: '2026-11-16'
+updateNote: '公式 PV を追加'
+pv:
+  youtube: 'D8VuWHSX6bY'
+  title: '【公式】「スマスロ 獣王」プロモーションムービー＜2026年10月5日全国導入予定＞'
+  channel: 'サミーチャンネル（サミー公式YouTube）'
 ---
 
 ## メーカーの発表
