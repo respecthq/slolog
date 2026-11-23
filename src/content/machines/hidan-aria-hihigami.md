@@ -20,6 +20,7 @@ draft: false
 watchKeyword: 緋弾のアリア
 watch:
   - https://p.hisshobon.jp/machine/4868
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7231
 counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未確認／none 対象外／bonus BIG・REGだけ／detail 小役も数える
   status: none
   date: 2026-11-09

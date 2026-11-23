@@ -25,6 +25,9 @@ pv:
   youtube: 'mmietR7BSls'
   title: '【スマスロモンキーターンRED】ティザーPV'
   channel: '山佐PR情報局（山佐公式YouTube）'
+watch:
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7219
+  - https://p.hisshobon.jp/machine/4850
 ---
 
 ## メーカーの発表

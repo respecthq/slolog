@@ -25,6 +25,8 @@ pv:
   youtube: 'U4WdxpF8PME'
   title: '【公式】ＬＢデジスロ ティザーPV'
   channel: 'ベルコ株式会社（ベルコ公式YouTube）'
+watch:
+  - https://p.hisshobon.jp/machine/4871
 ---
 
 ## メーカーの発表

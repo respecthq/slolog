@@ -23,6 +23,8 @@ counter: # 機種専用の小役カウンタ（設定判別）：unchecked 未�
   status: unchecked
   date: 2026-11-16
   note: 'BB・RB の確率は設定1〜6 の範囲だけ発表済み。設定ごとの値と判別ツールが出たら判断する'
+watch:
+  - https://p.hisshobon.jp/machine/4872
 ---
 
 ## メーカーの発表

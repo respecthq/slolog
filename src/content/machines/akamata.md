@@ -22,6 +22,7 @@ draft: false
 watchKeyword: アカマター
 watch:
   - https://p.hisshobon.jp/machine/4846
+  - https://p-gabu.jp/guideworks/machinecontents/detail/7183
 pv:
   youtube: 'rUpA5WV73tU'
   title: 'Lアカマター　プロモーションムービー'

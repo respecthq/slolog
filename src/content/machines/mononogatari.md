@@ -24,6 +24,8 @@ pv:
   youtube: 'TU3t1Qi7t7M'
   title: '【先行映像】Lパチスロ もののがたり'
   channel: 'SANKYOFEVERTV（SANKYO公式YouTube）'
+watch:
+  - https://p.hisshobon.jp/machine/4870
 ---
 
 ## メーカーの発表

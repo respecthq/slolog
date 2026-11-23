@@ -25,6 +25,8 @@ pv:
   youtube: 'ATujkr_3HUc'
   title: 'スマスロ LBアカギ 機種紹介PV'
   channel: 'ボーダー【公式】'
+watch:
+  - https://p.hisshobon.jp/machine/4867
 ---
 
 ## メーカーの発表
