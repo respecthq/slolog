@@ -21,8 +21,6 @@ watch:
   - https://www.eva-project.jp/l_godzilla_vs_eva2/
   - https://p-gabu.jp/guideworks/machinecontents/detail/7170
   - https://p.hisshobon.jp/machine/4849
-updated: '2026-11-03'
-updateNote: '天井を追加'
 pv:
   youtube: 'GwV0vN_MV5I'
   title: '【公式】「Lパチスロ ゴジラ対エヴァンゲリオン ２」プロモーションムービー第2弾'
@@ -34,6 +32,16 @@ ceilingCheck:
     - https://www.p-world.co.jp/machine/database/10590
   date: 2026-11-03
   note: 'G数は3か所で一致（パチガブは＋α表記なし）。AT間天井の恩恵：パチガブ「到達後のボーナスでAT当選濃厚・到達＝発動ではない」／必勝本「次回ボーナス当選でAT濃厚」で一致（P-WORLDは「AT濃厚のボーナスに当選」で、すぐ当たるとも読める）。2026-11-03 ユーザー指摘で「すぐボーナスではない」を明記'
+updated: '2026-11-25'
+updateNote: '筐体の画像を追加（フィールズ提供・監修済み）'
+image:
+  src: images/machines/godzilla-vs-evangelion2-kyoutai.png
+  alt: Lパチスロ ゴジラ対エヴァンゲリオン ２ の筐体
+  placement: above
+  credit: '©カラー　TM & © TOHO CO., LTD.'
+  creditImage: images/machines/godzilla-vs-evangelion2-credit.png
+  creditImageHeight: 26
+specNote: '※掲載の内容はすべて独自調査値'
 ---
 
 ## メーカーの発表
