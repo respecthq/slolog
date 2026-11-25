@@ -40,6 +40,7 @@ image:
 reels:
   src: images/machines/mhrise-sunbreak-reel.png
   credit: '©CAPCOM'
+specNote: '※掲載の内容はすべて独自調査値'
 ---
 
 ## メーカーの発表

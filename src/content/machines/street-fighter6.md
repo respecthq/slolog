@@ -38,6 +38,7 @@ image:
 reels:
   src: images/machines/street-fighter6-reel.png
   credit: '©CAPCOM'
+specNote: '※掲載の内容はすべて独自調査値'
 ---
 
 ## メーカーの発表
