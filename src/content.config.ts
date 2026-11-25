@@ -4,25 +4,30 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { counterRolesSchema, counterV2Schema } from './lib/counter-schema';
 
+// 2026-10-04〜 リール配列（メーカーの素材サイトの画像を加工せずに縮小だけして置く）。LP だけに出し、アプリへは送らない（spec.ts に入れない）
+const localImage = (label: string) => z.string().regex(/^images\/[\p{L}\p{N}_./ -]+\.(?:png|jpe?g|webp|avif)$/iu, `${label}は images/ から始まるローカル画像パスを指定してください`)
+  .refine((src) => !src.split('/').includes('..') && existsSync(resolve('public', src)), { message: `public配下に画像がありません。パスを確認してください` });
+
 // 許諾済み画像をpublic配下に置く。未登録なら画像枠は出さない。
 const machineImage = z.object({
   src: z.string().regex(/^images\/[\p{L}\p{N}_./ -]+\.(?:png|jpe?g|webp|avif)$/iu, '画像は images/ から始まるローカル画像パスを指定してください'),
   alt: z.string().trim().min(1, '画像の代替テキストを記入してください'),
   placement: z.enum(['above', 'background']).default('above'),
   credit: z.string().trim().optional(),
+  creditImageHeight: z.number().int().min(8).max(160).optional(), // 権利表記の画像を出す高さ（px）。文字の権利表記と同じくらいに見えるよう、機種ごとに決める
+  creditImage: localImage('権利表記の画像').optional(), // 2026-11-23〜 メーカーが権利表記を画像で渡してきたとき（フィールズの SF6・ゴジエヴァ2）。文字にせず、その画像をそのまま出す
 }).superRefine((image, ctx) => {
   if (image.src.split('/').includes('..') || !existsSync(resolve('public', image.src))) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['src'], message: 'public配下に画像がありません。パスを確認してください' });
   }
 });
 
-// 2026-10-04〜 リール配列（メーカーの素材サイトの画像を加工せずに縮小だけして置く）。LP だけに出し、アプリへは送らない（spec.ts に入れない）
-const localImage = (label: string) => z.string().regex(/^images\/[\p{L}\p{N}_./ -]+\.(?:png|jpe?g|webp|avif)$/iu, `${label}は images/ から始まるローカル画像パスを指定してください`)
-  .refine((src) => !src.split('/').includes('..') && existsSync(resolve('public', src)), { message: `public配下に画像がありません。パスを確認してください` });
 const machineReels = z.object({
   src: localImage('リール配列'), // 3 リールの配列（縦長）
   symbols: localImage('図柄一覧').optional(), // 図柄の一覧
-  credit: z.string().trim().min(1, 'リール配列の権利表記を記入してください'), // 素材ガイドの指定どおり（画像の近くにスミ一色で出す）
+  credit: z.string().trim().min(1, 'リール配列の権利表記を記入してください'), // 素材ガイドの指定どおり（画像の近くにスミ一色で出す）。creditImage があるときは、その代わりの文（alt）
+  creditImage: localImage('リール配列の権利表記の画像').optional(), // 2026-11-23〜 権利表記が画像で渡されたとき（フィールズの SF6）
+  creditImageHeight: z.number().int().min(8).max(160).optional(),
 });
 
 // 出典に使えない配信元（攻略・解析メディア）。

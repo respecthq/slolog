@@ -37,7 +37,7 @@ const cardImage = _cardExists(`public/images/card/${m.id}.jpg`) ? `images/card/$
     <nav class="breadcrumbs" aria-label="パンくず"><a href={url('')}>スロログ</a><span>/</span><a href={url('machines/')}>機種情報</a><span>/</span><span aria-current="page">{d.name}</span></nav>
     <div class:list={['detail-heading',{'has-image':!!d.image}]}>
       <div><p class="eyebrow">MACHINE GUIDE / {d.maker}</p><h1>{d.name}</h1><div class="detail-meta"><span>{d.fictional?'架空機 / サンプル':`導入時期：${fmt(d.released)}`}</span>{d.type&&<span>{d.type}</span>}</div>{d.fictional?<p>スロログのサンプルに使われているオリジナルの架空機です。実在のホールには設置されていません。掲載値は自社シミュレーターの実装・実測に基づきます。</p>:d.added&&<p class="detail-dates">掲載日 <time datetime={d.added}>{fmt(d.added)}</time>{d.updated&&d.updated>d.added&&<> ／ 更新日 <time datetime={d.updated}>{fmt(d.updated)}</time></>}</p>}</div>
-      {d.image&&<figure><img src={url(d.image.src)} alt={d.image.alt} width="230" height="380" /><figcaption class:list={[{rights:d.image.credit?.startsWith('©')}]}>{d.image.credit}</figcaption></figure>}
+      {d.image&&<figure><img src={url(d.image.src)} alt={d.image.alt} width="230" height="380" /><figcaption class:list={[{rights:d.image.credit?.startsWith('©')||d.image.creditImage}]}>{d.image.creditImage?<img class="rights-img" src={url(d.image.creditImage)} alt={d.image.credit||'権利表記'} style={d.image.creditImageHeight?`height:${d.image.creditImageHeight}px`:undefined} loading="lazy" />:d.image.credit}</figcaption></figure>}
     </div>
     <div class="detail-layout">
       <div class="detail-main">
@@ -53,7 +53,7 @@ const cardImage = _cardExists(`public/images/card/${m.id}.jpg`) ? `images/card/$
         </section>}
         {!d.fictional&&d.reels&&<section class="spec-section reel-section"><div class="section-label"><span>{reelNo} / REEL STRIP</span><h2>リール配列</h2></div>
           <div class:list={['reel-grid',{'no-symbols':!d.reels.symbols}]}><figure class="reel-strip"><img src={url(d.reels.src)} alt={`${d.name} のリール配列（左・中・右）`} loading="lazy" /></figure>{d.reels.symbols&&<figure class="reel-symbols"><img src={url(d.reels.symbols)} alt={`${d.name} の図柄一覧`} loading="lazy" /></figure>}</div>
-          <p class="reel-rights">{d.reels.credit}</p>
+          <p class="reel-rights">{d.reels.creditImage?<img class="rights-img" src={url(d.reels.creditImage)} alt={d.reels.credit} style={`height:${d.reels.creditImageHeight??16}px`} loading="lazy" />:d.reels.credit}</p>
         </section>}
         {d.fictional&&<section class="spec-section"><div class="section-label"><span>02 / OWN SIMULATOR</span><h2>天井・ゾーン</h2></div>
           {ceiling.some(([,v])=>v)?<SpecRows items={ceiling}/>:<p class="muted">掲載していません。</p>}

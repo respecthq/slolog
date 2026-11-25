@@ -22,3 +22,7 @@
 @media (prefers-reduced-motion:reduce){.pv-play:hover .pv-icon{transform:none}}
 @media (max-width:520px){.pv-play{gap:10px;padding:14px 16px}.pv-icon{width:52px;height:52px}.pv-icon::after{left:21px;top:16px;border-width:10px 0 10px 16px}.pv-text strong{font-size:14px}.pv-text small{font-size:11px}}
 .catalog-date{display:inline-flex;align-items:center;gap:6px}.catalog-badge{font-size:10px;font-weight:800;letter-spacing:.06em;line-height:1;padding:4px 6px;border-radius:4px}.catalog-badge.is-new{background:var(--orange);color:#fff}.catalog-badge.is-update{background:#fff;color:#ac4300;border:1px solid #ac4300}
+
+/* 2026-11-23 権利表記を画像で出すとき（フィールズの SF6・ゴジエヴァ2）。筐体画像の大きさの決まりが効かないように */
+.detail-heading figcaption img.rights-img{display:block;height:auto;width:auto;max-width:100%;max-height:150px;margin:0 auto;max-width:100%;object-fit:contain}.catalog-rights img.rights-img{display:block;height:auto;width:auto;max-width:100%;max-height:64px}
+.reel-rights img.rights-img{display:block;width:auto;max-width:100%}

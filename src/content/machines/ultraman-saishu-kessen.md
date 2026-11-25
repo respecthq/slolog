@@ -21,12 +21,21 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: ULTRAMAN
-updated: '2026-10-10'
-updateNote: '天井の書き方を「条件 → 当たるもの」に'
 pv:
   youtube: 'BpjuIzkf7Ww'
   title: '「L ULTRAMAN 最終決戦」プロモーションムービー第1弾'
   channel: 'フィールズ 公式YouTube'
+updated: '2026-11-25'
+updateNote: '筐体・リール配列の画像を追加（フィールズ提供・監修済み）'
+specNote: '※掲載の内容はすべて独自調査値'
+image:
+  src: images/machines/ultraman-saishu-kessen-kyoutai.png
+  alt: L ULTRAMAN 最終決戦 の筐体
+  placement: above
+  credit: '©円谷プロ　©Eiichi Shimizu, Tomohiro Shimoguchi ©ULTRAMAN製作委員会3　©OK!!'
+reels:
+  src: images/machines/ultraman-saishu-kessen-reel.png
+  credit: '©円谷プロ　©Eiichi Shimizu, Tomohiro Shimoguchi ©ULTRAMAN製作委員会3　©OK!!'
 ---
 
 ## メーカーの発表

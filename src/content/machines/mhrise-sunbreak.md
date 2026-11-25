@@ -26,12 +26,20 @@ ceilingCheck:
     - https://p.hisshobon.jp/machine/4830/1/8
   date: 2026-10-05
   note: '2サイトで4条件一致（パチガブ 10/02 掲載）。リプレイ周期は両サイトとも天井欄ではなく通常時の項目（パチガブ「当選」／必勝本「濃厚」→「濃厚／確定」を使わず仕組みどおり「最大5周期」と書く）。2026-10-05 ユーザー判断で天井に含め、何に当選するかを明記'
-updated: '2026-10-10'
-updateNote: '天井の書き方を「条件 → 当たるもの」に'
 pv:
   youtube: 'QzFm6A5nvE0'
   title: 'スマスロ モンスターハンターライズ：サンブレイク PV'
   channel: 'エンターライズ 公式YouTube'
+updated: '2026-11-25'
+updateNote: '筐体・リール配列の画像を追加（フィールズ提供・監修済み）'
+image:
+  src: images/machines/mhrise-sunbreak-kyoutai.png
+  alt: スマスロ モンスターハンターライズ：サンブレイク の筐体
+  placement: above
+  credit: '©CAPCOM'
+reels:
+  src: images/machines/mhrise-sunbreak-reel.png
+  credit: '©CAPCOM'
 ---
 
 ## メーカーの発表

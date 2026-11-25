@@ -18,8 +18,6 @@ fetched: 2026-09-23
 added: 2026-09-23
 draft: false
 watchKeyword: ストリートファイター6
-updated: '2026-10-10'
-updateNote: '天井の書き方を「条件 → 当たるもの」に'
 ceilingCheck:
   urls:
     - https://p-gabu.jp/guideworks/machinecontents/detail/7111/summarize
@@ -30,6 +28,16 @@ pv:
   youtube: 'cWvXcXMuNd0'
   title: 'スマスロ ストリートファイター6　PV'
   channel: 'エンターライズ 公式YouTube'
+updated: '2026-11-25'
+updateNote: '筐体・リール配列の画像を追加（フィールズ提供・監修済み）'
+image:
+  src: images/machines/street-fighter6-kyoutai.png
+  alt: スマスロ ストリートファイター6 の筐体
+  placement: above
+  credit: '©CAPCOM'
+reels:
+  src: images/machines/street-fighter6-reel.png
+  credit: '©CAPCOM'
 ---
 
 ## メーカーの発表
